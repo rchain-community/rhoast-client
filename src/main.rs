@@ -3,7 +3,7 @@ mod proto;
 mod utils;
 // use crate::proto::{casper, casper::casper_v1, routing, scalapb};
 use crate::proto::{
-    casper::casper_v1::*, casper::*, casper_msg::*, deploy::*, deployv1::ServiceError as serv_err,
+    casper::casper_v1::*, casper::*, casper_msg::*, deploy::*, deployv1::ServiceError,
     routing::*, scalapb::*,
 };
 

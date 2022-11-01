@@ -60,6 +60,7 @@ service DeployService {
   // temporary api for testing
   rpc getEventByHash(deploy.BlockQuery) returns (EventInfoResponse){}
 }
+
 message ServiceError {
   repeated string messages = 1;
 }

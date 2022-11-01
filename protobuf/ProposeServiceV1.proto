@@ -7,6 +7,7 @@ package casper.v1;
 // make a scalapb directory in this file's location and place it inside
 
 import "scalapb/scalapb.proto";
+import "DeployServiceV1.proto";
 
 option (scalapb.options) = {
   package_name: "coop.rchain.casper.protocol.propose.v1"
@@ -25,7 +26,7 @@ message PrintUnmatchedSendsQuery {
 
 message ProposeResponse {
   oneof message {
-    ServiceError error = 1;
+    deployv1.ServiceError error = 1;
     string result      = 2;
   }
 }
