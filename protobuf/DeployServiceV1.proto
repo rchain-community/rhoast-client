@@ -5,7 +5,6 @@ syntax = "proto3";
 package casper.v1;
 
 import "CasperMessage.proto";
-import "ServiceError.proto";
 import "DeployServiceCommon.proto";
 
 // If you are building for other languages "scalapb.proto"
@@ -61,6 +60,9 @@ service DeployService {
   // temporary api for testing
   rpc getEventByHash(BlockQuery) returns (EventInfoResponse){}
 }
+message ServiceError {
+  repeated string messages = 1;
+}
 
 message EventInfoResponse{
   oneof message{
@@ -87,7 +89,7 @@ message DeployResponse {
 // getBlock
 message BlockResponse {
   oneof message {
-    ServiceError error  = 1;
+    ServiceError error = 1;
     BlockInfo blockInfo = 2;
   }
 }
@@ -111,7 +113,7 @@ message MachineVerifyResponse {
 // showMainChain & getBlocks
 message BlockInfoResponse {
   oneof message {
-    ServiceError error        = 1;
+    ServiceError error = 1;
     LightBlockInfo blockInfo  = 2;
   }
 }
@@ -119,20 +121,20 @@ message BlockInfoResponse {
 // listenForDataAtName
 message ListeningNameDataResponse {
   oneof message {
-    ServiceError error                = 1;
+    ServiceError error = 1;
     ListeningNameDataPayload payload  = 2;
   }
 }
 
 message ListeningNameDataPayload {
-  repeated DataWithBlockInfo blockInfo = 1;
+  ServiceError error = 1;
   int32 length                         = 2;
 }
 
 // listenForContinuationAtName
 message ContinuationAtNameResponse {
   oneof message {
-    ServiceError error                 = 1;
+    ServiceError error = 1;
     ContinuationAtNamePayload payload  = 2;
   }
 }
@@ -145,7 +147,7 @@ message ContinuationAtNamePayload {
 // findDeploy
 message FindDeployResponse {
   oneof message {
-    ServiceError error        = 1;
+    ServiceError error = 1;
     LightBlockInfo blockInfo  = 2;
   }
 }
@@ -153,7 +155,7 @@ message FindDeployResponse {
 // previewPrivateNames
 message PrivateNamePreviewResponse {
   oneof message {
-    ServiceError error                 = 1;
+    ServiceError error = 1;
     PrivateNamePreviewPayload payload  = 2;
   }
 }
@@ -165,7 +167,7 @@ message PrivateNamePreviewPayload {
 // lastFinalizedBlock
 message LastFinalizedBlockResponse {
   oneof message {
-    ServiceError error   = 1;
+    ServiceError error = 1;
     BlockInfo blockInfo  = 2;
   }
 }
