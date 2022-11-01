@@ -2,7 +2,7 @@
  * The main API is `DeployService`.
  */
 syntax = "proto3";
-package casper;
+package deploy;
 
 import "CasperMessage.proto";
 
@@ -41,12 +41,12 @@ message BlocksQueryByHeight{
 
 message DataAtNameQuery {
   int32 depth = 1;
-  Par name = 2;
+  casper.Par name = 2;
 }
 
 message ContinuationAtNameQuery {
   int32 depth = 1;
-  repeated Par names = 2;
+  repeated casper.Par names = 2;
 }
 
 message VisualizeDagQuery {
@@ -143,7 +143,7 @@ message BlockInfo {
 }
 
 message DataWithBlockInfo {
-  repeated Par postBlockData = 1;
+  repeated casper.Par postBlockData = 1;
   LightBlockInfo block = 2;
 }
 
@@ -153,26 +153,26 @@ message ContinuationsWithBlockInfo {
 }
 
 message WaitingContinuationInfo {
-  repeated BindPattern postBlockPatterns = 1;
-  Par postBlockContinuation = 2;
+  repeated casper.BindPattern postBlockPatterns = 1;
+  casper.Par postBlockContinuation = 2;
 }
 
 
 message ReportProduceProto{
   option (scalapb.message).extends = "ReportEventProto";
 
-  Par channel = 1;
-  ListParWithRandom data = 2;
+  casper.Par channel = 1;
+  casper.ListParWithRandom data = 2;
 }
 
 message ReportConsumeProto{
   option (scalapb.message).extends = "ReportEventProto";
 
-  repeated Par channels = 1;
-  repeated BindPattern patterns=2;
+  repeated casper.Par channels = 1;
+  repeated casper.BindPattern patterns=2;
   // disable because can not work and it is not important actually
 //  TaggedContinuation continuation=3;
-  repeated PeekProto peeks=4;
+  repeated casper_msg.PeekProto peeks=4;
 }
 
 message ReportCommProto{

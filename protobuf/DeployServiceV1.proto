@@ -2,7 +2,7 @@
  * The main API is `DeployService`.
  */
 syntax = "proto3";
-package casper.v1;
+package deployv1;
 
 import "CasperMessage.proto";
 import "DeployServiceCommon.proto";
@@ -28,37 +28,37 @@ option (scalapb.options) = {
 // To get results back, use `listenForDataAtName`.
 service DeployService {
   // Queue deployment of Rholang code (or fail to parse).
-  rpc doDeploy(DeployDataProto) returns (DeployResponse) {}
+  rpc doDeploy(casper_msg.DeployDataProto) returns (DeployResponse) {}
   // Get details about a particular block.
-  rpc getBlock(BlockQuery) returns (BlockResponse) {}
+  rpc getBlock(deploy.BlockQuery) returns (BlockResponse) {}
   // Get dag
-  rpc visualizeDag(VisualizeDagQuery) returns (stream VisualizeBlocksResponse) {}
-  rpc machineVerifiableDag(MachineVerifyQuery) returns (MachineVerifyResponse) {}
+  rpc visualizeDag(deploy.VisualizeDagQuery) returns (stream VisualizeBlocksResponse) {}
+  rpc machineVerifiableDag(deploy.MachineVerifyQuery) returns (MachineVerifyResponse) {}
   // Returns on success LightBlockInfo
-  rpc showMainChain(BlocksQuery) returns (stream BlockInfoResponse) {}
+  rpc showMainChain(deploy.BlocksQuery) returns (stream BlockInfoResponse) {}
   // Get a summary of blocks on the blockchain.
-  rpc getBlocks(BlocksQuery) returns (stream BlockInfoResponse) {}
+  rpc getBlocks(deploy.BlocksQuery) returns (stream BlockInfoResponse) {}
   // Find data sent to a name.
-  rpc listenForDataAtName(DataAtNameQuery) returns (ListeningNameDataResponse) {}
+  rpc listenForDataAtName(deploy.DataAtNameQuery) returns (ListeningNameDataResponse) {}
   // Find processes receiving on a name.
-  rpc listenForContinuationAtName(ContinuationAtNameQuery) returns (ContinuationAtNameResponse) {}
+  rpc listenForContinuationAtName(deploy.ContinuationAtNameQuery) returns (ContinuationAtNameResponse) {}
   // Find block containing a deploy.
-  rpc findDeploy(FindDeployQuery) returns (FindDeployResponse) {}
+  rpc findDeploy(deploy.FindDeployQuery) returns (FindDeployResponse) {}
   // Preview new top-level unforgeable names (for example, to compute signatures over them).
-  rpc previewPrivateNames(PrivateNamePreviewQuery) returns (PrivateNamePreviewResponse) {}
+  rpc previewPrivateNames(deploy.PrivateNamePreviewQuery) returns (PrivateNamePreviewResponse) {}
   // Get details about a particular block.
-  rpc lastFinalizedBlock(LastFinalizedBlockQuery) returns (LastFinalizedBlockResponse) {}
+  rpc lastFinalizedBlock(deploy.LastFinalizedBlockQuery) returns (LastFinalizedBlockResponse) {}
   // Check if a given block is finalized.
-  rpc isFinalized(IsFinalizedQuery) returns (IsFinalizedResponse) {}
+  rpc isFinalized(deploy.IsFinalizedQuery) returns (IsFinalizedResponse) {}
   // Check if a given validator is bonded.
   // Returns on success BondStatusResponse
-  rpc bondStatus(BondStatusQuery) returns (BondStatusResponse) {}
+  rpc bondStatus(deploy.BondStatusQuery) returns (BondStatusResponse) {}
   // Executes deploy as user deploy with immediate rollback and return result
-  rpc exploratoryDeploy(ExploratoryDeployQuery) returns (ExploratoryDeployResponse) {}
+  rpc exploratoryDeploy(deploy.ExploratoryDeployQuery) returns (ExploratoryDeployResponse) {}
   // get blocks by block height
-  rpc getBlocksByHeights(BlocksQueryByHeight) returns (stream BlockInfoResponse){}
+  rpc getBlocksByHeights(deploy.BlocksQueryByHeight) returns (stream BlockInfoResponse){}
   // temporary api for testing
-  rpc getEventByHash(BlockQuery) returns (EventInfoResponse){}
+  rpc getEventByHash(deploy.BlockQuery) returns (EventInfoResponse){}
 }
 message ServiceError {
   repeated string messages = 1;
@@ -67,14 +67,14 @@ message ServiceError {
 message EventInfoResponse{
   oneof message{
     ServiceError error = 1;
-    BlockEventInfo result = 2;
+    deploy.BlockEventInfo result = 2;
   }
 }
 
 message ExploratoryDeployResponse{
   oneof message{
     ServiceError error = 1;
-    DataWithBlockInfo result = 2;
+    deploy.DataWithBlockInfo result = 2;
   }
 }
 
@@ -90,7 +90,7 @@ message DeployResponse {
 message BlockResponse {
   oneof message {
     ServiceError error = 1;
-    BlockInfo blockInfo = 2;
+    deploy.BlockInfo blockInfo = 2;
   }
 }
 
@@ -114,7 +114,7 @@ message MachineVerifyResponse {
 message BlockInfoResponse {
   oneof message {
     ServiceError error = 1;
-    LightBlockInfo blockInfo  = 2;
+    deploy.LightBlockInfo blockInfo  = 2;
   }
 }
 
@@ -140,7 +140,7 @@ message ContinuationAtNameResponse {
 }
 
 message ContinuationAtNamePayload {
-  repeated ContinuationsWithBlockInfo blockResults = 1;
+  repeated deploy.ContinuationsWithBlockInfo blockResults = 1;
   int32 length = 2;
 }
 
@@ -148,7 +148,7 @@ message ContinuationAtNamePayload {
 message FindDeployResponse {
   oneof message {
     ServiceError error = 1;
-    LightBlockInfo blockInfo  = 2;
+    deploy.LightBlockInfo blockInfo  = 2;
   }
 }
 
@@ -168,7 +168,7 @@ message PrivateNamePreviewPayload {
 message LastFinalizedBlockResponse {
   oneof message {
     ServiceError error = 1;
-    BlockInfo blockInfo  = 2;
+    deploy.BlockInfo blockInfo  = 2;
   }
 }
 
