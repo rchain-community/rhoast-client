@@ -5,16 +5,15 @@ pub mod casper {
     }
 }
 
-pub mod deployv1{
+pub mod deployv1 {
     tonic::include_proto!("deployv1");
 }
-   
+
 pub mod casper_msg {
     tonic::include_proto!("casper_msg");
 }
-pub mod deploy{
+pub mod deploy {
     tonic::include_proto!("deploy");
-
 }
 
 pub mod scalapb {
