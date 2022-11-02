@@ -6,8 +6,8 @@ use crate::proto::{
     scalapb::*,
 };
 
-use crate::utils::getBlake2Hash;
 use crate::proto::deployv1::PrivateNamePreviewPayload;
+use crate::utils::getBlake2Hash;
 
 fn main() {
     println!("hello world!");
@@ -25,5 +25,8 @@ fn main() {
     };
     PrivateNamePreviewPayload { ids: vec![] };
     //sample usage
-    println!("{:?}", getBlake2Hash::getBlake2Hash(&[1, 4, 54, 67], Some(9)))
+    println!(
+        "{:?}",
+        getBlake2Hash::getBlake2Hash(&[1, 4, 54, 67], Some(9))
+    );
 }
