@@ -1,6 +1,6 @@
-const ALPHABET: &str = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
-
 pub fn encode(buffer: &[u8]) -> String {
+    const ALPHABET: &str = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+
     if buffer.len() == 0 {
         return "".to_string();
     } else {
