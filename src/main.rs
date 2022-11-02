@@ -3,8 +3,8 @@ mod proto;
 mod utils;
 // use crate::proto::{casper, casper::casper_v1, routing, scalapb};
 use crate::proto::{
-    casper::casper_v1::*, casper::*, casper_msg::*, deploy::*, deployv1::ServiceError,
-    routing::*, scalapb::*,
+    casper::casper_v1::*, casper::*, casper_msg::*, deploy::*, deployv1::ServiceError, routing::*,
+    scalapb::*,
 };
 
 use crate::proto::deployv1::PrivateNamePreviewPayload;
