@@ -6,7 +6,7 @@ pub fn getBlake2Hash(toHash: &[u8], length: Option<u32>) -> Vec<u8> {
     let mut hasher = Blake2bVar::new(len as usize).unwrap();
     hasher.update(toHash);
     //write hash to buffer
-    let mut buf: Vec<u8> = Vec::with_capacity(len as usize);
+    let mut buf: Vec<u8> =vec![0; len as usize];
     hasher.finalize_variable(&mut buf).unwrap();
     buf
 }
