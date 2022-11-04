@@ -13,7 +13,11 @@ pub fn bytesFromHex(hexStr: &str) -> Result<Vec<u8>, ErrCode> {
                 Ok(decoded_string) => {
                     //write to byte
                     let mut bytes = vec![0; decoded_string.len()];
-                    hex::decode_to_slice(hexStr, &mut bytes as &mut [u8]).unwrap();
+                    if let Err(_) = hex::decode_to_slice(hexStr, &mut bytes as &mut [u8]) {
+                        return Err(ErrCode::ByteFromHex(
+                            "Error decoding a hex string into a mutable bytes slice",
+                        ));
+                    };
                     return Ok(bytes);
                 }
                 Err(_) => {
