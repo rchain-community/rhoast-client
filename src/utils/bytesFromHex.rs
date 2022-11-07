@@ -6,7 +6,7 @@ pub fn getHexSTring(input: &str) -> String {
 }
 
 pub fn bytesFromHex(hexStr: &str) -> Result<Vec<u8>, ErrCode> {
-    //decode hex tring to utf8
+    //decode hex string to utf8
     match hex::decode(hexStr) {
         Ok(hex_value) => {
             match String::from_utf8(hex_value) {

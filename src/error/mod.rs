@@ -5,6 +5,7 @@ pub enum ErrCode {
     ByteFromHex(&'static str),
     Bs58(&'static str),
     Blake2(&'static str),
+    EthAdressFromKey(&'static str),
 }
 
 #[allow(unreachable_patterns)]
@@ -17,6 +18,7 @@ impl fmt::Display for ErrCode {
             ErrCode::ByteFromHex(ele) => write!(f, "Byte From Hex error: {}", ele),
             ErrCode::Bs58(ele) => write!(f, "BS58 error: {}", ele),
             ErrCode::Blake2(ele) => write!(f, "Blake2 error: {}", ele),
+            ErrCode::EthAdressFromKey(ele) => write!(f, "EthAdressFromKey error: {}", ele),
             _ => write!(f, "{:?}", self), // For any variant not previously covered
         }
     }
