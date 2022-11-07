@@ -11,25 +11,29 @@ pub fn getEthAddrFromPublicKey(pub_key: &str) -> Result<String, ErrCode> {
         ));
     } else {
         let mut pub_key_byte = bytesFromHex::bytesFromHex(&pub_key)?;
-        let mut hasher = Keccak256::new();
 
         //remove the first index of pub_key_byte
         pub_key_byte.remove(0);
-        hasher.update(&pub_key_byte[..]);
-        let hasher_result = hasher.finalize();
-        let keccak_slice: Vec<u8> = hasher_result.into_iter().rev().take(40).collect::<Vec<_>>();
-        //reverse to put back in place
-        let keccak_slice_in_place: Vec<u8> = keccak_slice.into_iter().rev().collect();
-        let result = format!("0x{}", encode_hex(&keccak_slice_in_place));
+
+        let hasher_result = encode_hex(&keccak256(&pub_key_byte));
+        let len = hasher_result.len();
+        let result = format!("0x{}", &hasher_result[len - 40..]);
 
         return Ok(String::from(result));
     }
 }
 
-fn encode_hex(bytes: &Vec<u8>) -> String {
+pub fn encode_hex(bytes: &Vec<u8>) -> String {
     let mut s = String::with_capacity(bytes.len() * 2);
     for &b in bytes {
         write!(&mut s, "{:02x}", b).unwrap();
     }
     s
+}
+
+pub fn keccak256(data: &Vec<u8>) -> Vec<u8> {
+    let mut hasher = Keccak256::new();
+    hasher.update(&data[..]);
+    let hasher_result = hasher.finalize().to_vec();
+    hasher_result
 }

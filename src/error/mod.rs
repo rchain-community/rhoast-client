@@ -6,6 +6,7 @@ pub enum ErrCode {
     Bs58(&'static str),
     Blake2(&'static str),
     EthAdressFromKey(&'static str),
+    RevAddressFromKey(&'static str),
 }
 
 #[allow(unreachable_patterns)]
@@ -19,6 +20,7 @@ impl fmt::Display for ErrCode {
             ErrCode::Bs58(ele) => write!(f, "BS58 error: {}", ele),
             ErrCode::Blake2(ele) => write!(f, "Blake2 error: {}", ele),
             ErrCode::EthAdressFromKey(ele) => write!(f, "EthAdressFromKey error: {}", ele),
+            ErrCode::RevAddressFromKey(ele) => write!(f, "RevAddressFromKey error: {}", ele),
             _ => write!(f, "{:?}", self), // For any variant not previously covered
         }
     }
