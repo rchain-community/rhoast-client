@@ -7,6 +7,7 @@ pub enum ErrCode {
     Blake2(&'static str),
     EthAdressFromKey(&'static str),
     RevAddressFromKey(&'static str),
+    PubFromPrivate(&'static str),
 }
 
 #[allow(unreachable_patterns)]
@@ -21,6 +22,7 @@ impl fmt::Display for ErrCode {
             ErrCode::Blake2(ele) => write!(f, "Blake2 error: {}", ele),
             ErrCode::EthAdressFromKey(ele) => write!(f, "EthAdressFromKey error: {}", ele),
             ErrCode::RevAddressFromKey(ele) => write!(f, "RevAddressFromKey error: {}", ele),
+            ErrCode::PubFromPrivate(ele) => write!(f, "PubFromPrivate error: {}", ele),
             _ => write!(f, "{:?}", self), // For any variant not previously covered
         }
     }
