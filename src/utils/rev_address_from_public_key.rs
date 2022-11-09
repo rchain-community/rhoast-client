@@ -43,7 +43,6 @@ pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, ErrCode> {
         let payload_bytes = decode_b16(payload.as_bytes())?;
         let checksum = hex::encode(get_blake2_hash::get_blake2_hash(&payload_bytes, Some(32))?);
 
-
         let addr = format!("{}{}", payload, &checksum[..8]);
         // Return REV address
         Ok(base58::encode(decode_b16(&addr.as_bytes().to_vec())?))
