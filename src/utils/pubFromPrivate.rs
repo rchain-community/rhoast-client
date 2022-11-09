@@ -22,7 +22,14 @@ pub fn get_pri_key() -> SecretKey {
 pub fn get_seckey_from_string(input: &str) -> Result<SecretKey, ErrCode> {
     match <[u8; SECRET_KEY_SIZE]>::from_hex(input) {
         Ok(buffer) =>{
-            return Ok(SecretKey::from_slice(&buffer).unwrap())
+            match SecretKey::from_slice(&buffer){
+                Ok(sec_key)=>{
+                    return Ok(sec_key)
+                },
+                Err(_)=>{
+                    return Err(ErrCode::PubFromPrivate("error writing slice to secret key "));
+                }
+            }
         },
         Err(_) => {
             return Err(ErrCode::PubFromPrivate("error writing hex to buffer "));
