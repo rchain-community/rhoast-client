@@ -1,11 +1,11 @@
 use crate::error::ErrCode;
 
-pub fn getHexSTring(input: &str) -> String {
+pub fn get_hex_string(input: &str) -> String {
     let hex_string = hex::encode(input);
     hex_string
 }
 
-pub fn bytesFromHex(hexStr: &str) -> Result<Vec<u8>, ErrCode> {
+pub fn bytes_from_hex(hexStr: &str) -> Result<Vec<u8>, ErrCode> {
     //decode hex string to utf8
     match hex::decode(hexStr) {
         Ok(hex_value) => {

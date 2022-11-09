@@ -1,15 +1,15 @@
 use crate::error::ErrCode;
-use crate::utils::bytesFromHex;
+use crate::utils::bytes_from_hex;
 use sha3::{Digest, Keccak256};
 
 //encode str to hex str using the func bytesFromHex::getHexSTring before passing it
-pub fn getEthAddrFromPublicKey(pub_key: &str) -> Result<String, ErrCode> {
+pub fn get_eth_addr_from_public_key(pub_key: &str) -> Result<String, ErrCode> {
     if pub_key.len() != 130 || pub_key.len() == 0 {
         return Err(ErrCode::EthAdressFromKey(
             "Public key must contain 130 characters",
         ));
     } else {
-        let mut pub_key_byte = bytesFromHex::bytesFromHex(&pub_key)?;
+        let mut pub_key_byte = bytes_from_hex::bytes_from_hex(&pub_key)?;
 
         //remove the first index of pub_key_byte
         pub_key_byte.remove(0);

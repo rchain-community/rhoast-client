@@ -2,7 +2,10 @@ use crate::error::ErrCode;
 use bitcoin_hashes::{sha256, Hash};
 use hex::FromHex;
 use secp256k1::rand::thread_rng;
-use secp256k1::{ecdsa, constants::SECRET_KEY_SIZE, Message, PublicKey, Secp256k1, SecretKey, Signing, Verification};
+use secp256k1::{
+    constants::SECRET_KEY_SIZE, ecdsa, Message, PublicKey, Secp256k1, SecretKey, Signing,
+    Verification,
+};
 
 //use secret gotten from get_pri_pub_key_pair() to create new secret here
 pub fn get_pub_key(secret_key: &SecretKey) -> PublicKey {
@@ -21,14 +24,12 @@ pub fn get_pri_key() -> SecretKey {
 
 pub fn get_seckey_from_string(input: &str) -> Result<SecretKey, ErrCode> {
     match <[u8; SECRET_KEY_SIZE]>::from_hex(input) {
-        Ok(buffer) =>{
-            match SecretKey::from_slice(&buffer){
-                Ok(sec_key)=>{
-                    return Ok(sec_key)
-                },
-                Err(_)=>{
-                    return Err(ErrCode::PubFromPrivate("error writing slice to secret key "));
-                }
+        Ok(buffer) => match SecretKey::from_slice(&buffer) {
+            Ok(sec_key) => return Ok(sec_key),
+            Err(_) => {
+                return Err(ErrCode::PubFromPrivate(
+                    "error writing slice to secret key ",
+                ));
             }
         },
         Err(_) => {

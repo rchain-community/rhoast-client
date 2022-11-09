@@ -4,11 +4,11 @@ mod proto;
 mod utils;
 use crate::proto::{
     casper::casper_v1::*, casper::*, casper_msg::*, deploy::*, deployv1::ServiceError, routing::*,
-    scalapb::*,
+    scalapb,
 };
 
 use crate::proto::deployv1::PrivateNamePreviewPayload;
-use crate::utils::getBlake2Hash;
+use crate::utils::get_blake2_hash;
 
 fn main() {
     println!("hello world!");
@@ -25,13 +25,14 @@ fn main() {
         hash: "".to_string(),
     };
     PrivateNamePreviewPayload { ids: vec![] };
+
     //sample usage
     println!(
         "{:?}",
-        getBlake2Hash::getBlake2Hash(&[1, 4, 54, 67], Some(9))
+        get_blake2_hash::get_blake2_hash(&[1, 4, 54, 67], Some(9))
     );
 
-    use crate::utils::pubFromPrivate::*;
+    use crate::utils::pub_from_private::*;
     use secp256k1::Secp256k1;
 
     //how to recover pub key from private key string,

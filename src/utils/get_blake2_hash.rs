@@ -2,7 +2,7 @@ use crate::error::ErrCode;
 use blake2::digest::{Update, VariableOutput};
 use blake2::Blake2bVar;
 
-pub fn getBlake2Hash(to_hash: &[u8], length: Option<u32>) -> Result<Vec<u8>, ErrCode> {
+pub fn get_blake2_hash(to_hash: &[u8], length: Option<u32>) -> Result<Vec<u8>, ErrCode> {
     let len = length.unwrap_or(32);
     match Blake2bVar::new(len as usize) {
         Ok(mut hasher) => {
