@@ -40,14 +40,13 @@ fn main() {
     let b = get_pub_key(&a);
 
     //
-    let k = get_seckey_buffer_from_string(&a.display_secret().to_string()).unwrap();
+    let k = get_seckey_from_string(&a.display_secret().to_string()).unwrap();
 
-    println!("buffers {:?}---{:?}", &a[..], k);
-    //convert pri key to string
+    println!("buffers {:?}---{:?}", &a[..], &k[..]);
 
     let secp = Secp256k1::new();
-    //use recoverd buffer to recover pub key
-    let signature = sign_recovery(&secp, b"hi", &k).unwrap();
+    //use recoverd se key to recover pub key
+    let signature = sign_recovery(&secp, b"hi", &k[..]).unwrap();
 
     let (recovery_id, serialize_sig) = signature.serialize_compact();
 
