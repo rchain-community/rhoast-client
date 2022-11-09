@@ -30,4 +30,23 @@ fn main() {
         "{:?}",
         getBlake2Hash::getBlake2Hash(&[1, 4, 54, 67], Some(9))
     );
+
+    use crate::utils::pubFromPrivate::*;
+    use secp256k1::{Secp256k1};
+
+    //how to recover pub key from private key, code sample
+    let a = get_pri_key();
+
+    println!("{}", a.display_secret().to_string());
+    let secp = Secp256k1::new();
+
+
+    let signature = sign_recovery(&secp, a.display_secret().to_string().as_bytes(), &a[..]).unwrap();
+
+    let (recovery_id, serialize_sig) = signature.serialize_compact();
+
+    
+    let pub_key= recover(&secp, a.display_secret().to_string().as_bytes(), &serialize_sig, recovery_id.to_i32() as u8);
+    println!("{:?}", pub_key.unwrap().to_string())
+
 }
