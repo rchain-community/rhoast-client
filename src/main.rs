@@ -32,21 +32,27 @@ fn main() {
     );
 
     use crate::utils::pubFromPrivate::*;
-    use secp256k1::{Secp256k1};
+    use secp256k1::Secp256k1;
 
-    //how to recover pub key from private key, code sample
+    //how to recover pub key from private key string,
     let a = get_pri_key();
+    //sign pub key with private key
+    let b = get_pub_key(&a);
 
+    //convert pri key to string
     println!("{}", a.display_secret().to_string());
     let secp = Secp256k1::new();
 
-
-    let signature = sign_recovery(&secp, a.display_secret().to_string().as_bytes(), &a[..]).unwrap();
+    let signature =
+        sign_recovery(&secp, a.display_secret().to_string().as_bytes(), &a[..]).unwrap();
 
     let (recovery_id, serialize_sig) = signature.serialize_compact();
 
-    
-    let pub_key= recover(&secp, a.display_secret().to_string().as_bytes(), &serialize_sig, recovery_id.to_i32() as u8);
-    println!("{:?}", pub_key.unwrap().to_string())
-
+    let pub_key = recover(
+        &secp,
+        a.display_secret().to_string().as_bytes(),
+        &serialize_sig,
+        recovery_id.to_i32() as u8,
+    );
+    assert_eq!(pub_key.unwrap(), b);
 }

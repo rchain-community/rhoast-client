@@ -1,7 +1,7 @@
 use crate::error::ErrCode;
-use secp256k1::rand::thread_rng;
-use secp256k1::{PublicKey, Error, Secp256k1, Message, SecretKey, Signing, Verification, ecdsa};
 use bitcoin_hashes::{sha256, Hash};
+use secp256k1::rand::thread_rng;
+use secp256k1::{ecdsa, Message, PublicKey, Secp256k1, SecretKey, Signing, Verification};
 
 //use secret gotten from get_pri_pub_key_pair() to create new secret here
 pub fn get_pub_key(secret_key: &SecretKey) -> PublicKey {
@@ -18,20 +18,52 @@ pub fn get_pri_key() -> SecretKey {
     seckey
 }
 
-pub fn recover<C: Verification>(secp: &Secp256k1<C>,msg: &[u8],sig: &[u8],recovery_id: u8) -> Result<PublicKey, Error> {
+pub fn recover<C: Verification>(
+    secp: &Secp256k1<C>,
+    msg: &[u8],
+    sig: &[u8],
+    recovery_id: u8,
+) -> Result<PublicKey, ErrCode> {
     let msg = sha256::Hash::hash(msg);
-    let msg = Message::from_slice(&msg)?;
-    let id = ecdsa::RecoveryId::from_i32(recovery_id as i32)?;
-    let sig = ecdsa::RecoverableSignature::from_compact(&sig, id)?;
-
-    secp.recover_ecdsa(&msg, &sig)
+    match Message::from_slice(&msg) {
+        Ok(msg) => match ecdsa::RecoveryId::from_i32(recovery_id as i32) {
+            Ok(id) => match ecdsa::RecoverableSignature::from_compact(&sig, id) {
+                Ok(sig) => {
+                    if let Ok(pub_key) = secp.recover_ecdsa(&msg, &sig) {
+                        return Ok(pub_key);
+                    } else {
+                        return Err(ErrCode::PubFromPrivate("error getting pub key "));
+                    }
+                }
+                Err(_) => {
+                    return Err(ErrCode::PubFromPrivate(
+                        "error converting compact-encoded byte slice to a signature ",
+                    ))
+                }
+            },
+            Err(_) => return Err(ErrCode::PubFromPrivate("error creating recovery id ")),
+        },
+        Err(_) => return Err(ErrCode::PubFromPrivate("error getting message from slice ")),
+    }
 }
 
-pub fn sign_recovery<C: Signing>(secp: &Secp256k1<C>, msg: &[u8], seckey: &[u8]) -> Result<ecdsa::RecoverableSignature, Error> {
+pub fn sign_recovery<C: Signing>(
+    secp: &Secp256k1<C>,
+    msg: &[u8],
+    seckey: &[u8],
+) -> Result<ecdsa::RecoverableSignature, ErrCode> {
     let msg = sha256::Hash::hash(msg);
-    let msg = Message::from_slice(&msg)?;
-    let seckey = SecretKey::from_slice(&seckey)?;
-    Ok(secp.sign_ecdsa_recoverable(&msg, &seckey))
+    match Message::from_slice(&msg) {
+        Ok(msg) => match SecretKey::from_slice(&seckey) {
+            Ok(seckey) => return Ok(secp.sign_ecdsa_recoverable(&msg, &seckey)),
+            Err(_) => {
+                return Err(ErrCode::PubFromPrivate(
+                    "error getting secret key from slice ",
+                ))
+            }
+        },
+        Err(_) => return Err(ErrCode::PubFromPrivate("error getting message from slice ")),
+    }
 }
 
 pub fn decode_b16(input: &[u8]) -> Result<Vec<u8>, ErrCode> {
