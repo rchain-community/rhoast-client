@@ -1,7 +1,6 @@
 use crate::error::ErrCode;
 use crate::utils::bytesFromHex;
 use sha3::{Digest, Keccak256};
-use std::fmt::Write;
 
 //encode str to hex str using the func bytesFromHex::getHexSTring before passing it
 pub fn getEthAddrFromPublicKey(pub_key: &str) -> Result<String, ErrCode> {
@@ -24,11 +23,7 @@ pub fn getEthAddrFromPublicKey(pub_key: &str) -> Result<String, ErrCode> {
 }
 
 pub fn encode_hex(bytes: &Vec<u8>) -> String {
-    let mut s = String::with_capacity(bytes.len() * 2);
-    for &b in bytes {
-        write!(&mut s, "{:02x}", b).unwrap();
-    }
-    s
+    hex::encode(bytes)
 }
 
 pub fn keccak256(data: &Vec<u8>) -> Vec<u8> {

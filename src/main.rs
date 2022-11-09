@@ -39,20 +39,18 @@ fn main() {
     //sign pub key with private key
     let b = get_pub_key(&a);
 
-    //convert pri key to string
-    println!("{}", a.display_secret().to_string());
-    let secp = Secp256k1::new();
+    //
+    let k = get_seckey_buffer_from_string(&a.display_secret().to_string()).unwrap();
 
-    let signature =
-        sign_recovery(&secp, a.display_secret().to_string().as_bytes(), &a[..]).unwrap();
+    println!("buffers {:?}---{:?}", &a[..], k);
+    //convert pri key to string
+
+    let secp = Secp256k1::new();
+    //use recoverd buffer to recover pub key
+    let signature = sign_recovery(&secp, b"hi", &k).unwrap();
 
     let (recovery_id, serialize_sig) = signature.serialize_compact();
 
-    let pub_key = recover(
-        &secp,
-        a.display_secret().to_string().as_bytes(),
-        &serialize_sig,
-        recovery_id.to_i32() as u8,
-    );
+    let pub_key = recover(&secp, b"hi", &serialize_sig, recovery_id.to_i32() as u8);
     assert_eq!(pub_key.unwrap(), b);
 }

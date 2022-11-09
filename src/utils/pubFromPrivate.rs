@@ -1,7 +1,11 @@
 use crate::error::ErrCode;
 use bitcoin_hashes::{sha256, Hash};
+use hex::FromHex;
 use secp256k1::rand::thread_rng;
-use secp256k1::{ecdsa, Message, PublicKey, Secp256k1, SecretKey, Signing, Verification};
+use secp256k1::{
+    constants::SECRET_KEY_SIZE, ecdsa, Message, PublicKey, Secp256k1, SecretKey, Signing,
+    Verification,
+};
 
 //use secret gotten from get_pri_pub_key_pair() to create new secret here
 pub fn get_pub_key(secret_key: &SecretKey) -> PublicKey {
@@ -16,6 +20,15 @@ pub fn get_pri_key() -> SecretKey {
     let mut rng = thread_rng();
     let (seckey, _) = secp.generate_keypair(&mut rng);
     seckey
+}
+
+pub fn get_seckey_buffer_from_string(input: &str) -> Result<[u8; 32], ErrCode> {
+    match <[u8; SECRET_KEY_SIZE]>::from_hex(input) {
+        Ok(buffer) => return Ok(buffer),
+        Err(_) => {
+            return Err(ErrCode::PubFromPrivate("error writing hex to buffer "));
+        }
+    }
 }
 
 pub fn recover<C: Verification>(
