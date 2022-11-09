@@ -1,6 +1,5 @@
 use crate::error::ErrCode;
-use crate::utils::bytes_from_hex;
-use sha3::{Digest, Keccak256};
+use crate::utils::{bytes_from_hex, keccak256};
 
 //encode str to hex str using the func bytesFromHex::getHexSTring before passing it
 pub fn get_eth_addr_from_public_key(pub_key: &str) -> Result<String, ErrCode> {
@@ -14,21 +13,10 @@ pub fn get_eth_addr_from_public_key(pub_key: &str) -> Result<String, ErrCode> {
         //remove the first index of pub_key_byte
         pub_key_byte.remove(0);
 
-        let hasher_result = encode_hex(&keccak256(&pub_key_byte));
+        let hasher_result = hex::encode(&keccak256(&pub_key_byte));
         let len = hasher_result.len();
         let result = format!("0x{}", &hasher_result[len - 40..]);
 
         return Ok(String::from(result));
     }
-}
-
-pub fn encode_hex(bytes: &Vec<u8>) -> String {
-    hex::encode(bytes)
-}
-
-pub fn keccak256(data: &Vec<u8>) -> Vec<u8> {
-    let mut hasher = Keccak256::new();
-    hasher.update(&data[..]);
-    let hasher_result = hasher.finalize().to_vec();
-    hasher_result
 }

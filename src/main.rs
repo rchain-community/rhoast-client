@@ -53,4 +53,11 @@ fn main() {
 
     let pub_key = recover(&secp, b"hi", &serialize_sig, recovery_id.to_i32() as u8);
     assert_eq!(pub_key.unwrap(), b);
+
+    use crate::utils::rev_address_from_public_key::*;
+
+    println!(
+        "{:?}",
+        get_addr_from_eth("16f36f3534e1496cd3d7a7148f7b97fbb1f580cd").unwrap()
+    )
 }

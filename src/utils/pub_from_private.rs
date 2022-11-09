@@ -85,16 +85,3 @@ pub fn sign_recovery<C: Signing>(
         Err(_) => return Err(ErrCode::PubFromPrivate("error getting message from slice ")),
     }
 }
-
-pub fn decode_b16(input: &[u8]) -> Result<Vec<u8>, ErrCode> {
-    match base16::decode(input) {
-        Ok(val) => return Ok(val),
-        Err(_) => return Err(ErrCode::PubFromPrivate("Error decoding b16")),
-    }
-}
-
-pub fn encode_b16(input: &[u8]) -> String {
-    let mut buffer = [0u8; 1024];
-    let encoded = base16::encode_config_slice(input, base16::EncodeLower, &mut buffer);
-    std::str::from_utf8(&buffer[..encoded]).unwrap().to_string()
-}
