@@ -1,14 +1,14 @@
 use crate::error::ErrCode;
-use crate::utils::{bytes_from_hex, keccak256};
+use crate::utils::{decode_b16, keccak256};
 
-//encode str to hex str using the func bytesFromHex::getHexSTring before passing it
+//get eth address provided the uncompressed pub key
 pub fn get_eth_addr_from_public_key(pub_key: &str) -> Result<String, ErrCode> {
-    if pub_key.len() != 130 || pub_key.len() == 0 {
+    if pub_key.len() != 130 {
         return Err(ErrCode::EthAdressFromKey(
             "Public key must contain 130 characters",
         ));
     } else {
-        let mut pub_key_byte = bytes_from_hex::bytes_from_hex(&pub_key)?;
+        let mut pub_key_byte = decode_b16(&pub_key.as_bytes())?;
 
         //remove the first index of pub_key_byte
         pub_key_byte.remove(0);

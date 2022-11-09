@@ -17,18 +17,13 @@ impl Default for Prefix {
         }
     }
 }
-//encode str to hex str using the func bytesFromHex::getHexSTring before passing it
-fn hex_to_base58(hex_str: &str) -> Result<String, ErrCode> {
-    let byte = bytes_from_hex::bytes_from_hex(hex_str)?;
-    Ok(base58::encode(byte))
-}
 
-//get rev addr from eth
+//get rev addr from eth addr
 pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, ErrCode> {
     let eth_addr = remove_0x(eth_addr_raw);
-    if eth_addr_raw.len() != 40 || eth_addr_raw.len() == 0 {
+    if eth_addr.len() != 40 {
         return Err(ErrCode::RevAddressFromKey(
-            "ETH address must contain 130 characters",
+            "ETH address must contain 40 characters",
         ));
     } else {
         let prefix = Prefix {
@@ -49,8 +44,8 @@ pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, ErrCode> {
     }
 }
 
+//get rev addr from pub key
 pub fn rev_address_from_public_key(pub_key: &str) -> Result<String, ErrCode> {
-    let mut eth_addr_without_prefix = get_eth_addr_from_public_key(pub_key)?;
-    eth_addr_without_prefix.drain(0..2);
-    Ok(get_addr_from_eth(&eth_addr_without_prefix)?)
+    let eth_addr = get_eth_addr_from_public_key(pub_key)?;
+    Ok(get_addr_from_eth(&eth_addr)?)
 }

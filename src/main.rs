@@ -43,7 +43,7 @@ fn main() {
     //
     let k = get_seckey_from_string(&a.display_secret().to_string()).unwrap();
 
-    println!("buffers {:?}---{:?}", &a[..], &k[..]);
+    assert_eq!(&a[..], &k[..]);
 
     let secp = Secp256k1::new();
     //use recoverd se key to recover pub key
@@ -54,10 +54,20 @@ fn main() {
     let pub_key = recover(&secp, b"hi", &serialize_sig, recovery_id.to_i32() as u8);
     assert_eq!(pub_key.unwrap(), b);
 
-    use crate::utils::rev_address_from_public_key::*;
+    use crate::utils::{
+        eth_address_from_public_key::get_eth_addr_from_public_key, rev_address_from_public_key::*,
+    };
 
     println!(
-        "{:?}",
-        get_addr_from_eth("16f36f3534e1496cd3d7a7148f7b97fbb1f580cd").unwrap()
-    )
+        "rev addr: {:?}",
+        get_addr_from_eth("d7510a2b3761de03c8697cf2fc48dc86e5359462").unwrap()
+    );
+
+    //to use pub key, first uncompress it, then encode to hex format
+    println!("uncompressed private key {:?}", hex::encode(&b.serialize_uncompressed()));
+    println!("etth addr from pub key {}", get_eth_addr_from_public_key(&hex::encode(&b.serialize_uncompressed())).unwrap());
+
+    //get rev address from pub key
+    println!("rev from pub key {:?}", rev_address_from_public_key(&hex::encode(&b.serialize_uncompressed())).unwrap())
 }
+
