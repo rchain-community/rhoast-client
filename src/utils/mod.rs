@@ -29,9 +29,8 @@ pub fn decode_b16(input: &[u8]) -> Result<Vec<u8>, ErrCode> {
 }
 
 pub fn encode_b16(input: &[u8]) -> String {
-    let mut buffer = [0u8; 1024];
-    let encoded = base16::encode_config_slice(input, base16::EncodeLower, &mut buffer);
-    std::str::from_utf8(&buffer[..encoded]).unwrap().to_string()
+    let encoded = base16::encode_config(input, base16::EncodeLower);
+    encoded
 }
 
 pub fn keccak256(data: &Vec<u8>) -> Vec<u8> {

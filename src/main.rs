@@ -64,13 +64,36 @@ fn main() {
     );
 
     //to use pub key, first uncompress it, then encode to hex format
-    println!("uncompressed private key {:?}", hex::encode(&b.serialize_uncompressed()));
-    println!("etth addr from pub key {}", get_eth_addr_from_public_key(&hex::encode(&b.serialize_uncompressed())).unwrap());
+    println!(
+        "uncompressed private key {:?}",
+        hex::encode(&b.serialize_uncompressed())
+    );
+    println!(
+        "etth addr from pub key {}",
+        get_eth_addr_from_public_key(&hex::encode(&b.serialize_uncompressed())).unwrap()
+    );
 
     //get rev address from pub key
-    println!("rev from pub key {:?}", rev_address_from_public_key(&hex::encode(&b.serialize_uncompressed())).unwrap());
+    println!(
+        "rev from pub key {:?}",
+        rev_address_from_public_key(&hex::encode(&b.serialize_uncompressed())).unwrap()
+    );
 
     //get rev addr frorm private key
-    println!("rev from private key {:?}", get_rev_addr_from_private_key(&get_seckey_from_string("ff845d703de76008c3c807282b73682fb93d10eac223dd4c71ff6defe8b76523").unwrap()))
-}
+    println!(
+        "rev from private key {:?}",
+        get_rev_addr_from_private_key(
+            &get_seckey_from_string(
+                "ff845d703de76008c3c807282b73682fb93d10eac223dd4c71ff6defe8b76523"
+            )
+            .unwrap()
+        )
+    );
 
+    //get new rev addr
+    println!("new rev addr {:?}", get_new_rev_address());
+
+    //verify rev addr
+    println!("verify rev addr {:?}", verify_rev_addr("11112DHYtii3vQBmzZdozoTwprdomN3rhNFvb77DPiviEwFAR8zGNX").unwrap());
+
+}
