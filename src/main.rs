@@ -68,6 +68,9 @@ fn main() {
     println!("etth addr from pub key {}", get_eth_addr_from_public_key(&hex::encode(&b.serialize_uncompressed())).unwrap());
 
     //get rev address from pub key
-    println!("rev from pub key {:?}", rev_address_from_public_key(&hex::encode(&b.serialize_uncompressed())).unwrap())
+    println!("rev from pub key {:?}", rev_address_from_public_key(&hex::encode(&b.serialize_uncompressed())).unwrap());
+
+    //get rev addr frorm private key
+    println!("rev from private key {:?}", get_rev_addr_from_private_key(&get_seckey_from_string("ff845d703de76008c3c807282b73682fb93d10eac223dd4c71ff6defe8b76523").unwrap()))
 }
 

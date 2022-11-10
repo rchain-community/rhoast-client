@@ -1,8 +1,9 @@
 use crate::error::ErrCode;
 use crate::utils::{
     base58, bytes_from_hex, decode_b16, eth_address_from_public_key::get_eth_addr_from_public_key,
-    get_blake2_hash, keccak256, remove_0x,
+    get_blake2_hash, keccak256, remove_0x, pub_from_private::get_pub_key
 };
+use secp256k1::SecretKey;
 
 struct Prefix {
     coin_id: String,
@@ -48,4 +49,10 @@ pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, ErrCode> {
 pub fn rev_address_from_public_key(pub_key: &str) -> Result<String, ErrCode> {
     let eth_addr = get_eth_addr_from_public_key(pub_key)?;
     Ok(get_addr_from_eth(&eth_addr)?)
+}
+
+//get rev address from private key
+pub fn get_rev_addr_from_private_key(key: &SecretKey)-> Result<String, ErrCode>{
+    let pub_key = get_pub_key(key);
+    rev_address_from_public_key(&hex::encode(pub_key.serialize_uncompressed()))
 }
