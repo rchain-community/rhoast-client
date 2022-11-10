@@ -1,6 +1,6 @@
 use crate::error::ErrCode;
 use crate::utils::{
-    base58, bytes_from_hex, decode_b16, eth_address_from_public_key::get_eth_addr_from_public_key,
+    base58, decode_b16, eth_address_from_public_key::get_eth_addr_from_public_key,
     get_blake2_hash, keccak256, remove_0x, pub_from_private::get_pub_key
 };
 use secp256k1::SecretKey;
