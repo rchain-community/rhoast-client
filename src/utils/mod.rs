@@ -40,7 +40,7 @@ pub fn keccak256(data: &[u8]) -> Vec<u8> {
 
 #[cfg(test)]
 mod tests {
-	use super::*;
+    use super::*;
 
     #[test]
     fn it_works() {
