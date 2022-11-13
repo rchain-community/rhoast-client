@@ -6,7 +6,7 @@ use crate::proto::{
 use crate::proto::deployv1::PrivateNamePreviewPayload;
 use crate::utils::get_blake2_hash;
 
-pub fn run(){
+pub fn run() {
     ServiceError {
         messages: vec!["hello".to_string()],
     };
@@ -89,6 +89,8 @@ pub fn run(){
     println!("new rev addr {:?}", get_new_rev_address());
 
     //verify rev addr
-    println!("verify rev addr {:?}", verify_rev_addr("11112DHYtii3vQBmzZdozoTwprdomN3rhNFvb77DPiviEwFAR8zGNX").unwrap());
-
+    println!(
+        "verify rev addr {:?}",
+        verify_rev_addr("11112DHYtii3vQBmzZdozoTwprdomN3rhNFvb77DPiviEwFAR8zGNX").unwrap()
+    );
 }

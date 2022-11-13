@@ -1,12 +1,9 @@
 mod error;
+mod example;
 mod models;
 mod proto;
 mod utils;
-mod example;
-
-
 
 fn main() {
     println!("hello world!");
-    
 }

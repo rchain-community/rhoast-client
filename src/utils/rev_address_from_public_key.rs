@@ -109,9 +109,10 @@ pub fn verify_rev_addr(rev_addr_raw: &str) -> Result<bool, ErrCode> {
         let payload = &rev_hex[0..len - 8];
         let checksum = &rev_hex[len - 8..];
 
-        let payload_bytes=decode_b16(payload.as_bytes())?;
-        let checksum_cal = &hex::encode(get_blake2_hash::get_blake2_hash(&payload_bytes, Some(32))?)[..8];
+        let payload_bytes = decode_b16(payload.as_bytes())?;
+        let checksum_cal =
+            &hex::encode(get_blake2_hash::get_blake2_hash(&payload_bytes, Some(32))?)[..8];
 
-        Ok(checksum_cal==checksum)
+        Ok(checksum_cal == checksum)
     }
 }
