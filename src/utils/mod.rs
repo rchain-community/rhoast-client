@@ -37,3 +37,14 @@ pub fn keccak256(data: &[u8]) -> Vec<u8> {
     hasher.update(&data[..]);
     hasher.finalize().to_vec()
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+    #[test]
+    fn it_works() {
+        let result = 2 + 2;
+        assert_eq!(result, 5);
+    }
+}

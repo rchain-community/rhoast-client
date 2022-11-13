@@ -31,9 +31,8 @@ jobs:
 
       - name: Test
         run: |
-          cargo check
           cargo test --all          
 
-      - name: Build
-        run: |
-          cargo build --release
+      # - name: Build
+      #   run: |
+      #     cargo build --release
