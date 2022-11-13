@@ -47,9 +47,9 @@ impl Default for Prefix {
 pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, ErrCode> {
     let eth_addr = remove_0x(eth_addr_raw);
     if eth_addr.len() != 40 {
-        return Err(ErrCode::RevAddressFromKey(
+        Err(ErrCode::RevAddressFromKey(
             "ETH address must contain 40 characters",
-        ));
+        ))
     } else {
         let prefix = Prefix {
             ..Default::default()
@@ -65,14 +65,14 @@ pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, ErrCode> {
 
         let addr = format!("{}{}", payload, &checksum[..8]);
         // Return REV address
-        Ok(base58::encode(decode_b16(&addr.as_bytes().to_vec())?))
+        Ok(base58::encode(decode_b16(addr.as_bytes())?))
     }
 }
 
 //get rev addr from pub key
 pub fn rev_address_from_public_key(pub_key: &str) -> Result<String, ErrCode> {
     let eth_addr = get_eth_addr_from_public_key(pub_key)?;
-    Ok(get_addr_from_eth(&eth_addr)?)
+    get_addr_from_eth(&eth_addr)
 }
 
 //get rev address from private key
@@ -100,7 +100,7 @@ pub fn get_new_rev_address() -> Result<RevAddress, ErrCode> {
 
 pub fn verify_rev_addr(rev_addr_raw: &str) -> Result<bool, ErrCode> {
     let rev_byte = base58::decode(rev_addr_raw)?;
-    if rev_byte.len() == 0 {
+    if rev_byte.is_empty() {
         Ok(false)
     } else {
         let rev_hex = encode_b16(&rev_byte);

@@ -3,7 +3,7 @@ pub mod eth_address_from_public_key;
 pub mod get_blake2_hash;
 pub mod pub_from_private;
 pub mod rev_address_from_public_key;
-pub const sig_algorithm: &str = "secp256k1";
+pub const SIG_ALGORITHM: &str = "secp256k1";
 
 use crate::error::ErrCode;
 use sha3::{Digest, Keccak256};
@@ -23,19 +23,17 @@ pub fn remove_0x(input: &str) -> String {
 
 pub fn decode_b16(input: &[u8]) -> Result<Vec<u8>, ErrCode> {
     match base16::decode(input) {
-        Ok(val) => return Ok(val),
-        Err(_) => return Err(ErrCode::PubFromPrivate("Error decoding b16")),
+        Ok(val) => Ok(val),
+        Err(_) => Err(ErrCode::PubFromPrivate("Error decoding b16")),
     }
 }
 
 pub fn encode_b16(input: &[u8]) -> String {
-    let encoded = base16::encode_config(input, base16::EncodeLower);
-    encoded
+    base16::encode_config(input, base16::EncodeLower)
 }
 
-pub fn keccak256(data: &Vec<u8>) -> Vec<u8> {
+pub fn keccak256(data: &[u8]) -> Vec<u8> {
     let mut hasher = Keccak256::new();
     hasher.update(&data[..]);
-    let hasher_result = hasher.finalize().to_vec();
-    hasher_result
+    hasher.finalize().to_vec()
 }

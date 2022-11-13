@@ -9,13 +9,11 @@ pub fn get_blake2_hash(to_hash: &[u8], length: Option<u32>) -> Result<Vec<u8>, E
             hasher.update(to_hash);
             //write hash to buffer
             let mut buf: Vec<u8> = vec![0; len as usize];
-            if let Err(_) = hasher.finalize_variable(&mut buf) {
+            if hasher.finalize_variable(&mut buf).is_err() {
                 return Err(ErrCode::Blake2("Error writing to buffer"));
             }
-            return Ok(buf);
+            Ok(buf)
         }
-        Err(_) => {
-            return Err(ErrCode::Blake2("Error allocating hasher"));
-        }
+        Err(_) => Err(ErrCode::Blake2("Error allocating hasher")),
     }
 }
