@@ -11,8 +11,7 @@ use secp256k1::{
 pub fn get_pub_key(secret_key: &SecretKey) -> PublicKey {
     let secp = Secp256k1::new();
 
-    let public_key = PublicKey::from_secret_key(&secp, &secret_key);
-    public_key
+    PublicKey::from_secret_key(&secp, secret_key)
 }
 
 pub fn get_pri_key() -> SecretKey {
@@ -26,15 +25,11 @@ pub fn get_seckey_from_string(input: &str) -> Result<SecretKey, ErrCode> {
     match <[u8; SECRET_KEY_SIZE]>::from_hex(input) {
         Ok(buffer) => match SecretKey::from_slice(&buffer) {
             Ok(sec_key) => return Ok(sec_key),
-            Err(_) => {
-                return Err(ErrCode::PubFromPrivate(
-                    "error writing slice to secret key ",
-                ));
-            }
+            Err(_) => Err(ErrCode::PubFromPrivate(
+                "error writing slice to secret key ",
+            )),
         },
-        Err(_) => {
-            return Err(ErrCode::PubFromPrivate("error writing hex to buffer "));
-        }
+        Err(_) => Err(ErrCode::PubFromPrivate("error writing hex to buffer ")),
     }
 }
 
@@ -50,16 +45,14 @@ pub fn recover<C: Verification>(
             Ok(id) => match ecdsa::RecoverableSignature::from_compact(&sig, id) {
                 Ok(sig) => {
                     if let Ok(pub_key) = secp.recover_ecdsa(&msg, &sig) {
-                        return Ok(pub_key);
+                        Ok(pub_key)
                     } else {
-                        return Err(ErrCode::PubFromPrivate("error getting pub key "));
+                        Err(ErrCode::PubFromPrivate("error getting pub key "))
                     }
                 }
-                Err(_) => {
-                    return Err(ErrCode::PubFromPrivate(
-                        "error converting compact-encoded byte slice to a signature ",
-                    ))
-                }
+                Err(_) => Err(ErrCode::PubFromPrivate(
+                    "error converting compact-encoded byte slice to a signature ",
+                )),
             },
             Err(_) => return Err(ErrCode::PubFromPrivate("error creating recovery id ")),
         },
@@ -76,11 +69,9 @@ pub fn sign_recovery<C: Signing>(
     match Message::from_slice(&msg) {
         Ok(msg) => match SecretKey::from_slice(&seckey) {
             Ok(seckey) => return Ok(secp.sign_ecdsa_recoverable(&msg, &seckey)),
-            Err(_) => {
-                return Err(ErrCode::PubFromPrivate(
-                    "error getting secret key from slice ",
-                ))
-            }
+            Err(_) => Err(ErrCode::PubFromPrivate(
+                "error getting secret key from slice ",
+            )),
         },
         Err(_) => return Err(ErrCode::PubFromPrivate("error getting message from slice ")),
     }
