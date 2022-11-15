@@ -9,5 +9,4 @@ use crate::example::run;
 fn main() {
     println!("hello world!");
     run();
-
 }
