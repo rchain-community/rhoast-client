@@ -3,6 +3,7 @@ mod example;
 mod models;
 mod proto;
 mod utils;
+mod http;
 
 use crate::example::run;
 
