@@ -143,6 +143,15 @@ message DeployDataProto {
   int64 validAfterBlockNumber = 10;
 }
 
+message DeployData {
+  string term         = 1; //rholang source code to deploy (will be parsed into `Par`)
+  int64  timestamp    = 2; //millisecond timestamp
+  string shardId      = 3;
+  int64 phloPrice     = 4; //phlo price
+  int64 phloLimit     = 5; //phlo limit for the deployment
+  int64 validAfterBlockNumber = 6;
+}
+
 message ProcessedDeployProto {
     DeployDataProto deploy = 1;
     casper.PCost cost = 2 ;

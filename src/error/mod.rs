@@ -7,6 +7,7 @@ pub enum ErrCode {
     EthAdressFromKey(&'static str),
     RevAddressFromKey(&'static str),
     PubFromPrivate(&'static str),
+    DeployUtil(&'static str),
 }
 
 #[allow(unreachable_patterns)]
@@ -16,6 +17,7 @@ impl fmt::Display for ErrCode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         // Define what behaviour for each variant of the enum
         match &self {
+            ErrCode::DeployUtil(ele) => write!(f, "Deploy util error: {}", ele),
             ErrCode::Bs58(ele) => write!(f, "BS58 error: {}", ele),
             ErrCode::Blake2(ele) => write!(f, "Blake2 error: {}", ele),
             ErrCode::EthAdressFromKey(ele) => write!(f, "EthAdressFromKey error: {}", ele),

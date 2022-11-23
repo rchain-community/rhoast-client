@@ -1,4 +1,5 @@
 pub mod base58;
+pub mod deploy_util;
 pub mod eth_address_from_public_key;
 pub mod get_blake2_hash;
 pub mod pub_from_private;
