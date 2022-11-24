@@ -1,9 +1,9 @@
 mod error;
 mod example;
+mod http;
 mod models;
 mod proto;
 mod utils;
-mod http;
 
 use crate::example::run;
 
