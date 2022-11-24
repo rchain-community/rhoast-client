@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DeployData {
-    pub timestamp: u32,
+    pub timestamp: i64,
     pub term: String,
     pub shard_id: String,
     pub phlo_price: u64,
@@ -13,8 +13,8 @@ pub struct DeployData {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DeployDataPayload {
-    pub sig_algorithm: Option<String>,
-    pub timestamp: u32,
+    pub sig_algorithm: String,
+    pub timestamp: i64,
     pub term: String,
     pub shard_id: String,
     pub phlo_price: u64,
@@ -36,9 +36,10 @@ pub struct EasyDeploy {
     pub term: String,
     pub shard_id: Option<String>,
     pub private_key: String,
-    pub phlo_price: u64,
+    pub phlo_price: Option<u64>,
+    pub phlo_price_auto: Option<String>,
     pub phlo_limit: u32,
-    pub timeoute: Option<Duration>,
+    pub timeout: Option<Duration>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
