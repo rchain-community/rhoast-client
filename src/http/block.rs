@@ -4,7 +4,7 @@ pub async fn block_call(
     host: &String,
     options: BlockOptions,
 ) -> Result<BlockResponse, reqwest::Error> {
-    let url = format!("{}/api/blocks/", host);
+    let url = format!("{}/api/blocks/{}", host, options.position);
     let response: BlockResponse = reqwest::get(url).await?.json().await?;
     Ok(response)
 }
