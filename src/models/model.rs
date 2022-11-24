@@ -73,94 +73,94 @@ pub struct BlockOptions {
 }
 #[derive(Debug, Serialize, Deserialize)]
 pub struct LightBlockInfo {
-    parents_hash_list: Vec<String>, //not sure of this type as the TS has any here
-    block_hash: String,
-    block_size: String,
-    seq_num: i32,
-    block_number: i32,
-    version: i64,
-    deploy_count: i32,
-    tuple_space_hash: String,
-    timestamp: i64,
-    fault_tolerance: i32,
+    pub parents_hash_list: Vec<String>, //not sure of this type as the TS has any here
+    pub block_hash: String,
+    pub block_size: String,
+    pub seq_num: i32,
+    pub block_number: i32,
+    pub version: i64,
+    pub deploy_count: i32,
+    pub tuple_space_hash: String,
+    pub timestamp: i64,
+    pub fault_tolerance: i32,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BlockResponse {
-    blocks: Vec<LightBlockInfo>,
+    pub blocks: Vec<LightBlockInfo>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct PrepareDeployOptions {
-    deployer: String,
-    timestamp: i32,
-    name_qty: i32,
+    pubdeployer: String,
+    pubtimestamp: i32,
+    pubname_qty: i32,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct PrepareDeployResponse {
-    names: Vec<String>,
-    block_number: i32,
+    pub names: Vec<String>,
+    pub block_number: i32,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DataPayload {
-    data: String,
+    pub data: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DataAtNameUnforgPrivate {
-    unforg_private: DataPayload,
+    pub unforg_private: DataPayload,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DataAtNameUnforgDeploy {
-    unforg_deploy: DataPayload,
+    pub unforg_deploy: DataPayload,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DataAtNameUnforgDeployer {
-    unforg_deployer: DataPayload,
+    pub unforg_deployer: DataPayload,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DataAtNameUnforgPrivateOptions {
-    name: DataAtNameUnforgPrivate,
-    depth: u64,
+    pub name: DataAtNameUnforgPrivate,
+    pub depth: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DataAtNameUnforgDeployOptions {
-    name: DataAtNameUnforgDeploy,
-    depth: u64,
+    pub name: DataAtNameUnforgDeploy,
+    pub depth: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DataAtNameUnforgDeployerOptions {
-    name: DataAtNameUnforgDeployer,
-    depth: u64,
+    pub name: DataAtNameUnforgDeployer,
+    pub depth: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DataAtNameByBlockHashUnforgPrivateOptions {
-    name: DataAtNameUnforgPrivate,
-    depth: u64,
-    block_hash: String,
-    use_pre_state_hash: bool,
+    pub name: DataAtNameUnforgPrivate,
+    pub depth: u64,
+    pub block_hash: String,
+    pub use_pre_state_hash: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DataAtNameByBlockHashUnforgDeployOptions {
-    name: DataAtNameUnforgDeploy,
-    depth: u64,
-    block_hash: String,
-    use_pre_state_hash: bool,
+    pub name: DataAtNameUnforgDeploy,
+    pub depth: u64,
+    pub block_hash: String,
+    pub use_pre_state_hash: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DataAtNameByBlockHashUnforgDeployerOptions {
-    name: DataAtNameUnforgDeployer,
-    depth: u64,
-    block_hash: String,
-    use_pre_state_hash: bool,
+    pub name: DataAtNameUnforgDeployer,
+    pub depth: u64,
+    pub block_hash: String,
+    pub use_pre_state_hash: bool,
 }
