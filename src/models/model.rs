@@ -92,9 +92,9 @@ pub struct BlockResponse {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct PrepareDeployOptions {
-    pubdeployer: String,
-    pubtimestamp: i32,
-    pubname_qty: i32,
+    pub deployer: String,
+    pub timestamp: i32,
+    pub name_qty: i32,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
