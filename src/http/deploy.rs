@@ -33,6 +33,4 @@ async fn deploy(
     }
 }
 
-async fn easy_deploy(){
-    
-}
+async fn easy_deploy() {}
