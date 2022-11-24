@@ -9,7 +9,7 @@ async fn deploy(
 ) -> Result<String, reqwest::Error> {
     //append endpoint
     let url = format!("{}/api/deploy", host);
-    if !options.term.contains("(`rho:rchain:deployId`)") {
+    if !options.term.contains("(`rho:rchain:deployId`)") && timeout.is_some() {
         println!("term does not include (`rho:rchain:deployId`), data-at-name may not work'");
     }
 
