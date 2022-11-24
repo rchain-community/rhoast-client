@@ -9,6 +9,10 @@ async fn deploy(
 ) -> Result<String, reqwest::Error> {
     //append endpoint
     let url = format!("{}/api/deploy", host);
+    if !options.term.contains("(`rho:rchain:deployId`)") {
+        println!("term does not include (`rho:rchain:deployId`), data-at-name may not work'");
+    }
+
     match timeout {
         Some(timeout) => {
             let client = reqwest::ClientBuilder::new().timeout(timeout).build()?;
