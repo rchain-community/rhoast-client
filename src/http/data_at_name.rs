@@ -1,13 +1,13 @@
 use crate::models::model::{
     DataAtNameByBlockHashUnforgDeployOptions, DataAtNameByBlockHashUnforgDeployerOptions,
-    DataAtNameByBlockHashUnforgPrivateOptions, DataAtNameUnforgDeploy, DataAtNameUnforgDeployer,
-    DataAtNameUnforgPrivateOptions,
+    DataAtNameByBlockHashUnforgPrivateOptions, DataAtNameUnforgDeployOptions,
+    DataAtNameUnforgDeployerOptions, DataAtNameUnforgPrivateOptions,
 };
 use serde::Serialize;
 pub trait DataAtName {}
 
-impl DataAtName for DataAtNameUnforgDeploy {}
-impl DataAtName for DataAtNameUnforgDeployer {}
+impl DataAtName for DataAtNameUnforgDeployerOptions {}
+impl DataAtName for DataAtNameUnforgDeployOptions {}
 impl DataAtName for DataAtNameUnforgPrivateOptions {}
 
 pub async fn data_at_name<C: DataAtName + Serialize>(
