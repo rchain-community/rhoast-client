@@ -1,12 +1,10 @@
 use crate::http::{block::valid_after_block_number, status::status};
 use crate::models::model::{
-    DataAtNameUnforgDeploy, DataAtNameUnforgDeployer, DataAtNameUnforgPrivateOptions, DeployData,
-    DeployDataPayload, EasyDeploy, ExploreDeployResponse, PrepareDeployOptions,
+    DeployData, DeployDataPayload, EasyDeploy, ExploreDeployResponse, PrepareDeployOptions,
     PrepareDeployResponse,
 };
 use crate::utils::deploy_util::get_deploy_data;
 use core::time::Duration;
-use serde::Serialize;
 
 pub async fn deploy(
     host: String,
@@ -99,27 +97,6 @@ pub async fn prepare_deploy(
 ) -> Result<PrepareDeployResponse, reqwest::Error> {
     let url = format!("{}/api/prepare-deploy", host);
     let response: PrepareDeployResponse = reqwest::Client::new()
-        .post(url)
-        .json(&options)
-        .send()
-        .await?
-        .json()
-        .await?;
-    Ok(response)
-}
-
-pub trait DataAtName {}
-
-impl DataAtName for DataAtNameUnforgDeploy {}
-impl DataAtName for DataAtNameUnforgDeployer {}
-impl DataAtName for DataAtNameUnforgPrivateOptions {}
-
-pub async fn data_at_name<C: DataAtName + Serialize>(
-    host: String,
-    options: C,
-) -> Result<String, reqwest::Error> {
-    let url = format!("{}/api/data-at-name", host);
-    let response: String = reqwest::Client::new()
         .post(url)
         .json(&options)
         .send()
