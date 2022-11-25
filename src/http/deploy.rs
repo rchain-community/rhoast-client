@@ -1,9 +1,12 @@
 use crate::http::{block::valid_after_block_number, status::status};
-use crate::models::model::{DeployData, DeployDataPayload, EasyDeploy, ExploreDeployResponse};
+use crate::models::model::{
+    DeployData, DeployDataPayload, EasyDeploy, ExploreDeployResponse, PrepareDeployOptions,
+    PrepareDeployResponse,
+};
 use crate::utils::deploy_util::get_deploy_data;
 use core::time::Duration;
 
-async fn deploy(
+pub async fn deploy(
     host: String,
     options: DeployData,
     timeout: Option<Duration>,
@@ -35,7 +38,7 @@ async fn deploy(
     }
 }
 
-async fn easy_deploy(
+pub async fn easy_deploy(
     host: String,
     options: EasyDeploy,
 ) -> Result<ExploreDeployResponse, reqwest::Error> {
@@ -86,4 +89,19 @@ async fn easy_deploy(
             Ok(response)
         }
     }
+}
+
+pub async fn prepare_deploy(
+    host: String,
+    options: PrepareDeployOptions,
+) -> Result<PrepareDeployResponse, reqwest::Error> {
+    let url = format!("{}/api/prepare-deploy", host);
+    let response: PrepareDeployResponse = reqwest::Client::new()
+        .post(url)
+        .json(&options)
+        .send()
+        .await?
+        .json()
+        .await?;
+    Ok(response)
 }
