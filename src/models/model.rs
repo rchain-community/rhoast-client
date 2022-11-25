@@ -43,6 +43,12 @@ pub struct EasyDeploy {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct DeployResponse {
+    pub names: Vec<String>,
+    pub block_number: u64,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct ExploreDataOptions {
     pub term: String,
 }
