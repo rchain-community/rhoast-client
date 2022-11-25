@@ -1,6 +1,6 @@
 use crate::http::{block::valid_after_block_number, status::status};
 use crate::models::model::{
-    DeployData, DeployDataPayload, EasyDeploy, ExploreDeployResponse, PrepareDeployOptions,
+    DeployData, DeployDataPayload, DeployResponse, EasyDeploy, PrepareDeployOptions,
     PrepareDeployResponse,
 };
 use crate::utils::deploy_util::get_deploy_data;
@@ -10,7 +10,7 @@ pub async fn deploy(
     host: String,
     options: DeployData,
     timeout: Option<Duration>,
-) -> Result<ExploreDeployResponse, reqwest::Error> {
+) -> Result<DeployResponse, reqwest::Error> {
     //append endpoint
     let url = format!("{}/api/deploy", host);
     if !options.term.contains("(`rho:rchain:deployId`)") && timeout.is_some() {
@@ -20,13 +20,13 @@ pub async fn deploy(
     match timeout {
         Some(timeout) => {
             let client = reqwest::ClientBuilder::new().timeout(timeout).build()?;
-            let response: ExploreDeployResponse =
+            let response: DeployResponse =
                 client.post(url).json(&options).send().await?.json().await?;
             Ok(response)
         }
 
         None => {
-            let response: ExploreDeployResponse = reqwest::Client::new()
+            let response: DeployResponse = reqwest::Client::new()
                 .post(url)
                 .json(&options)
                 .send()
@@ -41,7 +41,7 @@ pub async fn deploy(
 pub async fn easy_deploy(
     host: String,
     options: EasyDeploy,
-) -> Result<ExploreDeployResponse, reqwest::Error> {
+) -> Result<DeployResponse, reqwest::Error> {
     let url = format!("{}/api/deploy", host);
     let mut phlo_price_ok = 0;
     if options.phlo_price_auto.is_some() {
@@ -73,13 +73,13 @@ pub async fn easy_deploy(
     match options.timeout {
         Some(timeout) => {
             let client = reqwest::ClientBuilder::new().timeout(timeout).build()?;
-            let response: ExploreDeployResponse =
+            let response: DeployResponse =
                 client.post(url).json(&payload).send().await?.json().await?;
             Ok(response)
         }
 
         None => {
-            let response: ExploreDeployResponse = reqwest::Client::new()
+            let response: DeployResponse = reqwest::Client::new()
                 .post(url)
                 .json(&payload)
                 .send()
