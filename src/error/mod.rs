@@ -8,6 +8,7 @@ pub enum ErrCode {
     RevAddressFromKey(&'static str),
     PubFromPrivate(&'static str),
     DeployUtil(&'static str),
+    HttpUtil(&'static str),
 }
 
 #[allow(unreachable_patterns)]
@@ -20,6 +21,7 @@ impl fmt::Display for ErrCode {
             ErrCode::DeployUtil(ele) => write!(f, "Deploy util error: {}", ele),
             ErrCode::Bs58(ele) => write!(f, "BS58 error: {}", ele),
             ErrCode::Blake2(ele) => write!(f, "Blake2 error: {}", ele),
+            ErrCode::HttpUtil(ele) => write!(f, "HTTP error: {}", ele),
             ErrCode::EthAdressFromKey(ele) => write!(f, "EthAdressFromKey error: {}", ele),
             ErrCode::RevAddressFromKey(ele) => write!(f, "RevAddressFromKey error: {}", ele),
             ErrCode::PubFromPrivate(ele) => write!(f, "PubFromPrivate error: {}", ele),
