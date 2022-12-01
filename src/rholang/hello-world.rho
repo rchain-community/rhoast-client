@@ -1,0 +1,3 @@
+new result(`rho::deployId`) in {
+  result!("hello world")
+}
