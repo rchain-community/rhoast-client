@@ -88,5 +88,5 @@ pub async fn prepare_deploy(
 ) -> Result<PrepareDeployResponse, ErrCode> {
     let url = format!("{}/api/prepare-deploy", host);
     let req = reqwest::Client::new().post(url).json(&options).send().await;
-    get_method::<PrepareDeployResponse>(req, &String::from("Error on prapare deploy")).await
+    get_method::<PrepareDeployResponse>(req, &String::from("Error on prepare deploy")).await
 }
