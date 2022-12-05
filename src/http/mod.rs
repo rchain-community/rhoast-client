@@ -9,7 +9,7 @@ use crate::models::model::HttpModel;
 use crate::utils::base58::string_to_static_str;
 use serde::{de::DeserializeOwned, Serialize};
 
-pub async fn get_method<'a, T: HttpModel + Serialize>(
+pub async fn get_method<T: HttpModel + Serialize>(
     res: std::result::Result<reqwest::Response, reqwest::Error>,
     error_str: &String,
 ) -> Result<T, ErrCode>

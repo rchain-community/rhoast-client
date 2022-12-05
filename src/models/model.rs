@@ -23,6 +23,7 @@ impl HttpModel for DataAtNameUnforgPrivateOptions {}
 impl HttpModel for DataAtNameByBlockHashUnforgPrivateOptions {}
 impl HttpModel for DataAtNameByBlockHashUnforgDeployOptions {}
 impl HttpModel for DataAtNameByBlockHashUnforgDeployerOptions {}
+impl HttpModel for String {}
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DeployData {
