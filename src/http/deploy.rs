@@ -1,3 +1,5 @@
+use crate::error::ErrCode;
+use crate::http::get_method;
 use crate::http::{block::valid_after_block_number, status::status};
 use crate::models::model::{
     DeployData, DeployDataPayload, DeployResponse, EasyDeploy, PrepareDeployOptions,
@@ -10,7 +12,7 @@ pub async fn deploy(
     host: String,
     options: DeployData,
     timeout: Option<Duration>,
-) -> Result<DeployResponse, reqwest::Error> {
+) -> Result<DeployResponse, ErrCode> {
     //append endpoint
     let url = format!("{}/api/deploy", host);
     if !options.term.contains("(`rho:rchain:deployId`)") && timeout.is_some() {
@@ -18,30 +20,22 @@ pub async fn deploy(
     }
 
     match timeout {
-        Some(timeout) => {
-            let client = reqwest::ClientBuilder::new().timeout(timeout).build()?;
-            let response: DeployResponse =
-                client.post(url).json(&options).send().await?.json().await?;
-            Ok(response)
-        }
+        Some(timeout) => match reqwest::ClientBuilder::new().timeout(timeout).build() {
+            Ok(client) => {
+                let req = client.post(url).json(&options).send().await;
+                get_method::<DeployResponse>(req, &String::from("Error on deploy")).await
+            }
+            Err(_) => Err(ErrCode::HttpUtil("Error building HTTP client")),
+        },
 
         None => {
-            let response: DeployResponse = reqwest::Client::new()
-                .post(url)
-                .json(&options)
-                .send()
-                .await?
-                .json()
-                .await?;
-            Ok(response)
+            let req = reqwest::Client::new().post(url).json(&options).send().await;
+            get_method::<DeployResponse>(req, &String::from("Error on deploy")).await
         }
     }
 }
 
-pub async fn easy_deploy(
-    host: String,
-    options: EasyDeploy,
-) -> Result<DeployResponse, reqwest::Error> {
+pub async fn easy_deploy(host: String, options: EasyDeploy) -> Result<DeployResponse, ErrCode> {
     let url = format!("{}/api/deploy", host);
     let mut phlo_price_ok = 0;
     if options.phlo_price_auto.is_some() {
@@ -71,22 +65,19 @@ pub async fn easy_deploy(
     let payload = get_deploy_data(&deploy_data).unwrap();
 
     match options.timeout {
-        Some(timeout) => {
-            let client = reqwest::ClientBuilder::new().timeout(timeout).build()?;
-            let response: DeployResponse =
-                client.post(url).json(&payload).send().await?.json().await?;
-            Ok(response)
-        }
+        Some(timeout) => match reqwest::ClientBuilder::new().timeout(timeout).build() {
+            Ok(client) => {
+                let req = client.post(url).json(&payload).send().await;
+
+                get_method::<DeployResponse>(req, &String::from("Error on easy deploy")).await
+            }
+            Err(_) => Err(ErrCode::HttpUtil("Error building HTTP client")),
+        },
 
         None => {
-            let response: DeployResponse = reqwest::Client::new()
-                .post(url)
-                .json(&payload)
-                .send()
-                .await?
-                .json()
-                .await?;
-            Ok(response)
+            let req = reqwest::Client::new().post(url).json(&payload).send().await;
+
+            get_method::<DeployResponse>(req, &String::from("Error on easy deploy")).await
         }
     }
 }
@@ -94,14 +85,8 @@ pub async fn easy_deploy(
 pub async fn prepare_deploy(
     host: String,
     options: PrepareDeployOptions,
-) -> Result<PrepareDeployResponse, reqwest::Error> {
+) -> Result<PrepareDeployResponse, ErrCode> {
     let url = format!("{}/api/prepare-deploy", host);
-    let response: PrepareDeployResponse = reqwest::Client::new()
-        .post(url)
-        .json(&options)
-        .send()
-        .await?
-        .json()
-        .await?;
-    Ok(response)
+    let req = reqwest::Client::new().post(url).json(&options).send().await;
+    get_method::<PrepareDeployResponse>(req, &String::from("Error on prapare deploy")).await
 }
