@@ -1,5 +1,29 @@
 use core::time::Duration;
 use serde::{Deserialize, Serialize};
+pub trait HttpModel {}
+
+impl HttpModel for StatusRespoonse {}
+impl HttpModel for DeployData {}
+impl HttpModel for DeployDataPayload {}
+impl HttpModel for DeployDataReturn {}
+impl HttpModel for EasyDeploy {}
+impl HttpModel for DeployResponse {}
+impl HttpModel for ExploreDataOptions {}
+impl HttpModel for ExploreDeployResponse {}
+impl HttpModel for Version {}
+impl HttpModel for BlockOptions {}
+impl HttpModel for LightBlockInfo {}
+impl HttpModel for BlockResponse {}
+impl HttpModel for PrepareDeployOptions {}
+impl HttpModel for PrepareDeployResponse {}
+impl HttpModel for DataPayload {}
+impl HttpModel for DataAtNameUnforgDeployerOptions {}
+impl HttpModel for DataAtNameUnforgDeployOptions {}
+impl HttpModel for DataAtNameUnforgPrivateOptions {}
+impl HttpModel for DataAtNameByBlockHashUnforgPrivateOptions {}
+impl HttpModel for DataAtNameByBlockHashUnforgDeployOptions {}
+impl HttpModel for DataAtNameByBlockHashUnforgDeployerOptions {}
+impl HttpModel for String {}
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DeployData {

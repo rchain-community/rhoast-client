@@ -10,7 +10,7 @@ pub fn decode(input: &str) -> Result<Vec<u8>, ErrCode> {
     }
 }
 
-fn string_to_static_str(s: String) -> &'static str {
+pub fn string_to_static_str(s: String) -> &'static str {
     Box::leak(s.into_boxed_str())
 }
 
