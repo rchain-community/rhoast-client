@@ -6,15 +6,15 @@ package casper.v1;
 // https://raw.githubusercontent.com/scalapb/ScalaPB/master/protobuf/scalapb/scalapb.proto
 // make a scalapb directory in this file's location and place it inside
 
-import "scalapb/scalapb.proto";
+// import "scalapb/scalapb.proto";
 import "DeployServiceV1.proto";
 
-option (scalapb.options) = {
-  package_name: "coop.rchain.casper.protocol.propose.v1"
-  flat_package: true
-  single_file: true
-  preserve_unknown_fields: false
-};
+// option (scalapb.options) = {
+//   package_name: "coop.rchain.casper.protocol.propose.v1"
+//   flat_package: true
+//   single_file: true
+//   preserve_unknown_fields: false
+// };
 
 service ProposeService {
   rpc propose(PrintUnmatchedSendsQuery) returns (ProposeResponse) {}

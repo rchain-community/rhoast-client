@@ -1,5 +1,6 @@
 mod error;
 mod example;
+mod grpc;
 mod http;
 mod models;
 mod proto;
