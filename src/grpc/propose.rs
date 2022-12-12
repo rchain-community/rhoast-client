@@ -1,7 +1,7 @@
 use crate::error::ErrCode;
 use crate::proto::casper::casper_v1::*;
 use crate::utils::base58::string_to_static_str;
-use tonic::{transport::Server, Request, Response, Status};
+use tonic::Request;
 
 pub async fn propose(
     host: String,
