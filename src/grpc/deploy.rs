@@ -271,13 +271,14 @@ pub async fn visualize_dag_util_stream(
     host: String,
     payload: VisualizeDagQuery,
     output: &mut Vec<VisualizeBlocksResponse>,
+    num: usize,
 ) -> Result<(), ErrCode> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
             match client.visualize_dag(request).await {
                 Ok(stream) => {
-                    let mut stream = stream.into_inner();
+                    let mut stream = stream.into_inner().take(num);
                     while let Some(item) = stream.next().await {
                         output.push(item.unwrap())
                     }
@@ -300,13 +301,14 @@ pub async fn show_main_chain_util_stream(
     host: String,
     payload: BlocksQuery,
     output: &mut Vec<BlockInfoResponse>,
+    num: usize,
 ) -> Result<(), ErrCode> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
             match client.show_main_chain(request).await {
                 Ok(stream) => {
-                    let mut stream = stream.into_inner();
+                    let mut stream = stream.into_inner().take(num);
                     while let Some(item) = stream.next().await {
                         output.push(item.unwrap())
                     }
@@ -329,13 +331,14 @@ pub async fn show_blocks_util_stream(
     host: String,
     payload: BlocksQuery,
     output: &mut Vec<BlockInfoResponse>,
+    num: usize,
 ) -> Result<(), ErrCode> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
             match client.get_blocks(request).await {
                 Ok(stream) => {
-                    let mut stream = stream.into_inner();
+                    let mut stream = stream.into_inner().take(num);
                     while let Some(item) = stream.next().await {
                         output.push(item.unwrap())
                     }
@@ -358,13 +361,14 @@ pub async fn get_blocks_by_height_util_stream(
     host: String,
     payload: BlocksQueryByHeight,
     output: &mut Vec<BlockInfoResponse>,
+    num: usize,
 ) -> Result<(), ErrCode> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
             match client.get_blocks_by_heights(request).await {
                 Ok(stream) => {
-                    let mut stream = stream.into_inner();
+                    let mut stream = stream.into_inner().take(num);
                     while let Some(item) = stream.next().await {
                         output.push(item.unwrap())
                     }
