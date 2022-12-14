@@ -9,6 +9,7 @@ pub enum ErrCode {
     PubFromPrivate(&'static str),
     DeployUtil(&'static str),
     HttpUtil(&'static str),
+    GrpcUtil(&'static str),
 }
 
 #[allow(unreachable_patterns)]
@@ -25,6 +26,7 @@ impl fmt::Display for ErrCode {
             ErrCode::EthAdressFromKey(ele) => write!(f, "EthAdressFromKey error: {}", ele),
             ErrCode::RevAddressFromKey(ele) => write!(f, "RevAddressFromKey error: {}", ele),
             ErrCode::PubFromPrivate(ele) => write!(f, "PubFromPrivate error: {}", ele),
+            ErrCode::GrpcUtil(ele) => write!(f, "GRPC error: {}", ele),
             _ => write!(f, "{:?}", self), // For any variant not previously covered
         }
     }
