@@ -267,21 +267,32 @@ pub async fn get_event_by_hash_util(
     }
 }
 
-pub async fn visualize_dag_util_stream(
+pub async fn visualize_dag_util_stream<T>(
     host: String,
     payload: VisualizeDagQuery,
-    output: &mut Vec<VisualizeBlocksResponse>,
-    num: usize,
+    func: fn(VisualizeBlocksResponse) -> T,
+    num: Option<usize>,
 ) -> Result<(), ErrCode> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
             match client.visualize_dag(request).await {
                 Ok(stream) => {
-                    let mut stream = stream.into_inner().take(num);
-                    while let Some(item) = stream.next().await {
-                        output.push(item.unwrap())
+                    match num {
+                        Some(num) => {
+                            let mut stream = stream.into_inner().take(num);
+                            while let Some(item) = stream.next().await {
+                                func(item.unwrap());
+                            }
+                        }
+                        None => {
+                            let mut stream = stream.into_inner();
+                            while let Some(item) = stream.next().await {
+                                func(item.unwrap());
+                            }
+                        }
                     }
+
                     Ok(())
                 }
                 Err(err) => {
@@ -297,21 +308,32 @@ pub async fn visualize_dag_util_stream(
     }
 }
 
-pub async fn show_main_chain_util_stream(
+pub async fn show_main_chain_util_stream<T>(
     host: String,
     payload: BlocksQuery,
-    output: &mut Vec<BlockInfoResponse>,
-    num: usize,
+    func: fn(BlockInfoResponse) -> T,
+    num: Option<usize>,
 ) -> Result<(), ErrCode> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
             match client.show_main_chain(request).await {
                 Ok(stream) => {
-                    let mut stream = stream.into_inner().take(num);
-                    while let Some(item) = stream.next().await {
-                        output.push(item.unwrap())
+                    match num {
+                        Some(num) => {
+                            let mut stream = stream.into_inner().take(num);
+                            while let Some(item) = stream.next().await {
+                                func(item.unwrap());
+                            }
+                        }
+                        None => {
+                            let mut stream = stream.into_inner();
+                            while let Some(item) = stream.next().await {
+                                func(item.unwrap());
+                            }
+                        }
                     }
+
                     Ok(())
                 }
                 Err(err) => {
@@ -327,21 +349,32 @@ pub async fn show_main_chain_util_stream(
     }
 }
 
-pub async fn show_blocks_util_stream(
+pub async fn show_blocks_util_stream<T>(
     host: String,
     payload: BlocksQuery,
-    output: &mut Vec<BlockInfoResponse>,
-    num: usize,
+    func: fn(BlockInfoResponse) -> T,
+    num: Option<usize>,
 ) -> Result<(), ErrCode> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
             match client.get_blocks(request).await {
                 Ok(stream) => {
-                    let mut stream = stream.into_inner().take(num);
-                    while let Some(item) = stream.next().await {
-                        output.push(item.unwrap())
+                    match num {
+                        Some(num) => {
+                            let mut stream = stream.into_inner().take(num);
+                            while let Some(item) = stream.next().await {
+                                func(item.unwrap());
+                            }
+                        }
+                        None => {
+                            let mut stream = stream.into_inner();
+                            while let Some(item) = stream.next().await {
+                                func(item.unwrap());
+                            }
+                        }
                     }
+
                     Ok(())
                 }
                 Err(err) => {
@@ -357,21 +390,32 @@ pub async fn show_blocks_util_stream(
     }
 }
 
-pub async fn get_blocks_by_height_util_stream(
+pub async fn get_blocks_by_height_util_stream<T>(
     host: String,
     payload: BlocksQueryByHeight,
-    output: &mut Vec<BlockInfoResponse>,
-    num: usize,
+    func: fn(BlockInfoResponse) -> T,
+    num: Option<usize>,
 ) -> Result<(), ErrCode> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
             match client.get_blocks_by_heights(request).await {
                 Ok(stream) => {
-                    let mut stream = stream.into_inner().take(num);
-                    while let Some(item) = stream.next().await {
-                        output.push(item.unwrap())
+                    match num {
+                        Some(num) => {
+                            let mut stream = stream.into_inner().take(num);
+                            while let Some(item) = stream.next().await {
+                                func(item.unwrap());
+                            }
+                        }
+                        None => {
+                            let mut stream = stream.into_inner();
+                            while let Some(item) = stream.next().await {
+                                func(item.unwrap());
+                            }
+                        }
                     }
+
                     Ok(())
                 }
                 Err(err) => {
