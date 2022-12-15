@@ -1,4 +1,4 @@
-use crate::error::ErrCode;
+use crate::error::Error;
 use bitcoin_hashes::{sha256, Hash};
 use hex::FromHex;
 use secp256k1::rand::thread_rng;
@@ -21,15 +21,13 @@ pub fn get_pri_key() -> SecretKey {
     seckey
 }
 
-pub fn get_seckey_from_string(input: &str) -> Result<SecretKey, ErrCode> {
+pub fn get_seckey_from_string(input: &str) -> Result<SecretKey, Error> {
     match <[u8; SECRET_KEY_SIZE]>::from_hex(input) {
         Ok(buffer) => match SecretKey::from_slice(&buffer) {
             Ok(sec_key) => return Ok(sec_key),
-            Err(_) => Err(ErrCode::PubFromPrivate(
-                "error writing slice to secret key ",
-            )),
+            Err(_) => Err(Error::PubFromPrivate("error writing slice to secret key ")),
         },
-        Err(_) => Err(ErrCode::PubFromPrivate("error writing hex to buffer ")),
+        Err(_) => Err(Error::PubFromPrivate("error writing hex to buffer ")),
     }
 }
 
@@ -38,7 +36,7 @@ pub fn recover<C: Verification>(
     msg: &[u8],
     sig: &[u8],
     recovery_id: u8,
-) -> Result<PublicKey, ErrCode> {
+) -> Result<PublicKey, Error> {
     let msg = sha256::Hash::hash(msg);
     match Message::from_slice(&msg) {
         Ok(msg) => match ecdsa::RecoveryId::from_i32(recovery_id as i32) {
@@ -47,16 +45,16 @@ pub fn recover<C: Verification>(
                     if let Ok(pub_key) = secp.recover_ecdsa(&msg, &sig) {
                         Ok(pub_key)
                     } else {
-                        Err(ErrCode::PubFromPrivate("error getting pub key "))
+                        Err(Error::PubFromPrivate("error getting pub key "))
                     }
                 }
-                Err(_) => Err(ErrCode::PubFromPrivate(
+                Err(_) => Err(Error::PubFromPrivate(
                     "error converting compact-encoded byte slice to a signature ",
                 )),
             },
-            Err(_) => return Err(ErrCode::PubFromPrivate("error creating recovery id ")),
+            Err(_) => return Err(Error::PubFromPrivate("error creating recovery id ")),
         },
-        Err(_) => return Err(ErrCode::PubFromPrivate("error getting message from slice ")),
+        Err(_) => return Err(Error::PubFromPrivate("error getting message from slice ")),
     }
 }
 
@@ -64,15 +62,15 @@ pub fn sign_recovery<C: Signing>(
     secp: &Secp256k1<C>,
     msg: &[u8],
     seckey: &[u8],
-) -> Result<ecdsa::RecoverableSignature, ErrCode> {
+) -> Result<ecdsa::RecoverableSignature, Error> {
     let msg = sha256::Hash::hash(msg);
     match Message::from_slice(&msg) {
         Ok(msg) => match SecretKey::from_slice(&seckey) {
             Ok(seckey) => return Ok(secp.sign_ecdsa_recoverable(&msg, &seckey)),
-            Err(_) => Err(ErrCode::PubFromPrivate(
+            Err(_) => Err(Error::PubFromPrivate(
                 "error getting secret key from slice ",
             )),
         },
-        Err(_) => return Err(ErrCode::PubFromPrivate("error getting message from slice ")),
+        Err(_) => return Err(Error::PubFromPrivate("error getting message from slice ")),
     }
 }

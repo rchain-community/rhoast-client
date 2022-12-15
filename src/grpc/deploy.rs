@@ -1,4 +1,4 @@
-use crate::error::ErrCode;
+use crate::error::Error;
 use crate::proto::casper_msg::*;
 use crate::proto::deploy::*;
 use crate::proto::deployv1::*;
@@ -9,7 +9,7 @@ use tonic::Request;
 pub async fn do_deploy_util(
     host: String,
     payload: DeployDataProto,
-) -> Result<DeployResponse, ErrCode> {
+) -> Result<DeployResponse, Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -17,18 +17,18 @@ pub async fn do_deploy_util(
                 Ok(respose) => Ok(respose.into_inner()),
                 Err(err) => {
                     let err = format!("Error getting response {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
 
-pub async fn get_block_util(host: String, payload: BlockQuery) -> Result<BlockResponse, ErrCode> {
+pub async fn get_block_util(host: String, payload: BlockQuery) -> Result<BlockResponse, Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -36,13 +36,13 @@ pub async fn get_block_util(host: String, payload: BlockQuery) -> Result<BlockRe
                 Ok(respose) => Ok(respose.into_inner()),
                 Err(err) => {
                     let err = format!("Error getting response {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
@@ -50,7 +50,7 @@ pub async fn get_block_util(host: String, payload: BlockQuery) -> Result<BlockRe
 pub async fn machine_verification_dag_util(
     host: String,
     payload: MachineVerifyQuery,
-) -> Result<MachineVerifyResponse, ErrCode> {
+) -> Result<MachineVerifyResponse, Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -58,13 +58,13 @@ pub async fn machine_verification_dag_util(
                 Ok(respose) => Ok(respose.into_inner()),
                 Err(err) => {
                     let err = format!("Error getting response {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
@@ -72,7 +72,7 @@ pub async fn machine_verification_dag_util(
 pub async fn listen_for_date_at_name_util(
     host: String,
     payload: DataAtNameQuery,
-) -> Result<ListeningNameDataResponse, ErrCode> {
+) -> Result<ListeningNameDataResponse, Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -80,13 +80,13 @@ pub async fn listen_for_date_at_name_util(
                 Ok(respose) => Ok(respose.into_inner()),
                 Err(err) => {
                     let err = format!("Error getting response {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
@@ -94,7 +94,7 @@ pub async fn listen_for_date_at_name_util(
 pub async fn listen_for_continuation_at_name_util(
     host: String,
     payload: ContinuationAtNameQuery,
-) -> Result<ContinuationAtNameResponse, ErrCode> {
+) -> Result<ContinuationAtNameResponse, Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -102,13 +102,13 @@ pub async fn listen_for_continuation_at_name_util(
                 Ok(respose) => Ok(respose.into_inner()),
                 Err(err) => {
                     let err = format!("Error getting response {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
@@ -116,7 +116,7 @@ pub async fn listen_for_continuation_at_name_util(
 pub async fn find_deploy_util(
     host: String,
     payload: FindDeployQuery,
-) -> Result<FindDeployResponse, ErrCode> {
+) -> Result<FindDeployResponse, Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -124,13 +124,13 @@ pub async fn find_deploy_util(
                 Ok(respose) => Ok(respose.into_inner()),
                 Err(err) => {
                     let err = format!("Error getting response {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
@@ -138,7 +138,7 @@ pub async fn find_deploy_util(
 pub async fn prview_private_names_util(
     host: String,
     payload: PrivateNamePreviewQuery,
-) -> Result<PrivateNamePreviewResponse, ErrCode> {
+) -> Result<PrivateNamePreviewResponse, Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -146,13 +146,13 @@ pub async fn prview_private_names_util(
                 Ok(respose) => Ok(respose.into_inner()),
                 Err(err) => {
                     let err = format!("Error getting response {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
@@ -160,7 +160,7 @@ pub async fn prview_private_names_util(
 pub async fn last_finalized_block_util(
     host: String,
     payload: LastFinalizedBlockQuery,
-) -> Result<LastFinalizedBlockResponse, ErrCode> {
+) -> Result<LastFinalizedBlockResponse, Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -168,13 +168,13 @@ pub async fn last_finalized_block_util(
                 Ok(respose) => Ok(respose.into_inner()),
                 Err(err) => {
                     let err = format!("Error getting response {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
@@ -182,7 +182,7 @@ pub async fn last_finalized_block_util(
 pub async fn is_finalized_util(
     host: String,
     payload: IsFinalizedQuery,
-) -> Result<IsFinalizedResponse, ErrCode> {
+) -> Result<IsFinalizedResponse, Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -190,13 +190,13 @@ pub async fn is_finalized_util(
                 Ok(respose) => Ok(respose.into_inner()),
                 Err(err) => {
                     let err = format!("Error getting response {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
@@ -204,7 +204,7 @@ pub async fn is_finalized_util(
 pub async fn bond_status_util(
     host: String,
     payload: BondStatusQuery,
-) -> Result<BondStatusResponse, ErrCode> {
+) -> Result<BondStatusResponse, Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -212,13 +212,13 @@ pub async fn bond_status_util(
                 Ok(respose) => Ok(respose.into_inner()),
                 Err(err) => {
                     let err = format!("Error getting response {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
@@ -226,7 +226,7 @@ pub async fn bond_status_util(
 pub async fn exploratory_deploy_util(
     host: String,
     payload: ExploratoryDeployQuery,
-) -> Result<ExploratoryDeployResponse, ErrCode> {
+) -> Result<ExploratoryDeployResponse, Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -234,13 +234,13 @@ pub async fn exploratory_deploy_util(
                 Ok(respose) => Ok(respose.into_inner()),
                 Err(err) => {
                     let err = format!("Error getting response {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
@@ -248,7 +248,7 @@ pub async fn exploratory_deploy_util(
 pub async fn get_event_by_hash_util(
     host: String,
     payload: BlockQuery,
-) -> Result<EventInfoResponse, ErrCode> {
+) -> Result<EventInfoResponse, Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -256,13 +256,13 @@ pub async fn get_event_by_hash_util(
                 Ok(respose) => Ok(respose.into_inner()),
                 Err(err) => {
                     let err = format!("Error getting response {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
@@ -272,7 +272,7 @@ pub async fn visualize_dag_util_stream<T>(
     payload: VisualizeDagQuery,
     func: fn(VisualizeBlocksResponse) -> T,
     num: Option<usize>,
-) -> Result<(), ErrCode> {
+) -> Result<(), Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -297,13 +297,13 @@ pub async fn visualize_dag_util_stream<T>(
                 }
                 Err(err) => {
                     let err = format!("Error getting stream {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
@@ -313,7 +313,7 @@ pub async fn show_main_chain_util_stream<T>(
     payload: BlocksQuery,
     func: fn(BlockInfoResponse) -> T,
     num: Option<usize>,
-) -> Result<(), ErrCode> {
+) -> Result<(), Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -338,13 +338,13 @@ pub async fn show_main_chain_util_stream<T>(
                 }
                 Err(err) => {
                     let err = format!("Error getting stream {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
@@ -354,7 +354,7 @@ pub async fn show_blocks_util_stream<T>(
     payload: BlocksQuery,
     func: fn(BlockInfoResponse) -> T,
     num: Option<usize>,
-) -> Result<(), ErrCode> {
+) -> Result<(), Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -379,13 +379,13 @@ pub async fn show_blocks_util_stream<T>(
                 }
                 Err(err) => {
                     let err = format!("Error getting stream {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
@@ -395,7 +395,7 @@ pub async fn get_blocks_by_height_util_stream<T>(
     payload: BlocksQueryByHeight,
     func: fn(BlockInfoResponse) -> T,
     num: Option<usize>,
-) -> Result<(), ErrCode> {
+) -> Result<(), Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(payload);
@@ -420,13 +420,13 @@ pub async fn get_blocks_by_height_util_stream<T>(
                 }
                 Err(err) => {
                     let err = format!("Error getting stream {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }

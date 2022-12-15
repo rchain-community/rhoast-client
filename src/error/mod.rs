@@ -1,7 +1,7 @@
 use std::fmt;
 
 #[derive(Debug)]
-pub enum ErrCode {
+pub enum Error {
     Bs58(&'static str),
     Blake2(&'static str),
     EthAdressFromKey(&'static str),
@@ -13,20 +13,20 @@ pub enum ErrCode {
 }
 
 #[allow(unreachable_patterns)]
-// trait Display, allows Errcode enum to be displayed by:
+// trait Display, allows Error enum to be displayed by:
 //      println!("{}", error);
-impl fmt::Display for ErrCode {
+impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         // Define what behaviour for each variant of the enum
         match &self {
-            ErrCode::DeployUtil(ele) => write!(f, "Deploy util error: {}", ele),
-            ErrCode::Bs58(ele) => write!(f, "BS58 error: {}", ele),
-            ErrCode::Blake2(ele) => write!(f, "Blake2 error: {}", ele),
-            ErrCode::HttpUtil(ele) => write!(f, "HTTP error: {}", ele),
-            ErrCode::EthAdressFromKey(ele) => write!(f, "EthAdressFromKey error: {}", ele),
-            ErrCode::RevAddressFromKey(ele) => write!(f, "RevAddressFromKey error: {}", ele),
-            ErrCode::PubFromPrivate(ele) => write!(f, "PubFromPrivate error: {}", ele),
-            ErrCode::GrpcUtil(ele) => write!(f, "GRPC error: {}", ele),
+            Error::DeployUtil(ele) => write!(f, "Deploy util error: {}", ele),
+            Error::Bs58(ele) => write!(f, "BS58 error: {}", ele),
+            Error::Blake2(ele) => write!(f, "Blake2 error: {}", ele),
+            Error::HttpUtil(ele) => write!(f, "HTTP error: {}", ele),
+            Error::EthAdressFromKey(ele) => write!(f, "EthAdressFromKey error: {}", ele),
+            Error::RevAddressFromKey(ele) => write!(f, "RevAddressFromKey error: {}", ele),
+            Error::PubFromPrivate(ele) => write!(f, "PubFromPrivate error: {}", ele),
+            Error::GrpcUtil(ele) => write!(f, "GRPC error: {}", ele),
             _ => write!(f, "{:?}", self), // For any variant not previously covered
         }
     }

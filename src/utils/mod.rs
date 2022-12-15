@@ -6,7 +6,7 @@ pub mod pub_from_private;
 pub mod rev_address_from_public_key;
 pub const SIG_ALGORITHM: &str = "secp256k1";
 
-use crate::error::ErrCode;
+use crate::error::Error;
 use sha3::{Digest, Keccak256};
 
 pub fn remove_0x(input: &str) -> String {
@@ -22,10 +22,10 @@ pub fn remove_0x(input: &str) -> String {
     }
 }
 
-pub fn decode_b16(input: &[u8]) -> Result<Vec<u8>, ErrCode> {
+pub fn decode_b16(input: &[u8]) -> Result<Vec<u8>, Error> {
     match base16::decode(input) {
         Ok(val) => Ok(val),
-        Err(_) => Err(ErrCode::PubFromPrivate("Error decoding b16")),
+        Err(_) => Err(Error::PubFromPrivate("Error decoding b16")),
     }
 }
 

@@ -1,4 +1,4 @@
-use crate::error::ErrCode;
+use crate::error::Error;
 use crate::utils::{
     base58, decode_b16, encode_b16, eth_address_from_public_key::get_eth_addr_from_public_key,
     get_blake2_hash, keccak256, pub_from_private::*, remove_0x,
@@ -44,10 +44,10 @@ impl Default for Prefix {
 }
 
 //get rev addr from eth addr
-pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, ErrCode> {
+pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, Error> {
     let eth_addr = remove_0x(eth_addr_raw);
     if eth_addr.len() != 40 {
-        Err(ErrCode::RevAddressFromKey(
+        Err(Error::RevAddressFromKey(
             "ETH address must contain 40 characters",
         ))
     } else {
@@ -70,18 +70,18 @@ pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, ErrCode> {
 }
 
 //get rev addr from pub key
-pub fn rev_address_from_public_key(pub_key: &str) -> Result<String, ErrCode> {
+pub fn rev_address_from_public_key(pub_key: &str) -> Result<String, Error> {
     let eth_addr = get_eth_addr_from_public_key(pub_key)?;
     get_addr_from_eth(&eth_addr)
 }
 
 //get rev address from private key
-pub fn get_rev_addr_from_private_key(key: &SecretKey) -> Result<String, ErrCode> {
+pub fn get_rev_addr_from_private_key(key: &SecretKey) -> Result<String, Error> {
     let pub_key = get_pub_key(key);
     rev_address_from_public_key(&hex::encode(pub_key.serialize_uncompressed()))
 }
 
-pub fn get_new_rev_address() -> Result<RevAddress, ErrCode> {
+pub fn get_new_rev_address() -> Result<RevAddress, Error> {
     let private_key = get_pri_key();
     //use private key to sign pub key
     let publick_key = get_pub_key(&private_key);
@@ -98,7 +98,7 @@ pub fn get_new_rev_address() -> Result<RevAddress, ErrCode> {
     ))
 }
 
-pub fn verify_rev_addr(rev_addr_raw: &str) -> Result<bool, ErrCode> {
+pub fn verify_rev_addr(rev_addr_raw: &str) -> Result<bool, Error> {
     let rev_byte = base58::decode(rev_addr_raw)?;
     if rev_byte.is_empty() {
         Ok(false)

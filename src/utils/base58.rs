@@ -1,11 +1,11 @@
-use crate::error::ErrCode;
+use crate::error::Error;
 
-pub fn decode(input: &str) -> Result<Vec<u8>, ErrCode> {
+pub fn decode(input: &str) -> Result<Vec<u8>, Error> {
     match bs58::decode(input).into_vec() {
         Ok(decoded) => Ok(decoded),
         Err(_) => {
             let err_msg = format!("Error decoding {} to vec", input);
-            Err(ErrCode::Bs58(string_to_static_str(err_msg)))
+            Err(Error::Bs58(string_to_static_str(err_msg)))
         }
     }
 }
