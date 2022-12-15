@@ -1,4 +1,4 @@
-use crate::error::ErrCode;
+use crate::error::Error;
 use crate::models::model::{DeployData, DeployDataPayload, DeployDataReturn};
 use crate::proto::{casper::Par, deploy::DataWithBlockInfo};
 use crate::utils::pub_from_private::{get_pub_key, get_seckey_from_string};
@@ -28,7 +28,7 @@ pub fn sign_secp_256k1<C: Signing + Verification>(
     secp: &Secp256k1<C>,
     msg: &[u8],
     seckey: &[u8],
-) -> Result<ecdsa::SerializedSignature, ErrCode> {
+) -> Result<ecdsa::SerializedSignature, Error> {
     let msg = sha256::Hash::hash(msg);
     match Message::from_slice(&msg) {
         Ok(msg) => match SecretKey::from_slice(&seckey) {
@@ -37,12 +37,12 @@ pub fn sign_secp_256k1<C: Signing + Verification>(
                 let pubkey = PublicKey::from_secret_key(secp, &seckey);
                 match secp.verify_ecdsa(&msg, &sig, &pubkey) {
                     Ok(_) => Ok(sig.serialize_der()),
-                    Err(_) => Err(ErrCode::DeployUtil("Failed to verify signature")),
+                    Err(_) => Err(Error::DeployUtil("Failed to verify signature")),
                 }
             }
-            Err(_) => Err(ErrCode::DeployUtil("error writing secret to slice")),
+            Err(_) => Err(Error::DeployUtil("error writing secret to slice")),
         },
-        Err(_) => Err(ErrCode::DeployUtil("error writing message to slice")),
+        Err(_) => Err(Error::DeployUtil("error writing message to slice")),
     }
 }
 
@@ -91,7 +91,7 @@ unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
     ::std::slice::from_raw_parts((p as *const T) as *const u8, ::std::mem::size_of::<T>())
 }
 
-pub fn get_deploy_data(payload: &DeployDataPayload) -> Result<DeployDataReturn, ErrCode> {
+pub fn get_deploy_data(payload: &DeployDataPayload) -> Result<DeployDataReturn, Error> {
     //sign sec key
     let sec_key_hash = get_seckey_from_string(&payload.private_key)?;
     //get public key

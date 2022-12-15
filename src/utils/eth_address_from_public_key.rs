@@ -1,10 +1,10 @@
-use crate::error::ErrCode;
+use crate::error::Error;
 use crate::utils::{decode_b16, keccak256};
 
 //get eth address provided the uncompressed pub key
-pub fn get_eth_addr_from_public_key(pub_key: &str) -> Result<String, ErrCode> {
+pub fn get_eth_addr_from_public_key(pub_key: &str) -> Result<String, Error> {
     if pub_key.len() != 130 {
-        Err(ErrCode::EthAdressFromKey(
+        Err(Error::EthAdressFromKey(
             "Public key must contain 130 characters",
         ))
     } else {

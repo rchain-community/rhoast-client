@@ -1,4 +1,4 @@
-use crate::error::ErrCode;
+use crate::error::Error;
 use crate::http::get_method;
 use crate::http::{block::valid_after_block_number, status::status};
 use crate::models::model::{
@@ -12,7 +12,7 @@ pub async fn deploy(
     host: String,
     options: DeployData,
     timeout: Option<Duration>,
-) -> Result<DeployResponse, ErrCode> {
+) -> Result<DeployResponse, Error> {
     //append endpoint
     let url = format!("{}/api/deploy", host);
     if !options.term.contains("(`rho:rchain:deployId`)") && timeout.is_some() {
@@ -25,7 +25,7 @@ pub async fn deploy(
                 let req = client.post(url).json(&options).send().await;
                 get_method::<DeployResponse>(req, &String::from("Error on deploy")).await
             }
-            Err(_) => Err(ErrCode::HttpUtil("Error building HTTP client")),
+            Err(_) => Err(Error::HttpUtil("Error building HTTP client")),
         },
 
         None => {
@@ -35,7 +35,7 @@ pub async fn deploy(
     }
 }
 
-pub async fn easy_deploy(host: String, options: EasyDeploy) -> Result<DeployResponse, ErrCode> {
+pub async fn easy_deploy(host: String, options: EasyDeploy) -> Result<DeployResponse, Error> {
     let url = format!("{}/api/deploy", host);
     let mut phlo_price_ok = 0;
     if options.phlo_price_auto.is_some() {
@@ -71,7 +71,7 @@ pub async fn easy_deploy(host: String, options: EasyDeploy) -> Result<DeployResp
 
                 get_method::<DeployResponse>(req, &String::from("Error on easy deploy")).await
             }
-            Err(_) => Err(ErrCode::HttpUtil("Error building HTTP client")),
+            Err(_) => Err(Error::HttpUtil("Error building HTTP client")),
         },
 
         None => {
@@ -85,7 +85,7 @@ pub async fn easy_deploy(host: String, options: EasyDeploy) -> Result<DeployResp
 pub async fn prepare_deploy(
     host: String,
     options: PrepareDeployOptions,
-) -> Result<PrepareDeployResponse, ErrCode> {
+) -> Result<PrepareDeployResponse, Error> {
     let url = format!("{}/api/prepare-deploy", host);
     let req = reqwest::Client::new().post(url).json(&options).send().await;
     get_method::<PrepareDeployResponse>(req, &String::from("Error on prepare deploy")).await

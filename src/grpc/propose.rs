@@ -1,9 +1,9 @@
-use crate::error::ErrCode;
+use crate::error::Error;
 use crate::proto::casper::casper_v1::*;
 use crate::utils::base58::string_to_static_str;
 use tonic::Request;
 
-pub async fn propose_util(host: String, payload: bool) -> Result<ProposeResponse, ErrCode> {
+pub async fn propose_util(host: String, payload: bool) -> Result<ProposeResponse, Error> {
     match propose_service_client::ProposeServiceClient::connect(host).await {
         Ok(mut client) => {
             let request = Request::new(PrintUnmatchedSendsQuery {
@@ -13,13 +13,13 @@ pub async fn propose_util(host: String, payload: bool) -> Result<ProposeResponse
                 Ok(respose) => Ok(respose.into_inner()),
                 Err(err) => {
                     let err = format!("Error getting response {}", err);
-                    Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+                    Err(Error::GrpcUtil(string_to_static_str(err)))
                 }
             }
         }
         Err(err) => {
             let err = format!("Error creating GRPC connection {}", err);
-            Err(ErrCode::GrpcUtil(string_to_static_str(err)))
+            Err(Error::GrpcUtil(string_to_static_str(err)))
         }
     }
 }
