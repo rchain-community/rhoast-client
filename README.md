@@ -8,3 +8,4 @@ The Rust client would allow users to build applications in Rust, webAssembly and
 
 ## Usage
 More to come ….
+Test
