@@ -8,6 +8,13 @@ use secp256k1::{
 };
 
 //use secret gotten from get_pri_pub_key_pair() to create new secret here
+///
+/// ```
+/// use crate::utils::pub_from_private::{get_seckey_from_string,get_pub_key};
+/// let seckey=get_seckey_from_string("secret key").unwrap();
+/// let pub_key=get_pub_key(&seckey)
+/// ```
+/// 
 pub fn get_pub_key(secret_key: &SecretKey) -> PublicKey {
     let secp = Secp256k1::new();
 
