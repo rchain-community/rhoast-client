@@ -20,7 +20,13 @@ pub fn get_pub_key(secret_key: &SecretKey) -> PublicKey {
 
     PublicKey::from_secret_key(&secp, secret_key)
 }
-
+///
+/// ```
+/// use crate::utils::pub_from_private::{get_seckey_from_string,get_pri_key};
+/// let seckey=get_seckey_from_string("secret key").unwrap();
+/// let pri_key=get_pri_key(&seckey)
+/// ````
+/// 
 pub fn get_pri_key() -> SecretKey {
     let secp = Secp256k1::new();
     let mut rng = thread_rng();
