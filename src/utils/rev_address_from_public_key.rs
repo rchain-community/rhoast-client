@@ -84,6 +84,11 @@ pub fn rev_address_from_public_key(pub_key: &str) -> Result<String, Error> {
 }
 
 //get rev address from private key
+///
+/// use::crate::rev_address_from_public_key::get_rev_addr_from_private_key;
+/// let pub_key=get_rev_addr_from_private_key("pub key").unwrap();
+/// let rev_addr=get_new_rev_address(&seckey);
+/// 
 pub fn get_rev_addr_from_private_key(key: &SecretKey) -> Result<String, Error> {
     let pub_key = get_pub_key(key);
     rev_address_from_public_key(&hex::encode(pub_key.serialize_uncompressed()))
