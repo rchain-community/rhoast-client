@@ -3,6 +3,7 @@ use crate::utils::{decode_b16, keccak256};
 
 //get eth address provided the uncompressed pub key
 ///rust 
+/// to convert from public key to eth addr
 /// 
 /// use crate::utils::eth_address_from_public_key::get_eth_addr_from_public_key;
 /// 
