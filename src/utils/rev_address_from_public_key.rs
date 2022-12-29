@@ -71,10 +71,10 @@ pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, Error> {
 
 //get rev addr from pub key
 ///
-/// use::crate::rev_address_from public_key::rev_address_from_public_key;
+/// use::crate::utils::rev_address_from public_key::rev_address_from_public_key;
 /// 
 /// ```no_run
-/// let rev=rev_address_from_public_key("").unwrap()
+/// let rev=rev_address_from_public_key("public key").unwrap()
 /// print!("{rev}")
 /// ````
 /// 
