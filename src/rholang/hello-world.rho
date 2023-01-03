@@ -1,0 +1,3 @@
+new result(`rho:rchain:deployId`) in {
+  result!("hello world")
+}

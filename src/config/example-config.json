@@ -1,0 +1,25 @@
+{
+
+"https": {
+   "validate": [ "localhost" ],
+   "explore": [ "localhost" ]
+},
+"grpc": {
+   "validator": [ "localhost" ],
+   "propose": [ "localhost" ]
+},
+"pk": ["This-Is-Not-A-Private-Key"],
+"pkfile": [],
+"pubk": [],
+"pubkfile": [],
+"ETH": [],
+"REV": [],
+"logging": {
+   "info": 1,
+   "error": 1,
+   "comms": 0,
+   "debug": 0
+},
+"include": []
+
+}

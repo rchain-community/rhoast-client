@@ -1,0 +1,12 @@
+https = { validator = ["localhost"], explore = ["localhost"] } # Lists of rnodes
+grpc = { validator = ["localhost"], propose = ["localhost"] } # Lists of rnodes
+pk = ["This-Is-Not-A-Private-Key"] # List of private keys
+pkfile = [] # List of private key files
+pubk = [] # List of public keys
+pubkfile = [] # List of public key files
+ETH = [] # List of ETH addresses
+ETHfile = [] # List of ETH address files
+REV = [] # List of REV addresses
+REVfile = [] # List of REV address files
+logging = { info = 1, error = 1, comms = 0, debug = 0 } # logging output. 0 = off, 1 = on
+include = [] # include other config file(s)
