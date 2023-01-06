@@ -2,6 +2,16 @@ use crate::error::Error;
 use crate::utils::{decode_b16, keccak256};
 
 //get eth address provided the uncompressed pub key
+/// to convert from public key to eth addr
+/// 
+/// use crate::utils::eth_address_from_public_key::get_eth_addr_from_public_key;
+/// 
+/// ```no_run
+/// let eth= get_eth_addr_from_public_key("").unwrap()
+/// printl!("{eth}")
+/// ```
+/// 
+
 pub fn get_eth_addr_from_public_key(pub_key: &str) -> Result<String, Error> {
     if pub_key.len() != 130 {
         Err(Error::EthAdressFromKey(

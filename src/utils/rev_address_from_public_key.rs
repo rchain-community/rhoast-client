@@ -70,12 +70,26 @@ pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, Error> {
 }
 
 //get rev addr from pub key
+///
+/// use::crate::utils::rev_address_from public_key::rev_address_from_public_key;
+/// 
+/// ```no_run
+/// let rev=rev_address_from_public_key("public key").unwrap()
+/// print!("{rev}")
+/// ````
+/// 
 pub fn rev_address_from_public_key(pub_key: &str) -> Result<String, Error> {
     let eth_addr = get_eth_addr_from_public_key(pub_key)?;
     get_addr_from_eth(&eth_addr)
 }
 
 //get rev address from private key
+///
+///```no_run
+/// use::crate::utils::rev_address_from_public_key::get_rev_addr_from_private_key;
+/// let pub_key=get_rev_addr_from_private_key("private key").unwrap();
+///```
+/// 
 pub fn get_rev_addr_from_private_key(key: &SecretKey) -> Result<String, Error> {
     let pub_key = get_pub_key(key);
     rev_address_from_public_key(&hex::encode(pub_key.serialize_uncompressed()))
