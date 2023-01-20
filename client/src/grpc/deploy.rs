@@ -2,7 +2,7 @@ use crate::error::Error;
 use crate::proto::casper_msg::*;
 use crate::proto::deploy::*;
 use crate::proto::deployv1::*;
-use crate::utils::base58::string_to_static_str;
+use utils::base58::string_to_static_str;
 use futures::StreamExt;
 use tonic::Request;
 

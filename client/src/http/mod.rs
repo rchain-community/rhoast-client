@@ -6,7 +6,7 @@ mod status;
 
 use crate::error::Error;
 use crate::models::model::HttpModel;
-use crate::utils::base58::string_to_static_str;
+use utils::base58::string_to_static_str;
 use serde::{de::DeserializeOwned, Serialize};
 
 pub async fn get_method<T: HttpModel + Serialize>(

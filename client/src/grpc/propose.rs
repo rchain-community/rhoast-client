@@ -1,6 +1,6 @@
 use crate::error::Error;
 use crate::proto::casper::casper_v1::*;
-use crate::utils::base58::string_to_static_str;
+use utils::base58::string_to_static_str;
 use tonic::Request;
 
 pub async fn propose_util(host: String, payload: bool) -> Result<ProposeResponse, Error> {

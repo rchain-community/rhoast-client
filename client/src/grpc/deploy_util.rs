@@ -1,8 +1,8 @@
-use crate::error::Error;
+use utils::error::Error;
 use crate::models::model::{DeployData, DeployDataPayload, DeployDataReturn};
 use crate::proto::{casper::Par, deploy::DataWithBlockInfo};
-use crate::utils::pub_from_private::{get_pub_key, get_seckey_from_string};
-use crate::utils::{get_blake2_hash::get_blake2_hash, SIG_ALGORITHM};
+use utils::pub_from_private::{get_pub_key, get_seckey_from_string};
+use utils::{get_blake2_hash::get_blake2_hash, SIG_ALGORITHM};
 use bitcoin_hashes::{sha256, Hash};
 use secp256k1::{ecdsa, Message, PublicKey, Secp256k1, SecretKey, Signing, Verification};
 
@@ -54,24 +54,24 @@ pub fn transfer_rev_term(from: String, to: String, amount: u64) -> String {
     RevVaultCh,
     stdout(`rho:io:stdout`)
     in {{
-    
+
     rl!(`rho:rchain:revVault`, *RevVaultCh) |
     for (@(_, RevVault) <- RevVaultCh) {{
-  
+
     match (
       \"{}\",
       \"{}\",
       \"{}\"
     ) {{
       (from, to, amount) => {{
-  
+
         new vaultCh, revVaultkeyCh, deployerId(`rho:rchain:deployerId`) in {{
           @RevVault!(\"findOrCreate\", from, *vaultCh) |
           @RevVault!(\"deployerAuthKey\", *deployerId, *revVaultkeyCh) |
           for (@(true, vault) <- vaultCh; key <- revVaultkeyCh) {{
-  
+
             stdout!((\"Beginning transfer of \", amount, \"REV from\", from, \"to\", to)) |
-  
+
             new resultCh in {{
               @vault!(\"transfer\", to, amount, *key, *resultCh) |
               for (@result <- resultCh) {{
@@ -79,7 +79,7 @@ pub fn transfer_rev_term(from: String, to: String, amount: u64) -> String {
               }}
             }}
           }}
-        
+
       }}
     }}
   }}

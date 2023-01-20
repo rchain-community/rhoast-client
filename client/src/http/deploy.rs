@@ -5,7 +5,7 @@ use crate::models::model::{
     DeployData, DeployDataPayload, DeployResponse, EasyDeploy, PrepareDeployOptions,
     PrepareDeployResponse,
 };
-use crate::utils::deploy_util::get_deploy_data;
+use crate::grpc::deploy_util::get_deploy_data;
 use core::time::Duration;
 
 pub async fn deploy(

@@ -1,5 +1,5 @@
 use crate::error::Error;
-use crate::utils::{
+use crate::{
     base58, decode_b16, encode_b16, eth_address_from_public_key::get_eth_addr_from_public_key,
     get_blake2_hash, keccak256, pub_from_private::*, remove_0x,
 };

@@ -1,5 +1,5 @@
 use crate::error::Error;
-use crate::utils::{decode_b16, keccak256};
+use crate::{decode_b16, keccak256};
 
 //get eth address provided the uncompressed pub key
 /// to convert from public key to eth addr
