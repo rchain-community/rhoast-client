@@ -1,6 +1,5 @@
-
-pub mod grpc;
-pub mod proto;
 pub mod error;
-pub mod models;
+pub mod grpc;
 pub mod http;
+pub mod models;
+pub mod proto;

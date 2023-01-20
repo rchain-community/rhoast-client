@@ -1,10 +1,10 @@
-use utils::error::Error;
 use crate::models::model::{DeployData, DeployDataPayload, DeployDataReturn};
 use crate::proto::{casper::Par, deploy::DataWithBlockInfo};
-use utils::pub_from_private::{get_pub_key, get_seckey_from_string};
-use utils::{get_blake2_hash::get_blake2_hash, SIG_ALGORITHM};
 use bitcoin_hashes::{sha256, Hash};
 use secp256k1::{ecdsa, Message, PublicKey, Secp256k1, SecretKey, Signing, Verification};
+use utils::error::Error;
+use utils::pub_from_private::{get_pub_key, get_seckey_from_string};
+use utils::{get_blake2_hash::get_blake2_hash, SIG_ALGORITHM};
 
 pub fn get_first_block(block_info: &Vec<DataWithBlockInfo>) -> &DataWithBlockInfo {
     &block_info[0]

@@ -2,9 +2,9 @@ use crate::error::Error;
 use crate::proto::casper_msg::*;
 use crate::proto::deploy::*;
 use crate::proto::deployv1::*;
-use utils::base58::string_to_static_str;
 use futures::StreamExt;
 use tonic::Request;
+use utils::base58::string_to_static_str;
 
 pub async fn do_deploy_util(
     host: String,
