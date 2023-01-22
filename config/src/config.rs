@@ -13,7 +13,7 @@ mod tests {
     use super::*;
     #[test]
     fn read_works() {
-        let settings = read_config("src/config/example-config.toml");
+        let settings = read_config("examples/example-config.toml");
         println!("{:?}", settings);
     }
 }

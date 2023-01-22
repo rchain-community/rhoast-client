@@ -7,7 +7,7 @@ use crate::{decode_b16, keccak256};
 ///
 ///
 /// ```no_run
-/// use rust_client::utils::eth_address_from_public_key::get_eth_addr_from_public_key;
+/// use utils::eth_address_from_public_key::get_eth_addr_from_public_key;
 ///
 /// let eth= get_eth_addr_from_public_key("").unwrap();
 /// println!("{eth}");
