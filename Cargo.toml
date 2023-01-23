@@ -1,6 +1,6 @@
 [workspace]
-members = [ "utils", "config", "client", ]
-default-members = [ "utils", "config", "client" ]
+members = [ "utils", "rust_client_config", "client", ]
+default-members = [ "utils", "rust_client_config", "client" ]
 
 [package]
 name = "rhoast-client"
@@ -9,7 +9,7 @@ edition = "2021"
 
 [workspace.dependencies]
 structopt = "0.3"
-config_lib = { version = "0.13.1", package = "config" }
+config =  "0.13.1"
 prost = "0.10.4"
 tokio = { version = "1.19.2", features = ["macros", "rt-multi-thread"] }
 tonic = "0.7.2"

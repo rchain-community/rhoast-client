@@ -8,8 +8,6 @@ pub enum Error {
     RevAddressFromKey(&'static str),
     PubFromPrivate(&'static str),
     DeployUtil(&'static str),
-    HttpUtil(&'static str),
-    GrpcUtil(&'static str),
 }
 
 #[allow(unreachable_patterns)]
@@ -22,11 +20,9 @@ impl fmt::Display for Error {
             Error::DeployUtil(ele) => write!(f, "Deploy util error: {}", ele),
             Error::Bs58(ele) => write!(f, "BS58 error: {}", ele),
             Error::Blake2(ele) => write!(f, "Blake2 error: {}", ele),
-            Error::HttpUtil(ele) => write!(f, "HTTP error: {}", ele),
             Error::EthAdressFromKey(ele) => write!(f, "EthAdressFromKey error: {}", ele),
             Error::RevAddressFromKey(ele) => write!(f, "RevAddressFromKey error: {}", ele),
             Error::PubFromPrivate(ele) => write!(f, "PubFromPrivate error: {}", ele),
-            Error::GrpcUtil(ele) => write!(f, "GRPC error: {}", ele),
             _ => write!(f, "{:?}", self), // For any variant not previously covered
         }
     }

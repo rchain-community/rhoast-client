@@ -1,7 +1,7 @@
-use config_lib::Config;
+use config as config_lib;
 
-pub fn read_config(cfg: &str) -> Config {
-    Config::builder()
+pub fn read_config(cfg: &str) -> config_lib::Config {
+    config_lib::Config::builder()
         .add_source(config_lib::File::with_name(cfg))
         .add_source(config_lib::Environment::with_prefix("RUST_CLIENT"))
         .build()

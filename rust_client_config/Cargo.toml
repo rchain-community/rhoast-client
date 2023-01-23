@@ -1,9 +1,9 @@
 [package]
-name = "config"
+name = "rust_client_config"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-config_lib = { workspace = true }
+config = { workspace = true }
