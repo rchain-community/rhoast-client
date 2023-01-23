@@ -11,7 +11,7 @@ struct TestKey {
 }
 
 fn read_test_keys() -> Result<(), Box<dyn Error>> {
-    let mut rdr = csv::Reader::from_reader(io::stdin());
+    let mut rdr = csv::Reader::from_path("testing-keys.csv");
     for result in rdr.deserialize() {
         // Notice that we need to provide a type hint for automatic
         // deserialization.
