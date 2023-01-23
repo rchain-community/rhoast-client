@@ -1,13 +1,13 @@
+use crate::error::Error;
+use sha3::{Digest, Keccak256};
+
 pub mod base58;
-pub mod deploy_util;
+pub mod error;
 pub mod eth_address_from_public_key;
 pub mod get_blake2_hash;
 pub mod pub_from_private;
 pub mod rev_address_from_public_key;
 pub const SIG_ALGORITHM: &str = "secp256k1";
-
-use crate::error::Error;
-use sha3::{Digest, Keccak256};
 
 pub fn remove_0x(input: &str) -> String {
     let mut a = input.to_string();

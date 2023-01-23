@@ -35,6 +35,8 @@ pub fn run() {
     //sign pub key with private key
     let b = get_pub_key(&a);
 
+    b.to_string();
+
     //
     let k = get_seckey_from_string(&a.display_secret().to_string()).unwrap();
 

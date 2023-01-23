@@ -1,0 +1,20 @@
+[package]
+name = "client"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+tonic = { workspace = true }
+utils = { path = "../utils" }
+bitcoin_hashes = { workspace = true }
+secp256k1 = { workspace = true, features = [ "rand-std", "recovery"] }
+serde = { workspace = true, features = ["derive"]}
+futures = { workspace = true }
+prost = { workspace = true }
+hex = { workspace = true }
+reqwest = { workspace = true }
+chrono = { workspace = true }
+
+[build-dependencies]
+tonic-build = "0.7.2"

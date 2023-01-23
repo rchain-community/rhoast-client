@@ -1,5 +1,5 @@
 use crate::error::Error;
-use crate::utils::{
+use crate::{
     base58, decode_b16, encode_b16, eth_address_from_public_key::get_eth_addr_from_public_key,
     get_blake2_hash, keccak256, pub_from_private::*, remove_0x,
 };
@@ -72,7 +72,7 @@ pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, Error> {
 //get rev addr from pub key
 ///
 /// ```no_run
-/// use rust_client::utils::rev_address_from_public_key::rev_address_from_public_key;
+/// use utils::rev_address_from_public_key::rev_address_from_public_key;
 ///
 /// let rev=rev_address_from_public_key("public key").unwrap();
 /// print!("{rev}");
@@ -86,7 +86,7 @@ pub fn rev_address_from_public_key(pub_key: &str) -> Result<String, Error> {
 //get rev address from private key
 ///
 ///```no_run
-/// use rust_client::utils::{rev_address_from_public_key::get_rev_addr_from_private_key, pub_from_private::get_seckey_from_string};
+/// use utils::{rev_address_from_public_key::get_rev_addr_from_private_key, pub_from_private::get_seckey_from_string};
 ///
 /// let sec_key=get_seckey_from_string("private key").unwrap();
 /// let pub_key=get_rev_addr_from_private_key(&sec_key).unwrap();

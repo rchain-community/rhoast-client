@@ -10,7 +10,7 @@ use secp256k1::{
 //use secret gotten from get_pri_pub_key_pair() to create new secret here
 ///get public key from a private key
 /// ```no_run
-/// use rust_client::utils::pub_from_private::{get_seckey_from_string,get_pub_key};
+/// use utils::pub_from_private::{get_seckey_from_string,get_pub_key};
 /// let seckey=get_seckey_from_string("secret key").unwrap();
 /// let pub_key=get_pub_key(&seckey);
 /// ```
@@ -22,7 +22,7 @@ pub fn get_pub_key(secret_key: &SecretKey) -> PublicKey {
 }
 ///get private key
 /// ```no_run
-/// use rust_client::utils::pub_from_private::get_pri_key;
+/// use utils::pub_from_private::get_pri_key;
 /// let pri_key=get_pri_key();
 /// ````
 ///
