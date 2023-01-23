@@ -1,6 +1,6 @@
-use std::error::Error;
-use serde::Deserialize;
 use csv;
+use serde::Deserialize;
+use std::error::Error;
 
 #[derive(Debug, Deserialize)]
 struct TestKey {
