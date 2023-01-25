@@ -107,16 +107,16 @@ pub fn get_rev_addr_from_private_key(key: &SecretKey) -> Result<String, Error> {
 }
 
 /// Generate new rev address
-/// 
-/// 
+///
+///
 /// ```no_run
 /// use utils::rev_address_from_public_key::get_new_rev_address;
-/// 
+///
 /// let rev_details = get_new_rev_address().unwrap();
 /// println!("rev details: {:?}", rev_details);
 /// ```
-/// 
-/// 
+///
+///
 pub fn get_new_rev_address() -> Result<RevAddress, Error> {
     let private_key = get_pri_key();
     //use private key to sign pub key
@@ -135,14 +135,14 @@ pub fn get_new_rev_address() -> Result<RevAddress, Error> {
 }
 
 /// Validate a rev address
-/// 
+///
 /// ```no_run
 /// use utils::rev_address_from_public_key::verify_rev_addr;
-/// 
+///
 /// let valid = verify_rev_addr("valid_rev_addr").unwrap();
 /// ```
-/// 
-/// 
+///
+///
 pub fn verify_rev_addr(rev_addr_raw: &str) -> Result<bool, Error> {
     let rev_byte = base58::decode(rev_addr_raw)?;
     if rev_byte.is_empty() {

@@ -9,7 +9,7 @@ use secp256k1::{
 
 //use secret gotten from get_pri_pub_key_pair() to create new secret here
 /// Get public key from a private key
-/// 
+///
 /// ```no_run
 /// use utils::pub_from_private::{get_seckey_from_string,get_pub_key};
 /// let seckey = get_seckey_from_string("secret key").unwrap();
