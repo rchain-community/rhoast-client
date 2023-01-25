@@ -44,6 +44,15 @@ impl Default for Prefix {
 }
 
 //get rev addr from eth addr
+/// Get rev addr from Eth addr
+///
+/// ```no_run
+/// use utils::rev_address_from_public_key::get_addr_from_eth;
+///
+/// let rev_addr =get_addr_from_eth("Eth addr").unwrap();
+/// print!("{rev_addr}");
+/// ````
+///
 pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, Error> {
     let eth_addr = remove_0x(eth_addr_raw);
     if eth_addr.len() != 40 {
@@ -70,7 +79,7 @@ pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, Error> {
 }
 
 //get rev addr from pub key
-///
+/// Get rev addr from public key
 /// ```no_run
 /// use utils::rev_address_from_public_key::rev_address_from_public_key;
 ///
@@ -83,7 +92,7 @@ pub fn rev_address_from_public_key(pub_key: &str) -> Result<String, Error> {
     get_addr_from_eth(&eth_addr)
 }
 
-//get rev address from private key
+/// Get rev address from private key
 ///
 ///```no_run
 /// use utils::{rev_address_from_public_key::get_rev_addr_from_private_key, pub_from_private::get_seckey_from_string};
@@ -97,6 +106,17 @@ pub fn get_rev_addr_from_private_key(key: &SecretKey) -> Result<String, Error> {
     rev_address_from_public_key(&hex::encode(pub_key.serialize_uncompressed()))
 }
 
+/// Generate new rev address
+///
+///
+/// ```no_run
+/// use utils::rev_address_from_public_key::get_new_rev_address;
+///
+/// let rev_details = get_new_rev_address().unwrap();
+/// println!("rev details: {:?}", rev_details);
+/// ```
+///
+///
 pub fn get_new_rev_address() -> Result<RevAddress, Error> {
     let private_key = get_pri_key();
     //use private key to sign pub key
@@ -114,6 +134,15 @@ pub fn get_new_rev_address() -> Result<RevAddress, Error> {
     ))
 }
 
+/// Validate a rev address
+///
+/// ```no_run
+/// use utils::rev_address_from_public_key::verify_rev_addr;
+///
+/// let valid = verify_rev_addr("valid_rev_addr").unwrap();
+/// ```
+///
+///
 pub fn verify_rev_addr(rev_addr_raw: &str) -> Result<bool, Error> {
     let rev_byte = base58::decode(rev_addr_raw)?;
     if rev_byte.is_empty() {

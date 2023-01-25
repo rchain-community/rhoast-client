@@ -9,6 +9,8 @@ pub mod pub_from_private;
 pub mod rev_address_from_public_key;
 pub const SIG_ALGORITHM: &str = "secp256k1";
 
+/// This crate contains utility methods for the rho client
+
 pub fn remove_0x(input: &str) -> String {
     let mut a = input.to_string();
     if input.chars().nth(0).unwrap().to_string() == "0"

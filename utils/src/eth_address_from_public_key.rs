@@ -2,14 +2,13 @@ use crate::error::Error;
 use crate::{decode_b16, keccak256};
 
 //get eth address provided the uncompressed pub key
-/// to convert from public key to eth addr
-///
+/// To get ETH address from pub key
 ///
 ///
 /// ```no_run
 /// use utils::eth_address_from_public_key::get_eth_addr_from_public_key;
 ///
-/// let eth= get_eth_addr_from_public_key("").unwrap();
+/// let eth= get_eth_addr_from_public_key("pub_key").unwrap();
 /// println!("{eth}");
 /// ```
 ///
