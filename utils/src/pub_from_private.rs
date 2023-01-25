@@ -8,10 +8,12 @@ use secp256k1::{
 };
 
 //use secret gotten from get_pri_pub_key_pair() to create new secret here
-///get public key from a private key
+/// Get public key from a private key
+/// 
 /// ```no_run
 /// use utils::pub_from_private::{get_seckey_from_string,get_pub_key};
-/// let seckey=get_seckey_from_string("secret key").unwrap();
+/// let seckey = get_seckey_from_string("secret key").unwrap();
+/// //get pub key
 /// let pub_key=get_pub_key(&seckey);
 /// ```
 ///
@@ -20,7 +22,7 @@ pub fn get_pub_key(secret_key: &SecretKey) -> PublicKey {
 
     PublicKey::from_secret_key(&secp, secret_key)
 }
-///get private key
+/// Generate private key
 /// ```no_run
 /// use utils::pub_from_private::get_pri_key;
 /// let pri_key=get_pri_key();
