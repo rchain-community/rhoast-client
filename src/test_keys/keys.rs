@@ -17,6 +17,17 @@ fn read_test_keys() -> Result<(), Box<dyn Error>> {
         // deserialization.
         let record: TestKey = result?;
         println!("{:?}", record);
+        record
     }
-    Ok(())
+    Error()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_key_read() {
+        let keys: TestKey = read_test_keys();
+        assert!(keys.pk != "");
+    }
 }
