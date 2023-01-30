@@ -21,5 +21,6 @@ reqwest = { workspace = true, features = ["blocking", "json"] }
 serde = { workspace = true, features = ["derive"]}
 chrono = { workspace = true }
 futures = { workspace = true }
+csv = { workspace = true }
 
 [build-dependencies]
