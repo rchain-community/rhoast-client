@@ -17,7 +17,7 @@ fn read_test_keys() -> Result<(), Box<dyn Error>> {
         // deserialization.
         let record: TestKey = result?;
         println!("{:?}", record);
-        record
+        Ok(record)
     }
     Error()
 }
