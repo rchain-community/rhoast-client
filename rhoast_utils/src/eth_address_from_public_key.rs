@@ -6,7 +6,7 @@ use crate::{decode_b16, keccak256};
 ///
 ///
 /// ```no_run
-/// use utils::eth_address_from_public_key::get_eth_addr_from_public_key;
+/// use rhoast_utils::eth_address_from_public_key::get_eth_addr_from_public_key;
 ///
 /// let eth= get_eth_addr_from_public_key("pub_key").unwrap();
 /// println!("{eth}");

@@ -3,7 +3,7 @@ use crate::{
     base58, decode_b16, encode_b16, eth_address_from_public_key::get_eth_addr_from_public_key,
     get_blake2_hash, keccak256, pub_from_private::*, remove_0x,
 };
-use secp256k1::{PublicKey, SecretKey};
+use secp256k1::SecretKey;
 
 struct Prefix {
     coin_id: String,
@@ -19,11 +19,11 @@ pub struct RevAddress {
 }
 
 impl RevAddress {
-    fn new(rev_addr: &str, eth_addr: &str, pub_key: &PublicKey, pri_key: &SecretKey) -> Self {
+    fn new(rev_addr: &str, eth_addr: &str, pub_key: &str, pri_key: &SecretKey) -> Self {
         //extract secret key
         let pri_key = pri_key.display_secret().to_string();
         //uncompress pub key and encode it
-        let pub_key = &hex::encode(pub_key.serialize_uncompressed());
+        let pub_key = pub_key;
         //return rev adress details
         RevAddress {
             rev_addr: rev_addr.to_string(),
@@ -47,13 +47,13 @@ impl Default for Prefix {
 /// Get rev addr from Eth addr
 ///
 /// ```no_run
-/// use utils::rev_address_from_public_key::get_addr_from_eth;
+/// use rhoast_utils::rev_address_from_public_key::get_rev_addr_from_eth;
 ///
-/// let rev_addr =get_addr_from_eth("Eth addr").unwrap();
+/// let rev_addr =get_rev_addr_from_eth("Eth addr").unwrap();
 /// print!("{rev_addr}");
 /// ````
 ///
-pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, Error> {
+pub fn get_rev_addr_from_eth(eth_addr_raw: &str) -> Result<String, Error> {
     let eth_addr = remove_0x(eth_addr_raw);
     if eth_addr.len() != 40 {
         Err(Error::RevAddressFromKey(
@@ -81,7 +81,7 @@ pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, Error> {
 //get rev addr from pub key
 /// Get rev addr from public key
 /// ```no_run
-/// use utils::rev_address_from_public_key::rev_address_from_public_key;
+/// use rhoast_utils::rev_address_from_public_key::rev_address_from_public_key;
 ///
 /// let rev=rev_address_from_public_key("public key").unwrap();
 /// print!("{rev}");
@@ -89,13 +89,13 @@ pub fn get_addr_from_eth(eth_addr_raw: &str) -> Result<String, Error> {
 ///
 pub fn rev_address_from_public_key(pub_key: &str) -> Result<String, Error> {
     let eth_addr = get_eth_addr_from_public_key(pub_key)?;
-    get_addr_from_eth(&eth_addr)
+    get_rev_addr_from_eth(&eth_addr)
 }
 
 /// Get rev address from private key
 ///
 ///```no_run
-/// use utils::{rev_address_from_public_key::get_rev_addr_from_private_key, pub_from_private::get_seckey_from_string};
+/// use rhoast_utils::{rev_address_from_public_key::get_rev_addr_from_private_key, pub_from_private::get_seckey_from_string};
 ///
 /// let sec_key=get_seckey_from_string("private key").unwrap();
 /// let pub_key=get_rev_addr_from_private_key(&sec_key).unwrap();
@@ -103,14 +103,14 @@ pub fn rev_address_from_public_key(pub_key: &str) -> Result<String, Error> {
 ///
 pub fn get_rev_addr_from_private_key(key: &SecretKey) -> Result<String, Error> {
     let pub_key = get_pub_key(key);
-    rev_address_from_public_key(&hex::encode(pub_key.serialize_uncompressed()))
+    rev_address_from_public_key(&pub_key)
 }
 
 /// Generate new rev address
 ///
 ///
 /// ```no_run
-/// use utils::rev_address_from_public_key::get_new_rev_address;
+/// use rhoast_utils::rev_address_from_public_key::get_new_rev_address;
 ///
 /// let rev_details = get_new_rev_address().unwrap();
 /// println!("rev details: {:?}", rev_details);
@@ -121,7 +121,7 @@ pub fn get_new_rev_address() -> Result<RevAddress, Error> {
     let private_key = get_pri_key();
     //use private key to sign pub key
     let publick_key = get_pub_key(&private_key);
-    let pub_key_hex = &hex::encode(publick_key.serialize_uncompressed());
+    let pub_key_hex = &publick_key;
     //get eth addr from public key
     let eth_addr = get_eth_addr_from_public_key(pub_key_hex)?;
     //get rev addr from pub key
@@ -137,7 +137,7 @@ pub fn get_new_rev_address() -> Result<RevAddress, Error> {
 /// Validate a rev address
 ///
 /// ```no_run
-/// use utils::rev_address_from_public_key::verify_rev_addr;
+/// use rhoast_utils::rev_address_from_public_key::verify_rev_addr;
 ///
 /// let valid = verify_rev_addr("valid_rev_addr").unwrap();
 /// ```

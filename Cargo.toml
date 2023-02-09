@@ -1,6 +1,6 @@
 [workspace]
-members = [ "utils", "rust_client_config", "client", ]
-default-members = [ "utils", "rust_client_config", "client" ]
+members = [ "rhoast_utils", "rust_client_config", "client", ]
+default-members = [ "rhoast_utils", "rust_client_config", "client" ]
 
 [package]
 name = "rhoast-client"
