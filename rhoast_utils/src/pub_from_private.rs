@@ -11,21 +11,24 @@ use secp256k1::{
 /// Get public key from a private key
 ///
 /// ```no_run
-/// use utils::pub_from_private::{get_seckey_from_string,get_pub_key};
+/// use rhoast_utils::pub_from_private::{get_seckey_from_string,get_pub_key};
 /// let seckey = get_seckey_from_string("secret key").unwrap();
 /// //get pub key
 /// let pub_key=get_pub_key(&seckey);
 /// ```
 ///
-pub fn get_pub_key(secret_key: &SecretKey) -> PublicKey {
+pub fn get_pub_key(secret_key: &SecretKey) -> String {
     let secp = Secp256k1::new();
 
-    PublicKey::from_secret_key(&secp, secret_key)
+    let key = PublicKey::from_secret_key(&secp, secret_key);
+    hex::encode(key.serialize_uncompressed())
 }
 /// Generate private key
 /// ```no_run
-/// use utils::pub_from_private::get_pri_key;
+/// use rhoast_utils::pub_from_private::get_pri_key;
 /// let pri_key=get_pri_key();
+/// //To get string value
+/// let pri_string= pri_key.display_secret().to_string();
 /// ````
 ///
 pub fn get_pri_key() -> SecretKey {

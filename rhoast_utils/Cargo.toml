@@ -1,5 +1,5 @@
 [package]
-name = "utils"
+name = "rhoast_utils"
 version = "0.1.0"
 edition = "2021"
 
@@ -21,5 +21,6 @@ reqwest = { workspace = true, features = ["blocking", "json"] }
 serde = { workspace = true, features = ["derive"]}
 chrono = { workspace = true }
 futures = { workspace = true }
+csv = { workspace = true }
 
 [build-dependencies]

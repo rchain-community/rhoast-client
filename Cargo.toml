@@ -1,6 +1,6 @@
 [workspace]
-members = [ "utils", "rust_client_config", "client", ]
-default-members = [ "utils", "rust_client_config", "client" ]
+members = [ "rhoast_utils", "rust_client_config", "client", ]
+default-members = [ "rhoast_utils", "rust_client_config", "client" ]
 
 [package]
 name = "rhoast-client"
@@ -24,6 +24,7 @@ reqwest = { version ="0.11.13", features = ["blocking", "json"] }
 serde = { version ="1.0.147", features = ["derive"]}
 chrono = "0.4.23"
 futures = "0.3.25"
+csv = "1.1"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [build-dependencies]
