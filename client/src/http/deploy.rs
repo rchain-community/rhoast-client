@@ -9,7 +9,7 @@ use crate::models::model::{
 use core::time::Duration;
 
 pub async fn deploy(
-    host: String,
+    host: &String,
     options: DeployData,
     timeout: Option<Duration>,
 ) -> Result<DeployResponse, Error> {
@@ -35,15 +35,15 @@ pub async fn deploy(
     }
 }
 
-pub async fn easy_deploy(host: String, options: EasyDeploy) -> Result<DeployResponse, Error> {
+pub async fn easy_deploy(host: &String, options: EasyDeploy) -> Result<DeployResponse, Error> {
     let url = format!("{}/api/deploy", host);
     let mut phlo_price_ok = 0;
     if options.phlo_price_auto.is_some() {
         if options.phlo_price_auto.unwrap() == "auto" {
-            phlo_price_ok = status(&host).await?.min_phlo_price.parse::<u64>().unwrap();
+            phlo_price_ok = status(&host).await?.min_phlo_price;
         }
     } else {
-        phlo_price_ok = options.phlo_price.unwrap()
+        phlo_price_ok = options.phlo_price.unwrap() as i32
     }
 
     if !options.term.contains("(`rho:rchain:deployId`)") && options.timeout.is_some() {
@@ -58,7 +58,7 @@ pub async fn easy_deploy(host: String, options: EasyDeploy) -> Result<DeployResp
         private_key: options.private_key,
         term: options.term,
         shard_id: options.shard_id.unwrap(),
-        phlo_price: phlo_price_ok,
+        phlo_price: phlo_price_ok as u64,
         phlo_limit: options.phlo_limit,
         valid_after_block_number: vab,
     };
@@ -83,7 +83,7 @@ pub async fn easy_deploy(host: String, options: EasyDeploy) -> Result<DeployResp
 }
 
 pub async fn prepare_deploy(
-    host: String,
+    host: &String,
     options: PrepareDeployOptions,
 ) -> Result<PrepareDeployResponse, Error> {
     let url = format!("{}/api/prepare-deploy", host);
