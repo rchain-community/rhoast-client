@@ -1,7 +1,7 @@
 use client::grpc::deploy::*;
 use client::http::{block::block_call, status::status};
 use client::models::model::*;
-use client::proto::casper::BondStatusQuery;
+use client::proto::casper::IsFinalizedQuery;
 
 #[tokio::main]
 async fn main() {
@@ -11,11 +11,11 @@ async fn main() {
 
     // let status = status(&"http://rnode-06.test.r-pub.com:40403".to_string()).await;
     // println!("{:?}", status);
-    let bond_status = BondStatusQuery {
-        public_key: "UmVmaW5lZCBzdGF0aWM=".as_bytes().to_vec(),
+    let bond_status = IsFinalizedQuery {
+        hash: "UmVmaW5lZCBzdGF0aWM=".to_string(),
     };
 
-    let block = bond_status_util(
+    let block = is_finalized_util(
         "http://rnode-06.test.r-pub.com:40401".to_string(),
         bond_status,
     )
