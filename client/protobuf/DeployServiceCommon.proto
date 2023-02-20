@@ -2,7 +2,7 @@
  * The main API is `DeployService`.
  */
 syntax = "proto3";
-package deploy;
+package casper;
 
 import "CasperMessage.proto";
 
@@ -12,7 +12,7 @@ import "CasperMessage.proto";
 // make a scalapb directory in this file's location and place it inside
 
 import "scalapb/scalapb.proto";
-import "RhoTypes.proto";
+// import "RhoTypes.proto";
 
 option (scalapb.options) = {
   package_name: "coop.rchain.casper.protocol"
@@ -41,12 +41,12 @@ message BlocksQueryByHeight{
 
 message DataAtNameQuery {
   int32 depth = 1;
-  casper.Par name = 2;
+  Par name = 2;
 }
 
 message ContinuationAtNameQuery {
   int32 depth = 1;
-  repeated casper.Par names = 2;
+  repeated Par names = 2;
 }
 
 message VisualizeDagQuery {
@@ -143,7 +143,7 @@ message BlockInfo {
 }
 
 message DataWithBlockInfo {
-  repeated casper.Par postBlockData = 1;
+  repeated Par postBlockData = 1;
   LightBlockInfo block = 2;
 }
 
@@ -153,26 +153,26 @@ message ContinuationsWithBlockInfo {
 }
 
 message WaitingContinuationInfo {
-  repeated casper.BindPattern postBlockPatterns = 1;
-  casper.Par postBlockContinuation = 2;
+  repeated BindPattern postBlockPatterns = 1;
+  Par postBlockContinuation = 2;
 }
 
 
 message ReportProduceProto{
   option (scalapb.message).extends = "ReportEventProto";
 
-  casper.Par channel = 1;
-  casper.ListParWithRandom data = 2;
+  Par channel = 1;
+  ListParWithRandom data = 2;
 }
 
 message ReportConsumeProto{
   option (scalapb.message).extends = "ReportEventProto";
 
-  repeated casper.Par channels = 1;
-  repeated casper.BindPattern patterns=2;
+  repeated Par channels = 1;
+  repeated BindPattern patterns=2;
   // disable because can not work and it is not important actually
 //  TaggedContinuation continuation=3;
-  repeated casper_msg.PeekProto peeks=4;
+  repeated PeekProto peeks=4;
 }
 
 message ReportCommProto{
@@ -203,3 +203,4 @@ message BlockEventInfo{
   LightBlockInfo blockInfo = 1;
   repeated DeployInfoWithEventData deploys= 2;
 }
+

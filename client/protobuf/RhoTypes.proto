@@ -4,7 +4,6 @@
  * The top level is `Par`.
  */
 syntax = "proto3";
-package casper;
 
 // If you are building for other languages "scalapb.proto"
 // can be manually obtained here:

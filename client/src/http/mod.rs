@@ -20,10 +20,7 @@ where
 {
     match res {
         Ok(res) => match res.json::<T>().await {
-            Ok(value) => {
-                println!("{:?}", value);
-                Ok(value)
-            }
+            Ok(value) => Ok(value),
             Err(err) => {
                 let err = format!("{}: {:?}", error_str, err);
                 Err(Error::HttpUtil(string_to_static_str(err)))

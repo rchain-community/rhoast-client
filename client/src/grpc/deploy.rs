@@ -1,7 +1,6 @@
 use crate::error::Error;
-use crate::proto::casper_msg::*;
-use crate::proto::deploy::*;
-use crate::proto::deployv1::*;
+use crate::proto::casper::v1::*;
+use crate::proto::casper::*;
 use futures::StreamExt;
 use rhoast_utils::base58::string_to_static_str;
 use tonic::Request;

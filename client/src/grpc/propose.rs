@@ -1,5 +1,5 @@
 use crate::error::Error;
-use crate::proto::casper::casper_v1::*;
+use crate::proto::casper::v1::{propose_service_client, PrintUnmatchedSendsQuery, ProposeResponse};
 use rhoast_utils::base58::string_to_static_str;
 use tonic::Request;
 
