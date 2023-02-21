@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 pub trait HttpModel {}
 
-impl HttpModel for StatusRespoonse {}
+impl HttpModel for StatusResponse {}
 impl HttpModel for DeployDataRequest {}
 impl HttpModel for DeployDataPayload {}
 impl HttpModel for DeployDataReturn {}
@@ -112,7 +112,7 @@ pub struct Version {
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct StatusRespoonse {
+pub struct StatusResponse {
     pub address: String,
     pub version: Version,
     pub peers: u32,

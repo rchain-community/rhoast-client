@@ -1,7 +1,9 @@
 use client::grpc::deploy::*;
+use client::grpc::propose::propose_util;
 use client::proto::casper::*;
 
 const ENDPOINT: &str = "http://167.235.8.107:40401";
+const PROPOSE_ENDPOINT: &str = "http://167.235.8.107:40402";
 
 #[tokio::test]
 async fn test_do_deploy_util() {
@@ -114,4 +116,13 @@ async fn test_get_event_by_hash_util() {
         .await
         .unwrap();
     assert!(explore.message.is_some());
+}
+
+#[tokio::test]
+async fn test_prpopose_util() {
+    let propose = propose_util(PROPOSE_ENDPOINT.to_string(), true)
+        .await
+        .unwrap();
+
+    assert!(propose.message.is_some())
 }

@@ -26,11 +26,8 @@ async fn main() {
     .unwrap();
     println!("{:?}", block);
 
-    // let block = propose_util(
-    //     "http://167.235.8.107:40402".to_string(),
-    //     true,
-    // )
-    // .await
-    // .unwrap();
-    // println!("{:?}", block)
+    let block = propose_util("http://167.235.8.107:40402".to_string(), true)
+        .await
+        .unwrap();
+    println!("{:?}", block)
 }
