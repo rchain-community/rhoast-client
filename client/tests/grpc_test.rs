@@ -1,7 +1,7 @@
 use client::grpc::deploy::*;
 use client::proto::casper::*;
 
-const ENDPOINT: &str = "http://rnode-06.test.r-pub.com:40401";
+const ENDPOINT: &str = "http://167.235.8.107:40401";
 
 #[tokio::test]
 async fn test_do_deploy_util() {

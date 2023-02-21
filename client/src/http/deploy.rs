@@ -3,19 +3,19 @@ use crate::grpc::deploy_util::get_deploy_data;
 use crate::http::get_method;
 use crate::http::{block::valid_after_block_number, status::status};
 use crate::models::model::{
-    DeployData, DeployDataPayload, DeployResponse, EasyDeploy, PrepareDeployOptions,
-    PrepareDeployResponse,
+    DeployDataPayload, DeployDataRequest, DeployResponse, EasyDeploy, LightBlockInfo,
+    PrepareDeployOptions, PrepareDeployResponse,
 };
 use core::time::Duration;
 
 pub async fn deploy(
     host: &String,
-    options: DeployData,
+    options: DeployDataRequest,
     timeout: Option<Duration>,
 ) -> Result<DeployResponse, Error> {
     //append endpoint
     let url = format!("{}/api/deploy", host);
-    if !options.term.contains("(`rho:rchain:deployId`)") && timeout.is_some() {
+    if !options.data.term.contains("(`rho:rchain:deployId`)") && timeout.is_some() {
         println!("term does not include (`rho:rchain:deployId`), data-at-name may not work'");
     }
 
@@ -33,6 +33,15 @@ pub async fn deploy(
             get_method::<DeployResponse>(req, &String::from("Error on deploy")).await
         }
     }
+}
+
+pub async fn deploy_with_deployid(
+    host: &String,
+    deploy_id: &String,
+) -> Result<Vec<LightBlockInfo>, Error> {
+    let url = format!("{}/api/deploy/{}", host, deploy_id);
+    let req = reqwest::get(url).await;
+    get_method::<Vec<LightBlockInfo>>(req, &String::from("Error getting deployid")).await
 }
 
 pub async fn easy_deploy(host: &String, options: EasyDeploy) -> Result<DeployResponse, Error> {

@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 pub trait HttpModel {}
 
 impl HttpModel for StatusRespoonse {}
-impl HttpModel for DeployData {}
+impl HttpModel for DeployDataRequest {}
 impl HttpModel for DeployDataPayload {}
 impl HttpModel for DeployDataReturn {}
 impl HttpModel for EasyDeploy {}
@@ -26,7 +26,18 @@ impl HttpModel for DataAtNameByBlockHashUnforgDeployOptions {}
 impl HttpModel for DataAtNameByBlockHashUnforgDeployerOptions {}
 impl HttpModel for Bond {}
 impl HttpModel for String {}
+impl HttpModel for bool {}
 impl HttpModel for Vec<LightBlockInfo> {}
+impl HttpModel for BlockInfo {}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DeployDataRequest {
+    pub data: DeployData,
+    pub sig_algorithm: String,
+    pub signature: String,
+    pub deployer: String,
+}
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -113,6 +124,12 @@ pub struct StatusRespoonse {
 pub struct BlockOptions {
     pub position: i32,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct BlockPostion {
+    pub start: i32,
+    pub end: i32,
+}
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct LightBlockInfo {
@@ -134,12 +151,41 @@ pub struct LightBlockInfo {
     pub pre_state_hash: String,
     pub post_state_hash: String,
     pub bonds: Vec<Bond>,
+    pub justifications: Vec<ValidatorHash>,
+}
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ValidatorHash {
+    pub validator: String,
+    pub latest_block_hash: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Bond {
     pub validator: String,
     pub stake: i64,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BlockInfo {
+    pub block_info: LightBlockInfo,
+    pub deploys: Vec<BlockDeploys>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BlockDeploys {
+    pub deployer: String,
+    pub term: String,
+    pub timestamp: i64,
+    pub sig: String,
+    pub sig_algorithm: String,
+    pub phlo_price: u64,
+    pub phlo_limit: i64,
+    pub valid_after_block_number: u32,
+    pub cost: u64,
+    pub errored: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -159,7 +205,7 @@ pub struct PrepareDeployOptions {
 #[serde(rename_all = "camelCase")]
 pub struct PrepareDeployResponse {
     pub names: Vec<String>,
-    pub block_number: i32,
+    pub seq_number: i32,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
