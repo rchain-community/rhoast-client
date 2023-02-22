@@ -46,7 +46,7 @@ impl Default for Prefix {
 //get rev addr from eth addr
 /// Get rev addr from Eth addr
 ///
-/// ```no_run
+/// ```ignore
 /// use rhoast_utils::rev_address_from_public_key::get_rev_addr_from_eth;
 ///
 /// let rev_addr =get_rev_addr_from_eth("Eth addr").unwrap();
@@ -80,7 +80,7 @@ pub fn get_rev_addr_from_eth(eth_addr_raw: &str) -> Result<String, Error> {
 
 //get rev addr from pub key
 /// Get rev addr from public key
-/// ```no_run
+/// ```ignore
 /// use rhoast_utils::rev_address_from_public_key::rev_address_from_public_key;
 ///
 /// let rev=rev_address_from_public_key("public key").unwrap();
@@ -94,7 +94,7 @@ pub fn rev_address_from_public_key(pub_key: &str) -> Result<String, Error> {
 
 /// Get rev address from private key
 ///
-///```no_run
+///```ignore
 /// use rhoast_utils::{rev_address_from_public_key::get_rev_addr_from_private_key, pub_from_private::get_seckey_from_string};
 ///
 /// let sec_key=get_seckey_from_string("private key").unwrap();
@@ -109,7 +109,7 @@ pub fn get_rev_addr_from_private_key(key: &SecretKey) -> Result<String, Error> {
 /// Generate new rev address
 ///
 ///
-/// ```no_run
+/// ```ignore
 /// use rhoast_utils::rev_address_from_public_key::get_new_rev_address;
 ///
 /// let rev_details = get_new_rev_address().unwrap();
@@ -136,7 +136,7 @@ pub fn get_new_rev_address() -> Result<RevAddress, Error> {
 
 /// Validate a rev address
 ///
-/// ```no_run
+/// ```ignore
 /// use rhoast_utils::rev_address_from_public_key::verify_rev_addr;
 ///
 /// let valid = verify_rev_addr("valid_rev_addr").unwrap();

@@ -1,5 +1,5 @@
 use crate::models::model::{DeployData, DeployDataPayload, DeployDataReturn};
-use crate::proto::{casper::Par, deploy::DataWithBlockInfo};
+use crate::proto::{casper::DataWithBlockInfo, casper::Par};
 use bitcoin_hashes::{sha256, Hash};
 use rhoast_utils::error::Error;
 use rhoast_utils::pub_from_private::{get_pub_key, get_seckey_from_string};

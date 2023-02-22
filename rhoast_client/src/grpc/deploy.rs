@@ -1,9 +1,8 @@
 use crate::error::Error;
-use crate::proto::casper_msg::*;
-use crate::proto::deploy::*;
-use crate::proto::deployv1::*;
+use crate::http::string_to_static_str;
+use crate::proto::casper::v1::*;
+use crate::proto::casper::*;
 use futures::StreamExt;
-use rhoast_utils::base58::string_to_static_str;
 use tonic::Request;
 
 pub async fn do_deploy_util(
@@ -270,7 +269,7 @@ pub async fn get_event_by_hash_util(
 pub async fn visualize_dag_util_stream<T>(
     host: String,
     payload: VisualizeDagQuery,
-    func: fn(VisualizeBlocksResponse) -> T,
+    func: fn(&VisualizeBlocksResponse) -> T,
     num: Option<usize>,
 ) -> Result<(), Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
@@ -282,13 +281,13 @@ pub async fn visualize_dag_util_stream<T>(
                         Some(num) => {
                             let mut stream = stream.into_inner().take(num);
                             while let Some(item) = stream.next().await {
-                                func(item.unwrap());
+                                func(&item.unwrap());
                             }
                         }
                         None => {
                             let mut stream = stream.into_inner();
                             while let Some(item) = stream.next().await {
-                                func(item.unwrap());
+                                func(&item.unwrap());
                             }
                         }
                     }
@@ -311,7 +310,7 @@ pub async fn visualize_dag_util_stream<T>(
 pub async fn show_main_chain_util_stream<T>(
     host: String,
     payload: BlocksQuery,
-    func: fn(BlockInfoResponse) -> T,
+    func: fn(&BlockInfoResponse) -> T,
     num: Option<usize>,
 ) -> Result<(), Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
@@ -323,13 +322,13 @@ pub async fn show_main_chain_util_stream<T>(
                         Some(num) => {
                             let mut stream = stream.into_inner().take(num);
                             while let Some(item) = stream.next().await {
-                                func(item.unwrap());
+                                func(&item.unwrap());
                             }
                         }
                         None => {
                             let mut stream = stream.into_inner();
                             while let Some(item) = stream.next().await {
-                                func(item.unwrap());
+                                func(&item.unwrap());
                             }
                         }
                     }
@@ -352,7 +351,7 @@ pub async fn show_main_chain_util_stream<T>(
 pub async fn show_blocks_util_stream<T>(
     host: String,
     payload: BlocksQuery,
-    func: fn(BlockInfoResponse) -> T,
+    func: fn(&BlockInfoResponse) -> T,
     num: Option<usize>,
 ) -> Result<(), Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
@@ -364,13 +363,13 @@ pub async fn show_blocks_util_stream<T>(
                         Some(num) => {
                             let mut stream = stream.into_inner().take(num);
                             while let Some(item) = stream.next().await {
-                                func(item.unwrap());
+                                func(&item.unwrap());
                             }
                         }
                         None => {
                             let mut stream = stream.into_inner();
                             while let Some(item) = stream.next().await {
-                                func(item.unwrap());
+                                func(&item.unwrap());
                             }
                         }
                     }
@@ -393,7 +392,7 @@ pub async fn show_blocks_util_stream<T>(
 pub async fn get_blocks_by_height_util_stream<T>(
     host: String,
     payload: BlocksQueryByHeight,
-    func: fn(BlockInfoResponse) -> T,
+    func: fn(&BlockInfoResponse) -> T,
     num: Option<usize>,
 ) -> Result<(), Error> {
     match deploy_service_client::DeployServiceClient::connect(host).await {
@@ -405,13 +404,13 @@ pub async fn get_blocks_by_height_util_stream<T>(
                         Some(num) => {
                             let mut stream = stream.into_inner().take(num);
                             while let Some(item) = stream.next().await {
-                                func(item.unwrap());
+                                func(&item.unwrap());
                             }
                         }
                         None => {
                             let mut stream = stream.into_inner();
                             while let Some(item) = stream.next().await {
-                                func(item.unwrap());
+                                func(&item.unwrap());
                             }
                         }
                     }

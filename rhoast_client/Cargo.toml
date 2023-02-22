@@ -1,5 +1,5 @@
 [package]
-name = "client"
+name = "rhoast_client"
 version = "0.1.0"
 edition = "2021"
 
@@ -15,6 +15,7 @@ prost = { workspace = true }
 hex = { workspace = true }
 reqwest = { workspace = true }
 chrono = { workspace = true }
+tokio = {workspace = true}
 
 [build-dependencies]
 tonic-build = "0.7.2"

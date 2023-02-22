@@ -1,6 +1,6 @@
 use crate::error::Error;
-use crate::proto::casper::casper_v1::*;
-use rhoast_utils::base58::string_to_static_str;
+use crate::http::string_to_static_str;
+use crate::proto::casper::v1::{propose_service_client, PrintUnmatchedSendsQuery, ProposeResponse};
 use tonic::Request;
 
 pub async fn propose_util(host: String, payload: bool) -> Result<ProposeResponse, Error> {
