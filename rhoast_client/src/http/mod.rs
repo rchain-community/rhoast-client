@@ -9,8 +9,11 @@ use std::fmt::Debug;
 
 use crate::error::Error;
 use crate::models::model::HttpModel;
-use rhoast_utils::base58::string_to_static_str;
 use serde::{de::DeserializeOwned, Serialize};
+
+pub fn string_to_static_str(s: String) -> &'static str {
+    Box::leak(s.into_boxed_str())
+}
 
 pub async fn get_method<T: HttpModel + Serialize + Debug>(
     res: std::result::Result<reqwest::Response, reqwest::Error>,

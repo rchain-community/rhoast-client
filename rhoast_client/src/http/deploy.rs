@@ -1,11 +1,11 @@
 use crate::error::Error;
-use crate::grpc::deploy_util::get_deploy_data;
 use crate::http::get_method;
 use crate::http::{block::valid_after_block_number, status::status};
 use crate::models::model::{
     DeployDataPayload, DeployDataRequest, DeployResponse, EasyDeploy, LightBlockInfo,
     PrepareDeployOptions, PrepareDeployResponse,
 };
+use crate::util::deploy_util::get_deploy_data;
 use core::time::Duration;
 
 pub async fn deploy(

@@ -10,7 +10,7 @@ use secp256k1::{
 //use secret gotten from get_pri_pub_key_pair() to create new secret here
 /// Get public key from a private key
 ///
-/// ```no_run
+/// ```ignore
 /// use rhoast_utils::pub_from_private::{get_seckey_from_string,get_pub_key};
 /// let seckey = get_seckey_from_string("secret key").unwrap();
 /// //get pub key
@@ -24,7 +24,7 @@ pub fn get_pub_key(secret_key: &SecretKey) -> String {
     hex::encode(key.serialize_uncompressed())
 }
 /// Generate private key
-/// ```no_run
+/// ```ignore
 /// use rhoast_utils::pub_from_private::get_pri_key;
 /// let pri_key=get_pri_key();
 /// //To get string value

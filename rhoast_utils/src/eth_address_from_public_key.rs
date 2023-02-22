@@ -3,9 +3,7 @@ use crate::{decode_b16, keccak256};
 
 //get eth address provided the uncompressed pub key
 /// To get ETH address from pub key
-///
-///
-/// ```no_run
+/// ```ignore
 /// use rhoast_utils::eth_address_from_public_key::get_eth_addr_from_public_key;
 ///
 /// let eth= get_eth_addr_from_public_key("pub_key").unwrap();

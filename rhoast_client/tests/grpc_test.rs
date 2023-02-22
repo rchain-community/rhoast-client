@@ -1,6 +1,6 @@
-use client::grpc::deploy::*;
-use client::grpc::propose::propose_util;
-use client::proto::casper::*;
+use rhoast_client::grpc::deploy::*;
+use rhoast_client::grpc::propose::propose_util;
+use rhoast_client::proto::casper::*;
 
 const ENDPOINT: &str = "http://167.235.8.107:40401";
 const PROPOSE_ENDPOINT: &str = "http://167.235.8.107:40402";

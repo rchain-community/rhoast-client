@@ -1,9 +1,9 @@
 [workspace]
-members = [ "rhoast_utils", "rust_client_config", "client", ]
-default-members = [ "rhoast_utils", "rust_client_config", "client" ]
+members = [ "rhoast_utils", "rust_client_config", "rhoast_client", ]
+default-members = [ "rhoast_utils", "rust_client_config", "rhoast_client" ]
 
 [package]
-name = "rhoast-client"
+name = "rhoast-lib"
 version = "0.1.0"
 edition = "2021"
 
