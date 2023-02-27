@@ -9,4 +9,4 @@ This crate contains utility methods for the rhoast client
 7. Get rev address from private key
 8. Verify rev address
 
-Read the doc [here](https://docs.rs/rhoast_utils/0.1.0/rhoast_utils/index.html)
+Read the doc [here](https://docs.rs/rhoast_utils/0.1.1/rhoast_utils/index.html)
