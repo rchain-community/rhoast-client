@@ -46,47 +46,6 @@ pub fn sign_secp_256k1<C: Signing + Verification>(
     }
 }
 
-pub fn transfer_rev_term(from: String, to: String, amount: u64) -> String {
-    let term=format!("
-    new
-    deployId(`rho:rchain:deployId`),
-    rl(`rho:registry:lookup`),
-    RevVaultCh,
-    stdout(`rho:io:stdout`)
-    in {{
-
-    rl!(`rho:rchain:revVault`, *RevVaultCh) |
-    for (@(_, RevVault) <- RevVaultCh) {{
-
-    match (
-      \"{}\",
-      \"{}\",
-      \"{}\"
-    ) {{
-      (from, to, amount) => {{
-
-        new vaultCh, revVaultkeyCh, deployerId(`rho:rchain:deployerId`) in {{
-          @RevVault!(\"findOrCreate\", from, *vaultCh) |
-          @RevVault!(\"deployerAuthKey\", *deployerId, *revVaultkeyCh) |
-          for (@(true, vault) <- vaultCh; key <- revVaultkeyCh) {{
-
-            stdout!((\"Beginning transfer of \", amount, \"REV from\", from, \"to\", to)) |
-
-            new resultCh in {{
-              @vault!(\"transfer\", to, amount, *key, *resultCh) |
-              for (@result <- resultCh) {{
-                stdout!((\"Finished transfer of \", amount, \"REV to\", to, \"result was:\", result))
-              }}
-            }}
-          }}
-
-      }}
-    }}
-  }}
-  }}", from , to, amount);
-    term
-}
-
 unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
     ::std::slice::from_raw_parts((p as *const T) as *const u8, ::std::mem::size_of::<T>())
 }
