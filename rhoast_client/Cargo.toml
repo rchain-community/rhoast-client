@@ -13,7 +13,7 @@ readme = "README.md"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
 tonic = { workspace = true }
-rhoast_utils = { path = "../rhoast_utils" }
+rhoast_utils = { path = "../rhoast_utils", version="0.1.1"}
 bitcoin_hashes = { workspace = true }
 secp256k1 = { workspace = true, features = [ "rand-std", "recovery"] }
 serde = { workspace = true, features = ["derive"]}
