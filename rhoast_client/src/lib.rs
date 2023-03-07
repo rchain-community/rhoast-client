@@ -1,7 +1,8 @@
-//!This crate allows you to easily communicate an node using typed safe rust
+//!This crate allows you to easily communicate with a running node using typed safe rust
+//!via the node's grpc and http modules.
 //!
 //! ```ignore
-//! // example of a grpc propose
+//! // example of a grpc propose and getting a block via hash
 //! use rhoast_client::grpc::propose::propose_util;
 //! use rhoast_client::http::block::hash_block_call;
 //! use rhoast_client::grpc::deploy::get_blocks_by_height_util_stream;
