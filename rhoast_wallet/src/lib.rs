@@ -50,8 +50,7 @@ impl Node {
             Ok(addr) => {
                 if !addr {
                     return Err(Error::CheckBlance("invalid rev addr"));
-                } else {
-                }
+                } 
                 let term = rho::check_balance(rev_addr);
                 let payload = ExploreDataOptions { term };
                 let res = explore_deploy(&self.http_url, payload).await;
