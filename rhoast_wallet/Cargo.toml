@@ -7,4 +7,5 @@ edition = "2021"
 
 [dependencies]
 rhoast_client = {path= "../rhoast_client", version="0.1.0"}
+rhoast_utils = {path= "../rhoast_utils", version= "0.1.1"}
 serde_json = { workspace = true }
