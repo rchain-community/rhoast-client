@@ -25,9 +25,8 @@ pub fn pos_bond_rho(amount: u64) -> String {
 //Rholang code to check balance
 pub fn check_balance(addr: String) -> String {
     let rho_code = format!(
-        r#"
-    new return, rl(\`rho:registry:lookup\`), RevVaultCh, vaultCh in {{
-        rl!(\`rho:rchain:revVault\`, *RevVaultCh) |
+        r#"new return, rl(`rho:registry:lookup`), RevVaultCh, vaultCh in {{
+        rl!(`rho:rchain:revVault`, *RevVaultCh) |
         for (@(_, RevVault) <- RevVaultCh) {{
           @RevVault!("findOrCreate", "{}", *vaultCh) |
           for (@maybeVault <- vaultCh) {{
