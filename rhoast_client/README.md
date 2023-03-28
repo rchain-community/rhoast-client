@@ -29,7 +29,7 @@ via the node's grpc and http modules.
 
  ```
 
-Link to doc [here](https://docs.rs/rhoast_client/0.1.0/rhoast_client/index.html)
+Link to doc [here](https://docs.rs/rhoast_client/0.1.1/rhoast_client/index.html)
 
 
 ### Test
