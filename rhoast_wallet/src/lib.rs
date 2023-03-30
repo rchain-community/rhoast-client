@@ -30,28 +30,28 @@ fn string_to_static_str(s: String) -> &'static str {
 
 impl Node {
     pub fn new(
-        http_url: String,
-        grpc_url: String,
-        shard_id: String,
-        network: String,
-        http_admin_url: String,
+        http_url: &String,
+        grpc_url: &String,
+        shard_id: &String,
+        network: &String,
+        http_admin_url: &String,
     ) -> Self {
         Node {
-            http_url,
-            grpc_url,
-            shard_id,
-            network,
-            http_admin_url,
+            http_url: http_url.to_string(),
+            grpc_url: grpc_url.to_string(),
+            shard_id: shard_id.to_string(),
+            network: network.to_string(),
+            http_admin_url: http_admin_url.to_string(),
         }
     }
 
-    pub async fn check_balance(&self, rev_addr: String) -> Result<Option<u64>, Error> {
+    pub async fn check_balance(&self, rev_addr: &String) -> Result<u64, Error> {
         match verify_rev_addr(&rev_addr) {
             Ok(addr) => {
                 if !addr {
                     return Err(Error::CheckBlance("invalid rev addr"));
-                } 
-                let term = rho::check_balance(rev_addr);
+                }
+                let term = rho::check_balance(rev_addr.to_string());
                 let payload = ExploreDataOptions { term };
                 let res = explore_deploy(&self.http_url, payload).await;
 
@@ -64,31 +64,28 @@ impl Node {
                                 let expr = &json.get("expr");
                                 match expr {
                                     Some(expr_val) => {
+                                        if expr_val.as_array().unwrap().len() < 1 {
+                                            return Err(Error::CheckBlance(
+                                                "Error getting balance",
+                                            ));
+                                        }
                                         let expr_index = &expr_val[0];
-                                        let expr_int = expr_index.get("ExprInt");
-                                        match expr_int {
-                                            Some(expr_int) => {
-                                                let data = expr_int.get("data");
-                                                match data {
-                                                    Some(data) => Ok(data.as_u64()),
-                                                    None => {
-                                                        let err = format!(
-                                                            "Error getting balance {:?}",
-                                                            expr_val["ExprString"]["data"]
-                                                        );
-                                                        Err(Error::CheckBlance(
-                                                            string_to_static_str(err),
-                                                        ))
-                                                    }
+                                        let expr_int = &expr_index["ExprInt"]["data"];
+
+                                        match expr_int.as_u64() {
+                                            Some(balance) => Ok(balance),
+                                            None => match expr_index.get("ExprString") {
+                                                Some(error_msg) => {
+                                                    let expr_error =
+                                                        &error_msg["data"].as_str().unwrap();
+                                                    Err(Error::CheckBlance(string_to_static_str(
+                                                        expr_error.to_string(),
+                                                    )))
                                                 }
-                                            }
-                                            None => {
-                                                let err = format!(
-                                                    "Error getting balance {:?}",
-                                                    expr_val["ExprString"]["data"]
-                                                );
-                                                Err(Error::CheckBlance(string_to_static_str(err)))
-                                            }
+                                                None => {
+                                                    Err(Error::CheckBlance("Error getting balance"))
+                                                }
+                                            },
                                         }
                                     }
                                     None => Err(Error::CheckBlance("No expresssion found")),
