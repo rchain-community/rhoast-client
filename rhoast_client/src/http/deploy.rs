@@ -52,7 +52,7 @@ pub async fn easy_deploy(host: &String, options: EasyDeploy) -> Result<DeployRes
             phlo_price_ok = status(&host).await?.min_phlo_price;
         }
     } else {
-        phlo_price_ok = options.phlo_price.unwrap() as i32
+        phlo_price_ok = options.phlo_price.unwrap_or(1) as i32
     }
 
     if !options.term.contains("(`rho:rchain:deployId`)") && options.timeout.is_some() {
@@ -66,7 +66,7 @@ pub async fn easy_deploy(host: &String, options: EasyDeploy) -> Result<DeployRes
         timestamp: time,
         private_key: options.private_key,
         term: options.term,
-        shard_id: options.shard_id.unwrap(),
+        shard_id: options.shard_id.unwrap_or("".to_string()),
         phlo_price: phlo_price_ok as u64,
         phlo_limit: options.phlo_limit,
         valid_after_block_number: vab,
