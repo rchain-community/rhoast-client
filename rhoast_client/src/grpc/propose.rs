@@ -6,6 +6,9 @@ use tonic::Request;
 use super::GrpcV0_12;
 
 impl GrpcV0_12 {
+    pub fn new(host: &str)->Self{
+        GrpcV0_12 { host: host.to_string() }
+    }
     pub async fn propose(&self, payload: bool) -> Result<ProposeResponse, Error> {
         match propose_service_client::ProposeServiceClient::connect(self.host.to_string()).await {
             Ok(mut client) => {
