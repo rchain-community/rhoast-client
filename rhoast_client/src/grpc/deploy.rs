@@ -1,7 +1,7 @@
 use crate::error::Error;
 use crate::http::string_to_static_str;
-use crate::proto::casper::v1::*;
-use crate::proto::casper::*;
+use crate::proto::v0_12::casper::v1::*;
+use crate::proto::v0_12::casper::*;
 use futures::StreamExt;
 use tonic::Request;
 

@@ -1,4 +1,4 @@
-pub mod v0_12 {
+pub mod v0_13 {
     pub mod scalapb {
         tonic::include_proto!("scalapb");
     }

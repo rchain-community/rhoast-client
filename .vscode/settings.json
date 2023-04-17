@@ -1,3 +1,6 @@
 {
-    "nuxt.isNuxtApp": false
+    "nuxt.isNuxtApp": false,
+    "rust-analyzer.linkedProjects": [
+        "./rhoast_client_v03/Cargo.toml"
+    ]
 }
