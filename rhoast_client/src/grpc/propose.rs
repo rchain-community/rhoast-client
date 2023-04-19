@@ -1,8 +1,6 @@
 use crate::error::Error;
 use crate::http::string_to_static_str;
-use crate::proto::casper::v1::{
-    propose_service_client, PrintUnmatchedSendsQuery, ProposeResponse,
-};
+use crate::proto::casper::v1::{propose_service_client, PrintUnmatchedSendsQuery, ProposeResponse};
 use tonic::Request;
 
 use super::Grpc;
