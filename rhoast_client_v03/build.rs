@@ -4,19 +4,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     tonic_build::configure()
         .compile(
             &[
-                "protobufv03/CasperMessage.proto",
-                "protobufv03/DeployServiceCommon.proto",
-                "protobufv03/ProposeServiceCommon.proto",
+                "protobuf/CasperMessage.proto",
+                "protobuf/DeployServiceCommon.proto",
+                "protobuf/ProposeServiceCommon.proto",
             ],
-            &["protobufv03"],
+            &["protobuf"],
         )
         .unwrap();
     tonic_build::configure()
-        .compile(&["protobufv03/DeployServiceV1.proto"], &["protobufv03"])
+        .compile(&["protobuf/DeployServiceV1.proto"], &["protobuf"])
         .unwrap();
-    tonic_build::compile_protos("protobufv03/scalapb/scalapb.proto")?;
-    tonic_build::compile_protos("protobufv03/RhoTypes.proto")?;
-    tonic_build::compile_protos("protobufv03/routing.proto")?;
-    tonic_build::compile_protos("protobufv03/ServiceError.proto")?;
+    tonic_build::compile_protos("protobuf/scalapb/scalapb.proto")?;
+    tonic_build::compile_protos("protobuf/RhoTypes.proto")?;
+    tonic_build::compile_protos("protobuf/routing.proto")?;
+    tonic_build::compile_protos("protobuf/ServiceError.proto")?;
     Ok(())
 }

@@ -1,13 +1,13 @@
 use crate::error::Error;
 use crate::http::string_to_static_str;
-use crate::proto::v0_12::casper::v1::*;
-use crate::proto::v0_12::casper::*;
+use crate::proto::casper::v1::*;
+use crate::proto::casper::*;
 use futures::StreamExt;
 use tonic::Request;
 
-use super::GrpcV0_12;
+use super::Grpc;
 
-impl GrpcV0_12 {
+impl Grpc {
     pub async fn do_deploy_util(&self, payload: DeployDataProto) -> Result<DeployResponse, Error> {
         match deploy_service_client::DeployServiceClient::connect(self.host.to_string()).await {
             Ok(mut client) => {

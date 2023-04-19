@@ -1,15 +1,15 @@
 use crate::error::Error;
 use crate::http::string_to_static_str;
-use crate::proto::v0_12::casper::v1::{
+use crate::proto::casper::v1::{
     propose_service_client, PrintUnmatchedSendsQuery, ProposeResponse,
 };
 use tonic::Request;
 
-use super::GrpcV0_12;
+use super::Grpc;
 
-impl GrpcV0_12 {
+impl Grpc {
     pub fn new(host: &str) -> Self {
-        GrpcV0_12 {
+        Grpc {
             host: host.to_string(),
         }
     }

@@ -1,4 +1,3 @@
-pub mod v0_12 {
     pub mod scalapb {
         tonic::include_proto!("scalapb");
     }
@@ -13,4 +12,3 @@ pub mod v0_12 {
     pub mod routing {
         tonic::include_proto!("routing");
     }
-}
