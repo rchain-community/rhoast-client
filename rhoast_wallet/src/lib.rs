@@ -2,7 +2,8 @@ pub mod error;
 pub mod rho;
 
 use error::Error;
-use rhoast_client::{http::explore::explore_deploy, models::model::ExploreDataOptions};
+use rhoast_client::http::Http;
+use rhoast_client::models::model::ExploreDataOptions;
 use rhoast_utils::rev_address_from_public_key::verify_rev_addr;
 
 #[derive(Debug)]
@@ -51,9 +52,10 @@ impl Node {
                 if !addr {
                     return Err(Error::CheckBlance("invalid rev addr"));
                 }
+                let http = Http::new(&self.http_url);
                 let term = rho::check_balance(rev_addr.to_string());
                 let payload = ExploreDataOptions { term };
-                let res = explore_deploy(&self.http_url, payload).await;
+                let res = http.explore_deploy(payload).await;
 
                 match res {
                     Ok(response) => {

@@ -3,13 +3,15 @@
 //!
 //! ```ignore
 //! // example of a grpc propose and getting a block via hash
-//! use rhoast_client::grpc::propose::propose_util;
-//! use rhoast_client::http::block::hash_block_call;
-//! use rhoast_client::grpc::deploy::get_blocks_by_height_util_stream;
+//! // example of a grpc propose and getting a block via hash
+//! use rhoast_client::grpc::Grpc;
 //! use rhoast_client::proto::casper::BlocksQueryByHeight;
+//! use rhoast_client::http::Http;
 //!
-//!  let propose = propose_util("endpoint".to_string(), true).await.unwrap();
-//!  let block_info = hash_block_call(&"endpoint".to_string(), &"hash".to_string()).await.unwrap()
+//!  let grpc=Grpc::new("endpoint");
+//!  let http= Http::new("endpoint")
+//!  let propose = grpc.propose(true).await.unwrap();
+//!  let block_info = http.hash_block_call(&"hash".to_string()).await.unwrap()
 //!
 //! //for grpc stream actions like visualize_dag_util_stream, show_main_chain_util_stream, show_blocks_util_stream,
 //! // get_blocks_by_height_util_stream  pass in a function that takes in the returned value of the stream
@@ -23,7 +25,7 @@
 //! fn write_stream_to_file(input: &BlockInfoResponse){
 //! //write input to file
 //! }
-//! get_blocks_by_height_util_stream("endpoint".to_string(), block_query, write_stream_to_file, Some(40)).await.unwrap();
+//! grpc.get_blocks_by_height_util_stream(block_query, write_stream_to_file, Some(40)).await.unwrap();
 //!
 //! ```
 //!
