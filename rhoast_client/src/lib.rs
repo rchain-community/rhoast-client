@@ -1,4 +1,4 @@
-//!This crate allows you to easily communicate with a running node using typed safe rust
+//!This crate allows you to easily communicate with a running version 0.12.x node using typed safe rust
 //!via the node's grpc and http modules.
 //!
 //! ```ignore
