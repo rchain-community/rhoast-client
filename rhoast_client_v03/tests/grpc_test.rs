@@ -42,7 +42,6 @@ async fn exec_all_test() {
 }
 
 async fn test_do_deploy_util(grpc: Grpc) {
-    println!("{:?}", grpc);
     let payload = DeployDataProto {
         deployer: "Q2FsaWZvcm5pYSBQbGFzdGlj".as_bytes().to_vec(),
         term: "Multi-tiered".to_string(),
