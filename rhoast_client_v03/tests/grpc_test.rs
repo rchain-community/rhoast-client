@@ -1,6 +1,6 @@
 use futures::Future;
-use rhoast_client::grpc::Grpc;
-use rhoast_client::proto::casper::*;
+use rhoast_client_v03::grpc::Grpc;
+use rhoast_client_v03::proto::casper::*;
 
 const KEY: &str = "URL";
 const PORT: &str = "PORT";
@@ -38,6 +38,7 @@ async fn exec_all_test() {
     check_env(test_exploratory_deploy_util).await;
     check_env(test_get_event_by_hash_util).await;
     check_env(test_prpopose_util).await;
+    check_env(test_prpopose_result_util).await;
 }
 
 async fn test_do_deploy_util(grpc: Grpc) {
@@ -47,6 +48,7 @@ async fn test_do_deploy_util(grpc: Grpc) {
         timestamp: 9709,
         sig: "secp256k1".as_bytes().to_vec(),
         sig_algorithm: "secp256k1".to_string(),
+        shard_id: "shard".to_string(),
         phlo_price: 510,
         phlo_limit: 968,
         valid_after_block_number: 446,
@@ -123,8 +125,9 @@ async fn test_exploratory_deploy_util(grpc: Grpc) {
 }
 
 async fn test_get_event_by_hash_util(grpc: Grpc) {
-    let payload = BlockQuery {
+    let payload = ReportQuery {
         hash: "hash".to_string(),
+        force_replay: false,
     };
 
     let explore = grpc.get_event_by_hash_util(payload).await.unwrap();
@@ -133,6 +136,13 @@ async fn test_get_event_by_hash_util(grpc: Grpc) {
 
 async fn test_prpopose_util(grpc: Grpc) {
     let propose = grpc.propose(true).await.unwrap();
+
+    assert!(propose.message.is_some())
+}
+
+async fn test_prpopose_result_util(grpc: Grpc) {
+    let payload = ProposeResultQuery {};
+    let propose = grpc.propose_result(payload).await.unwrap();
 
     assert!(propose.message.is_some())
 }

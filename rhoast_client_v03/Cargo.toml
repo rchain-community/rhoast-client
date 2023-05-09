@@ -1,0 +1,17 @@
+[package]
+name = "rhoast_client_v03"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tonic = { workspace = true }
+bitcoin_hashes = { workspace = true }
+serde = { workspace = true, features = ["derive"]}
+futures = { workspace = true }
+prost = { workspace = true }
+tokio = {workspace = true}
+
+[build-dependencies]
+tonic-build = "0.7.2"

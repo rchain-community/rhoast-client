@@ -11,6 +11,11 @@ use crate::error::Error;
 use crate::models::model::HttpModel;
 use serde::{de::DeserializeOwned, Serialize};
 
+#[derive(Debug)]
+pub struct Http {
+    pub host: String,
+}
+
 pub fn string_to_static_str(s: String) -> &'static str {
     Box::leak(s.into_boxed_str())
 }

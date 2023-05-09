@@ -1,6 +1,6 @@
 [workspace]
-members = [ "rhoast_utils", "rust_client_config", "rhoast_client", "rhoast_wallet"]
-default-members = [ "rhoast_utils", "rust_client_config", "rhoast_client", "rhoast_wallet" ]
+members = [ "rhoast_utils", "rust_client_config", "rhoast_client", "rhoast_wallet", "rhoast_client_v03"]
+default-members = [ "rhoast_utils", "rust_client_config", "rhoast_client", "rhoast_wallet", "rhoast_client_v03" ]
 
 [package]
 name = "rhoast-lib"

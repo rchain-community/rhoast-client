@@ -1,17 +1,14 @@
-//!This crate allows you to easily communicate with a running version 0.12.x node using typed safe rust
+//!This crate allows you to easily communicate with a running version 0.13.x node using typed safe rust
 //!via the node's grpc and http modules.
 //!
 //! ```ignore
 //! // example of a grpc propose and getting a block via hash
 //! // example of a grpc propose and getting a block via hash
-//! use rhoast_client::grpc::Grpc;
-//! use rhoast_client::proto::casper::BlocksQueryByHeight;
-//! use rhoast_client::http::Http;
+//! use rhoast_client_v03::grpc::Grpc;
+//! use rhoast_client_v03::proto::casper::BlocksQueryByHeight;
 //!
 //!  let grpc=Grpc::new("endpoint");
-//!  let http= Http::new("endpoint")
 //!  let propose = grpc.propose(true).await.unwrap();
-//!  let block_info = http.hash_block_call(&"hash".to_string()).await.unwrap()
 //!
 //! //for grpc stream actions like visualize_dag_util_stream, show_main_chain_util_stream, show_blocks_util_stream,
 //! // get_blocks_by_height_util_stream  pass in a function that takes in the returned value of the stream
@@ -33,7 +30,4 @@
 //!
 pub mod error;
 pub mod grpc;
-pub mod http;
-pub mod models;
 pub mod proto;
-mod util;

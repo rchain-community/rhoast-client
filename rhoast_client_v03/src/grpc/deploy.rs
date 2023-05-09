@@ -1,11 +1,10 @@
+use super::string_to_static_str;
+use super::Grpc;
 use crate::error::Error;
-use crate::http::string_to_static_str;
 use crate::proto::casper::v1::*;
 use crate::proto::casper::*;
 use futures::StreamExt;
 use tonic::Request;
-
-use super::Grpc;
 
 impl Grpc {
     pub async fn do_deploy_util(&self, payload: DeployDataProto) -> Result<DeployResponse, Error> {
@@ -67,7 +66,6 @@ impl Grpc {
             }
         }
     }
-
     pub async fn listen_for_date_at_name_util(
         &self,
         payload: DataAtNameQuery,
@@ -76,6 +74,28 @@ impl Grpc {
             Ok(mut client) => {
                 let request = Request::new(payload);
                 match client.listen_for_data_at_name(request).await {
+                    Ok(respose) => Ok(respose.into_inner()),
+                    Err(err) => {
+                        let err = format!("Error getting response {}", err);
+                        Err(Error::GrpcUtil(string_to_static_str(err)))
+                    }
+                }
+            }
+            Err(err) => {
+                let err = format!("Error creating GRPC connection {}", err);
+                Err(Error::GrpcUtil(string_to_static_str(err)))
+            }
+        }
+    }
+
+    pub async fn get_date_at_name_util(
+        &self,
+        payload: DataAtNameByBlockQuery,
+    ) -> Result<RhoDataResponse, Error> {
+        match deploy_service_client::DeployServiceClient::connect(self.host.to_string()).await {
+            Ok(mut client) => {
+                let request = Request::new(payload);
+                match client.get_data_at_name(request).await {
                     Ok(respose) => Ok(respose.into_inner()),
                     Err(err) => {
                         let err = format!("Error getting response {}", err);
@@ -246,12 +266,31 @@ impl Grpc {
 
     pub async fn get_event_by_hash_util(
         &self,
-        payload: BlockQuery,
+        payload: ReportQuery,
     ) -> Result<EventInfoResponse, Error> {
         match deploy_service_client::DeployServiceClient::connect(self.host.to_string()).await {
             Ok(mut client) => {
                 let request = Request::new(payload);
                 match client.get_event_by_hash(request).await {
+                    Ok(respose) => Ok(respose.into_inner()),
+                    Err(err) => {
+                        let err = format!("Error getting response {}", err);
+                        Err(Error::GrpcUtil(string_to_static_str(err)))
+                    }
+                }
+            }
+            Err(err) => {
+                let err = format!("Error creating GRPC connection {}", err);
+                Err(Error::GrpcUtil(string_to_static_str(err)))
+            }
+        }
+    }
+
+    pub async fn status_util(&self, payload: ()) -> Result<StatusResponse, Error> {
+        match deploy_service_client::DeployServiceClient::connect(self.host.to_string()).await {
+            Ok(mut client) => {
+                let request = Request::new(payload);
+                match client.status(request).await {
                     Ok(respose) => Ok(respose.into_inner()),
                     Err(err) => {
                         let err = format!("Error getting response {}", err);
@@ -347,7 +386,6 @@ impl Grpc {
             }
         }
     }
-
     pub async fn show_blocks_util_stream<T>(
         &self,
         payload: BlocksQuery,

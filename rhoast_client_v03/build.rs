@@ -1,6 +1,6 @@
 //file to build the protobuf
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    //v0.12
+    //v0.13
     tonic_build::configure()
         .compile(
             &[

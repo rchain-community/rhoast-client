@@ -1,3 +1,4 @@
+use super::Http;
 use crate::models::model::{
     DataAtNameUnforgDeployOptions, DataAtNameUnforgDeployerOptions, DataAtNameUnforgPrivateOptions,
 };
@@ -10,13 +11,15 @@ impl DataAtName for DataAtNameUnforgDeployerOptions {}
 impl DataAtName for DataAtNameUnforgDeployOptions {}
 impl DataAtName for DataAtNameUnforgPrivateOptions {}
 
-pub async fn data_at_name<C: DataAtName + Serialize>(
-    host: String,
-    options: C,
-) -> Result<String, Error> {
-    let url = format!("{}/api/data-at-name", host);
-    let req = reqwest::Client::new().post(url).json(&options).send().await;
-    get_method_str(req, &"Error on data at name".to_string()).await
+impl Http {
+    pub async fn data_at_name<C: DataAtName + Serialize>(
+        &self,
+        options: C,
+    ) -> Result<String, Error> {
+        let url = format!("{}/api/data-at-name", &self.host);
+        let req = reqwest::Client::new().post(url).json(&options).send().await;
+        get_method_str(req, &"Error on data at name".to_string()).await
+    }
 }
 
 // pub trait DataAtNameBlockHash {}
