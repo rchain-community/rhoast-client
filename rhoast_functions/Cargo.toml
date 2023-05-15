@@ -1,0 +1,12 @@
+[package]
+name = "rhoast_functions"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = {workspace = true}
+dotenv = {workspace = true}
+listenfd = {workspace = true}
+actix-cors ={ workspace = true}
