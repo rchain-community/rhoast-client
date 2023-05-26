@@ -1,7 +1,15 @@
-use crate::rholang::test_rholang;
-use actix_web::{Error, HttpResponse};
+use actix_web::{web, Error, HttpResponse};
 
-pub async fn test() -> Result<HttpResponse, Error> {
-    let rholang_code = test_rholang();
-    Ok(HttpResponse::Ok().body(rholang_code))
+use crate::{rholang::parse_simple_deploy, types::SimpleDeployPayload};
+
+pub async fn simple_deploy_handler(
+    payload: web::Json<SimpleDeployPayload>,
+) -> Result<HttpResponse, Error> {
+    match parse_simple_deploy(&payload.text) {
+        Ok(text) => Ok(HttpResponse::Ok().body(text)),
+        Err(e) => {
+            let error = format!("Error: {:?}", e);
+            Ok(HttpResponse::BadRequest().body(error))
+        }
+    }
 }

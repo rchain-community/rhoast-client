@@ -1,6 +1,6 @@
 [workspace]
-members = [ "rhoast_utils", "rust_client_config", "rhoast_client", "rhoast_wallet", "rhoast_client_v03"]
-default-members = [ "rhoast_utils", "rust_client_config", "rhoast_client", "rhoast_wallet", "rhoast_client_v03" ]
+members = [ "rhoast_utils", "rust_client_config", "rhoast_client", "rhoast_wallet", "rhoast_client_v03", "rhoast_functions"]
+default-members = [ "rhoast_utils", "rust_client_config", "rhoast_client", "rhoast_wallet", "rhoast_client_v03", "rhoast_functions"]
 
 [package]
 name = "rhoast-lib"
@@ -26,6 +26,11 @@ chrono = "0.4.23"
 futures = "0.3.25"
 csv = "1.1"
 serde_json = "1.0.94"
+actix-web = "3.3.2"
+dotenv = "0.15.0"
+listenfd = "0.3"
+actix-cors="0.5.1"
+handlebars = "4.3.7"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [build-dependencies]

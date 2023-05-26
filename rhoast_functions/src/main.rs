@@ -3,12 +3,30 @@ use actix_web::{middleware::Logger, App, HttpServer};
 use listenfd::ListenFd;
 use std::env;
 
+pub mod cli;
 mod config;
 mod handlers;
 pub mod rholang;
+pub mod types;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    let args = cli::Args::new();
+    match args.select {
+        types::Select::CLI => {
+            if args.utility.is_none() {
+                panic!("select a utility type")
+            }
+            match args.utility.unwrap() {
+                types::Type::SimpleDeploy => args.parse_simple_deploy(),
+            }
+            Ok(())
+        }
+        types::Select::HTTP => run_http().await,
+    }
+}
+
+async fn run_http() -> std::io::Result<()> {
     dotenv::dotenv().ok();
     std::env::set_var("RUST_LOG", "actix_web=debug");
     //set env variables
