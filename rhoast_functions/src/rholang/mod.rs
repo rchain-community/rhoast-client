@@ -1,6 +1,6 @@
 use handlebars::Handlebars;
 use serde_json::json;
-use std::{error::Error, fs, collections::BTreeMap};
+use std::{collections::BTreeMap, error::Error, fs};
 
 pub fn parse_simple_deploy(text: &String) -> Result<String, Box<dyn Error>> {
     let reg = Handlebars::new();
@@ -15,7 +15,10 @@ fn parse_simple(rholang: &String, arg: &String, text: &String) -> Result<String,
     Ok(compiled)
 }
 
-pub fn parse_multiple_args(rholang: &String, args: &BTreeMap<String,String>) -> Result<String,Box<dyn Error>> {
+pub fn parse_multiple_args(
+    rholang: &String,
+    args: &BTreeMap<String, String>,
+) -> Result<String, Box<dyn Error>> {
     let mut rtc: String = rholang.to_string();
     for a in args.keys() {
         let val = args.get(a).unwrap();
