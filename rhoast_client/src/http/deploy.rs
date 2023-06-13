@@ -1,4 +1,4 @@
-use super::Http;
+use super::{Http, get_method_str};
 use crate::error::Error;
 use crate::http::get_method;
 use crate::models::model::{
@@ -45,7 +45,7 @@ impl Http {
         get_method::<Vec<LightBlockInfo>>(req, &String::from("Error getting deployid")).await
     }
 
-    pub async fn easy_deploy(&self, options: EasyDeploy) -> Result<DeployResponse, Error> {
+    pub async fn easy_deploy(&self, options: EasyDeploy) -> Result<String, Error> {
         let url = format!("{}/api/deploy", &self.host);
         let mut phlo_price_ok = 0;
         if options.phlo_price_auto.is_some() {
@@ -79,7 +79,7 @@ impl Http {
                 Ok(client) => {
                     let req = client.post(url).json(&payload).send().await;
 
-                    get_method::<DeployResponse>(req, &String::from("Error on easy deploy")).await
+                    get_method_str(req, &String::from("Error on easy deploy")).await
                 }
                 Err(_) => Err(Error::HttpUtil("Error building HTTP client")),
             },
@@ -87,7 +87,7 @@ impl Http {
             None => {
                 let req = reqwest::Client::new().post(url).json(&payload).send().await;
 
-                get_method::<DeployResponse>(req, &String::from("Error on easy deploy")).await
+                get_method_str(req, &String::from("Error on easy deploy")).await
             }
         }
     }
