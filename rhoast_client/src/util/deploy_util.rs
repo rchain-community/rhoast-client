@@ -1,4 +1,4 @@
-use crate::models::model::{DeployData, DeployDataPayload, DeployDataReturn};
+use crate::models::model::{DeployData, DeployDataPayload, DeployDataRequest};
 use crate::proto::{casper::DataWithBlockInfo, casper::Par};
 use bitcoin_hashes::{sha256, Hash};
 use rhoast_utils::error::Error;
@@ -50,7 +50,7 @@ unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
     ::std::slice::from_raw_parts((p as *const T) as *const u8, ::std::mem::size_of::<T>())
 }
 
-pub fn get_deploy_data(payload: &DeployDataPayload) -> Result<DeployDataReturn, Error> {
+pub fn get_deploy_data(payload: &DeployDataPayload) -> Result<DeployDataRequest, Error> {
     //sign sec key
     let sec_key_hash = get_seckey_from_string(&payload.private_key)?;
     //get public key
@@ -69,11 +69,11 @@ pub fn get_deploy_data(payload: &DeployDataPayload) -> Result<DeployDataReturn, 
     let secp = Secp256k1::new();
     let signature = sign_secp_256k1(&secp, &hash, &sec_key_hash[..])?;
     let sign_hex = hex::encode(&signature[..]);
-
-    Ok(DeployDataReturn {
+    
+    Ok(DeployDataRequest {
         data: deploy_data,
         deployer: pub_key.to_string(),
-        signture: sign_hex,
+        signature: sign_hex,
         sig_algorithm: SIG_ALGORITHM.to_string(),
     })
 }
