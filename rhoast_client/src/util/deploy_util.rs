@@ -67,13 +67,12 @@ pub fn get_deploy_data(payload: &DeployDataPayload) -> Result<DeployDataRequest,
     let to_sign = unsafe { any_as_u8_slice(&deploy_data) };
     let hash = get_blake2_hash(&to_sign, Some(32))?;
     let secp = Secp256k1::new();
-    let signature = sign_secp_256k1(&secp, &hash, &sec_key_hash[..])?;
-    let sign_hex = hex::encode(&signature[..]);
-    
+    let signature = sign_secp_256k1(&secp, &hash, &sec_key_hash[..])?.to_string();
+
     Ok(DeployDataRequest {
         data: deploy_data,
         deployer: pub_key.to_string(),
-        signature: sign_hex,
+        signature: signature,
         sig_algorithm: SIG_ALGORITHM.to_string(),
     })
 }

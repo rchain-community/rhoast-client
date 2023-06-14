@@ -62,7 +62,6 @@ pub struct DeployDataPayload {
     pub private_key: String,
 }
 
-
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct EasyDeploy {
