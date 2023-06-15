@@ -29,6 +29,7 @@ pub fn sign_secp_256k1<C: Signing + Verification>(
     msg: &[u8],
     seckey: &[u8],
 ) -> Result<ecdsa::SerializedSignature, Error> {
+   
     let msg = sha256::Hash::hash(msg);
     match Message::from_slice(&msg) {
         Ok(msg) => match SecretKey::from_slice(&seckey) {
@@ -50,6 +51,8 @@ unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
     ::std::slice::from_raw_parts((p as *const T) as *const u8, ::std::mem::size_of::<T>())
 }
 
+use tonic_build::Attributes;
+
 pub fn get_deploy_data(payload: &DeployDataPayload) -> Result<DeployDataRequest, Error> {
     //sign sec key
     let sec_key_hash = get_seckey_from_string(&payload.private_key)?;
@@ -68,7 +71,10 @@ pub fn get_deploy_data(payload: &DeployDataPayload) -> Result<DeployDataRequest,
     let hash = get_blake2_hash(&to_sign, Some(32))?;
     let secp = Secp256k1::new();
     let signature = sign_secp_256k1(&secp, &hash, &sec_key_hash[..])?.to_string();
-
+    let mut attributes = Attributes::default();
+    attributes.push_struct("EchoService", "#[derive(PartialEq, Debug)]");
+    
+    println!("{:?}", attributes);
     Ok(DeployDataRequest {
         data: deploy_data,
         deployer: pub_key.to_string(),
