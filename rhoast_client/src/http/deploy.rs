@@ -1,9 +1,9 @@
-use super::{Http, get_method_str};
+use super::{get_method_str, Http};
 use crate::error::Error;
 use crate::http::get_method;
 use crate::models::model::{
-    DeployDataPayload, DeployDataRequest, EasyDeploy, LightBlockInfo,
-    PrepareDeployOptions, PrepareDeployResponse,
+    DeployDataPayload, DeployDataRequest, EasyDeploy, LightBlockInfo, PrepareDeployOptions,
+    PrepareDeployResponse,
 };
 use crate::util::deploy_util::get_deploy_data;
 use core::time::Duration;

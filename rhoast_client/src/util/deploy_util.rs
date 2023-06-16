@@ -29,7 +29,6 @@ pub fn sign_secp_256k1<C: Signing + Verification>(
     msg: &[u8],
     seckey: &[u8],
 ) -> Result<ecdsa::SerializedSignature, Error> {
-   
     let msg = sha256::Hash::hash(msg);
     match Message::from_slice(&msg) {
         Ok(msg) => match SecretKey::from_slice(&seckey) {
@@ -73,7 +72,7 @@ pub fn get_deploy_data(payload: &DeployDataPayload) -> Result<DeployDataRequest,
     let signature = sign_secp_256k1(&secp, &hash, &sec_key_hash[..])?.to_string();
     let mut attributes = Attributes::default();
     attributes.push_struct("EchoService", "#[derive(PartialEq, Debug)]");
-    
+
     println!("{:?}", attributes);
     Ok(DeployDataRequest {
         data: deploy_data,
