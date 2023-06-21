@@ -23,7 +23,6 @@ hex = { workspace = true }
 reqwest = { workspace = true }
 chrono = { workspace = true }
 tokio = {workspace = true}
-tonic-build = {workspace = true}
 
 
 [build-dependencies]

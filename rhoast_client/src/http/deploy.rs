@@ -1,15 +1,15 @@
-use super::{Http, get_method_str};
+use super::{get_method_str, Http};
 use crate::error::Error;
 use crate::http::get_method;
 use crate::models::model::{
-    DeployDataPayload, DeployDataRequest, EasyDeploy, LightBlockInfo,
-    PrepareDeployOptions, PrepareDeployResponse,
+    DeployDataPayload, DeployDataRequest, EasyDeploy, LightBlockInfo, PrepareDeployOptions,
+    PrepareDeployResponse,
 };
 use crate::util::deploy_util::get_deploy_data;
 use core::time::Duration;
 
 impl Http {
-    ///uccess: request was correctly formatted and signed. Note that this does not indicate successful execution.\nUse the signature as deployId in
+    ///success: request was correctly formatted and signed. Note that this does not indicate successful execution.\nUse the signature as deployId in
     ///  /deploy/ or `deploy_with_deployid` method to find the hash of the block in which this deploy was attempted and then GET /block/{hash} or `hash_block_call` to find `DeployInfo` such as `systemDeployError`, `errored` and `cost`.\n
     pub async fn deploy(
         &self,
