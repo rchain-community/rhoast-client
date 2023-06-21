@@ -6,7 +6,6 @@ pub trait HttpModel {}
 impl HttpModel for StatusResponse {}
 impl HttpModel for DeployDataRequest {}
 impl HttpModel for DeployDataPayload {}
-impl HttpModel for DeployDataReturn {}
 impl HttpModel for EasyDeploy {}
 impl HttpModel for DeployResponse {}
 impl HttpModel for ExploreDataOptions {}
@@ -46,7 +45,7 @@ pub struct DeployData {
     pub term: String,
     pub shard_id: String,
     pub phlo_price: u64,
-    pub phlo_limit: u32,
+    pub phlo_limit: u64,
     pub valid_after_block_number: i32,
 }
 
@@ -58,18 +57,9 @@ pub struct DeployDataPayload {
     pub term: String,
     pub shard_id: String,
     pub phlo_price: u64,
-    pub phlo_limit: u32,
+    pub phlo_limit: u64,
     pub valid_after_block_number: i32,
     pub private_key: String,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct DeployDataReturn {
-    pub data: DeployData,
-    pub deployer: String,
-    pub signture: String,
-    pub sig_algorithm: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -80,7 +70,7 @@ pub struct EasyDeploy {
     pub private_key: String,
     pub phlo_price: Option<u64>,
     pub phlo_price_auto: Option<String>,
-    pub phlo_limit: u32,
+    pub phlo_limit: u64,
     pub timeout: Option<Duration>,
 }
 

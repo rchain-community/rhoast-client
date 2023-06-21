@@ -1,19 +1,21 @@
-use super::{Http, get_method_str};
+use super::{get_method_str, Http};
 use crate::error::Error;
 use crate::http::get_method;
 use crate::models::model::{
-    DeployDataPayload, DeployDataRequest, DeployResponse, EasyDeploy, LightBlockInfo,
-    PrepareDeployOptions, PrepareDeployResponse,
+    DeployDataPayload, DeployDataRequest, EasyDeploy, LightBlockInfo, PrepareDeployOptions,
+    PrepareDeployResponse,
 };
 use crate::util::deploy_util::get_deploy_data;
 use core::time::Duration;
 
 impl Http {
+    ///success: request was correctly formatted and signed. Note that this does not indicate successful execution.\nUse the signature as deployId in
+    ///  /deploy/ or `deploy_with_deployid` method to find the hash of the block in which this deploy was attempted and then GET /block/{hash} or `hash_block_call` to find `DeployInfo` such as `systemDeployError`, `errored` and `cost`.\n
     pub async fn deploy(
         &self,
         options: DeployDataRequest,
         timeout: Option<Duration>,
-    ) -> Result<DeployResponse, Error> {
+    ) -> Result<String, Error> {
         //append endpoint
         let url = format!("{}/api/deploy", &self.host);
         if !options.data.term.contains("(`rho:rchain:deployId`)") && timeout.is_some() {
@@ -24,14 +26,14 @@ impl Http {
             Some(timeout) => match reqwest::ClientBuilder::new().timeout(timeout).build() {
                 Ok(client) => {
                     let req = client.post(url).json(&options).send().await;
-                    get_method::<DeployResponse>(req, &String::from("Error on deploy")).await
+                    get_method_str(req, &String::from("Error on deploy")).await
                 }
                 Err(_) => Err(Error::HttpUtil("Error building HTTP client")),
             },
 
             None => {
                 let req = reqwest::Client::new().post(url).json(&options).send().await;
-                get_method::<DeployResponse>(req, &String::from("Error on deploy")).await
+                get_method_str(req, &String::from("Error on deploy")).await
             }
         }
     }
