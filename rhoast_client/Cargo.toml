@@ -23,6 +23,7 @@ hex = { workspace = true }
 reqwest = { workspace = true }
 chrono = { workspace = true }
 tokio = {workspace = true}
+bincode = {workspace = true}
 
 
 [build-dependencies]
